@@ -8,4 +8,5 @@ edition = "2021"
 [dependencies]
 tui = {workspace = true} 
 crossterm = {workspace = true}
+tokio = {workspace = true}
 core-logic = {path = "../core-logic"}
