@@ -2,6 +2,7 @@ mod export;
 mod init;
 mod state;
 mod views;
+mod utils;
 
 use init::init_terminal;
 
