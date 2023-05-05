@@ -3,10 +3,11 @@ mod init;
 mod state;
 mod views;
 mod utils;
-
-use init::init_terminal;
+mod input;
+mod shutdown;
 
 #[tokio::main]
 async fn main() -> Result<(), std::io::Error> {
-    init_terminal()
+    let terminal = init::terminal().await?;
+    shutdown::terminal(terminal)
 }

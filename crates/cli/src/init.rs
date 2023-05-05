@@ -1,15 +1,13 @@
-use crossterm::event::{self, DisableMouseCapture, EnableMouseCapture, Event, KeyCode};
+use crossterm::event::{EnableMouseCapture, KeyCode};
 use crossterm::execute;
-use crossterm::terminal::{
-    disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen,
-};
-use std::io::{stdout, Error};
+use crossterm::terminal::{enable_raw_mode, EnterAlternateScreen};
+use std::io::{stdout, Error, Stdout};
 use tui::backend::CrosstermBackend;
 use tui::Terminal;
 
 use crate::export::prelude::*;
 
-pub fn init_terminal() -> Result<(), Error> {
+pub async fn terminal() -> Result<Terminal<CrosstermBackend<Stdout>>, Error> {
     enable_raw_mode()?;
 
     let mut stdout = stdout();
@@ -20,26 +18,22 @@ pub fn init_terminal() -> Result<(), Error> {
 
     let state = AppState::default();
 
+    let mut manager = InputManager::default();
+    manager.register();
+
     loop {
         terminal.draw(|f| draw_menu(f, &state))?;
 
-        if let Event::Key(key) = event::read()? {
-            match key.code {
-                KeyCode::Char('q') => break,
-                _ => {}
-            }
+        let key = match manager.event_receiver.recv().await {
+            Some(e) => e,
+            _ => continue,
+        };
+
+        match key {
+            KeyCode::Char('q') => break,
+            _ => {}
         }
     }
 
-    disable_raw_mode()?;
-
-    execute!(
-        terminal.backend_mut(),
-        LeaveAlternateScreen,
-        DisableMouseCapture
-    )?;
-
-    terminal.show_cursor()?;
-
-    Ok(())
+    Ok(terminal)
 }

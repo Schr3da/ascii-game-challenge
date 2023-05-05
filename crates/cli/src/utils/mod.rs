@@ -1,5 +1,5 @@
 mod rect;
 
 pub mod prelude {
-  pub use super::rect::*;
+    pub use super::rect::*;
 }
