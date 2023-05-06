@@ -23,16 +23,12 @@ pub async fn terminal() -> Result<Terminal<CrosstermBackend<Stdout>>, Error> {
 
     loop {
         terminal.draw(|f| draw_menu(f, &state))?;
+        terminal.draw(|f| draw_game(f, &state))?;
 
-        let key = match manager.event_receiver.recv().await {
-            Some(e) => e,
+        match manager.event_receiver.recv().await {
+            Some(KeyCode::Char('q')) => break,
             _ => continue,
         };
-
-        match key {
-            KeyCode::Char('q') => break,
-            _ => {}
-        }
     }
 
     Ok(terminal)
