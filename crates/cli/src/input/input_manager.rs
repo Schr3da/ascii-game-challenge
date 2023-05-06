@@ -24,12 +24,14 @@ impl InputManager {
     pub fn register(&mut self) {
         let sender = self.event_sender.clone();
         let thread = task::spawn(async move {
-            let event = match event::read() {
-                Ok(Event::Key(e)) => e,
-                _ => return,
-            };
+            loop {
+                let event = match event::read() {
+                    Ok(Event::Key(e)) => e,
+                    _ => continue,
+                };
 
-            let _ = sender.send(event.code).await;
+                let _ = sender.send(event.code).await;
+            }
         });
 
         self.task = Some(thread);
