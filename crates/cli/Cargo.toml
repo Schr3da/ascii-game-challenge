@@ -9,4 +9,6 @@ edition = "2021"
 tui = {workspace = true} 
 crossterm = {workspace = true}
 tokio = {workspace = true}
+serde = {workspace = true} 
 core-logic = {path = "../core-logic"}
+core_serde = {path = "../core-serde"}
