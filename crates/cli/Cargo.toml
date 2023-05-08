@@ -11,4 +11,4 @@ crossterm = {workspace = true}
 tokio = {workspace = true}
 serde = {workspace = true} 
 core-logic = {path = "../core-logic"}
-core_serde = {path = "../core-serde"}
+core-serde = {path = "../core-serde"}

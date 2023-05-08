@@ -1,10 +1,10 @@
 use serde::{Deserialize, Serialize};
 
-use super::prelude::CellColors;
+use crate::prelude::*;
 
 #[derive(Clone, Serialize, Deserialize)]
 pub struct Cell {
-    pub symbol: String,
+    pub symbol: Ascii,
     pub background: CellColors,
     pub foreground: CellColors,
 }
@@ -12,7 +12,7 @@ pub struct Cell {
 impl Default for Cell {
     fn default() -> Self {
         Cell {
-            symbol: " ".to_string(),
+            symbol: Ascii::Space,
             background: CellColors::Black,
             foreground: CellColors::White,
         }

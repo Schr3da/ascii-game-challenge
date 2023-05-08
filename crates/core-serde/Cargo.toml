@@ -1,5 +1,5 @@
 [package]
-name = "core_serde"
+name = "core-serde"
 version = "0.1.0"
 edition = "2021"
 

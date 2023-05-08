@@ -1,4 +1,4 @@
-use super::prelude::*;
+use crate::prelude::*;
 
 pub struct Tile {
     pub cells: Vec<Cell>,
