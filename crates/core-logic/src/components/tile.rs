@@ -1,5 +1,8 @@
+use serde::{Deserialize, Serialize};
+
 use crate::prelude::*;
 
+#[derive(Clone, Serialize, Deserialize)]
 pub struct Tile {
     pub cells: Vec<Cell>,
     pub x: i32,

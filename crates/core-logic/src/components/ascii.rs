@@ -1,6 +1,6 @@
 use serde::*;
 
-#[derive(Clone, Serialize, Deserialize)]
+#[derive(Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub enum Ascii {
     Space,
     Plus,

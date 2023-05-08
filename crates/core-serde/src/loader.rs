@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 use std::fs;
 use std::path::Path;
 
-use super::prelude::*; 
+use super::prelude::*;
 
 pub fn load_json_from_file<T>(next: &str) -> T
 where

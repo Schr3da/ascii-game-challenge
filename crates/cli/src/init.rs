@@ -16,6 +16,7 @@ pub async fn terminal() -> Result<Terminal<CrosstermBackend<Stdout>>, Error> {
     let backend = CrosstermBackend::new(stdout);
     let mut terminal = Terminal::new(backend)?;
 
+    let assets = AssetManager::default();
     let state = AppState::default();
 
     let mut manager = InputManager::default();
@@ -23,7 +24,7 @@ pub async fn terminal() -> Result<Terminal<CrosstermBackend<Stdout>>, Error> {
 
     loop {
         terminal.draw(|f| draw_menu(f, &state))?;
-        terminal.draw(|f| draw_game(f, &state))?;
+        terminal.draw(|f| draw_game(f, &state, &assets))?;
 
         match manager.event_receiver.recv().await {
             Some(KeyCode::Char('q')) => break,
