@@ -16,7 +16,9 @@ pub async fn terminal() -> Result<Terminal<CrosstermBackend<Stdout>>, Error> {
     let backend = CrosstermBackend::new(stdout);
     let mut terminal = Terminal::new(backend)?;
 
-    let assets = AssetManager::default();
+    let mut assets = AssetManager::default();
+    assets.load_cells();
+
     let state = AppState::default();
 
     let mut manager = InputManager::default();

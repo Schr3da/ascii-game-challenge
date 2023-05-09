@@ -1,6 +1,9 @@
-use serde::*;
+use std::fmt;
 
-#[derive(Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
+use serde::{de::Visitor, *};
+
+#[derive(Debug, Clone, Serialize, PartialEq, Eq, Hash)]
+#[serde(rename_all = "camelCase")]
 pub enum Ascii {
     Space,
     Plus,
@@ -18,5 +21,41 @@ impl ToString for Ascii {
             Ascii::Space => " ".to_string(),
             Ascii::Plus => "+".to_string(),
         }
+    }
+}
+
+impl From<&str> for Ascii {
+    fn from(value: &str) -> Self {
+        match value {
+            " " => Ascii::Space,
+            "+" => Ascii::Plus,
+            _ => Ascii::Space,
+        }
+    }
+}
+
+impl<'de> Deserialize<'de> for Ascii {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct AsciiVisitor;
+
+        impl<'de> Visitor<'de> for AsciiVisitor {
+            type Value = Ascii;
+
+            fn expecting(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+                formatter.write_str("Unable to parse to Ascii")
+            }
+
+            fn visit_str<E>(self, value: &str) -> Result<Ascii, E>
+            where
+                E: de::Error,
+            {
+                Ok(Ascii::from(value))
+            }
+        }
+
+        deserializer.deserialize_str(AsciiVisitor)
     }
 }

@@ -2,12 +2,13 @@ use serde::{Deserialize, Serialize};
 
 use crate::prelude::*;
 
-#[derive(Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Cell {
-    pub is_bold: bool,
     pub symbol: Ascii,
     pub background: CellColors,
     pub foreground: CellColors,
+    #[serde(rename = "isBold")]
+    pub is_bold: bool,
 }
 
 impl Default for Cell {

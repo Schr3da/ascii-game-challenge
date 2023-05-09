@@ -13,6 +13,9 @@ where
     let result = fs::read_to_string(path);
     match result {
         Ok(c) => parse_string::<T>(&c),
-        Err(_) => T::default(),
+        Err(e) => {
+            println!("{e}");
+            T::default()
+        }
     }
 }
