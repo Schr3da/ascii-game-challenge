@@ -22,8 +22,8 @@ impl ToString for Ascii {
         match self {
             Ascii::Space => " ".to_string(),
             Ascii::Plus => "+".to_string(),
-            Ascii::Minus=> "-".to_string(),
-            Ascii::A=> "a".to_string(),
+            Ascii::Minus => "-".to_string(),
+            Ascii::A => "a".to_string(),
         }
     }
 }
