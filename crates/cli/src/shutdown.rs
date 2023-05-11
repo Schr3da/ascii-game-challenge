@@ -7,6 +7,7 @@ use tui::backend::CrosstermBackend;
 use tui::Terminal;
 
 pub fn terminal(mut terminal: Terminal<CrosstermBackend<Stdout>>) -> Result<(), Error> {
+
     disable_raw_mode()?;
 
     execute!(

@@ -1,14 +1,20 @@
 [
   {
+    "symbol": "-",
+    "background": "white",
+    "foreground": "black",
+    "isBold": false
+  },
+  {
     "symbol": "+",
     "background": "black",
     "foreground": "white",
     "isBold": true
   },
   {
-    "symbol": " ",
-    "background": "black",
-    "foreground": "white",
-    "isBold": false
+    "symbol": "a",
+    "background": "white",
+    "foreground": "black",
+    "isBold": true
   }
 ]
