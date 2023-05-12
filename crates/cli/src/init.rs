@@ -1,3 +1,4 @@
+use core_logic::prelude::prelude::AssetResources;
 use crossterm::event::{EnableMouseCapture, KeyCode};
 use crossterm::execute;
 use crossterm::terminal::{enable_raw_mode, EnterAlternateScreen};
@@ -16,8 +17,8 @@ pub async fn terminal() -> Result<Terminal<CrosstermBackend<Stdout>>, Error> {
     let backend = CrosstermBackend::new(stdout);
     let mut terminal = Terminal::new(backend)?;
 
-    let mut assets = AssetManager::default();
-    assets.load_cells();
+    let mut assets = AssetResources::default();
+    assets.load();
 
     let state = AppState::default();
 

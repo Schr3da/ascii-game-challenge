@@ -1,0 +1,4 @@
+{
+  "cells": "./configs/cells/cell_config.json",
+  "assets": "./configs/assets/asset_config.json"
+}

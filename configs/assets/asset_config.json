@@ -1,0 +1,26 @@
+[
+  {
+    "id": "wall",
+    "cells": [
+      {
+        "symbol": "-",
+        "background": "white",
+        "foreground": "white",
+        "isBold": false
+      },
+      {
+        "symbol": "+",
+        "background": "white",
+        "foreground": "white",
+        "isBold": true
+      },
+      {
+        "symbol": "a",
+        "background": "white",
+        "foreground": "white",
+        "isBold": true 
+      }
+    ],
+    "description": "Wall structure"
+  }
+]
