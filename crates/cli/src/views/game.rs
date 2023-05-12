@@ -12,12 +12,12 @@ use core_logic::prelude::*;
 
 fn draw_cells<B: Backend>(f: &mut Frame<B>, data: &Vec<Cell>) {
     data.iter().enumerate().for_each(|(index, d)| {
-        let cell = match d.is_bold {
+        let style = match d.is_bold {
             true => Style::default().add_modifier(Modifier::BOLD),
             false => Style::default(),
         };
 
-        let title = Span::styled(d.symbol.to_string(), cell);
+        let title = Span::styled(d.symbol.to_string(), style);
 
         let next = Block::default().title(title).style(
             Style::default()
