@@ -10,5 +10,7 @@ tui = {workspace = true}
 crossterm = {workspace = true}
 tokio = {workspace = true}
 serde = {workspace = true} 
-core-logic = {path = "../core-logic"}
+core-ecs = {path = "../core-ecs"}
 core-serde = {path = "../core-serde"}
+core-state = {path = "../core-state"}
+core-shared = {path = "../core-shared"}

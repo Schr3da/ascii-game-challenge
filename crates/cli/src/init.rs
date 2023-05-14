@@ -1,4 +1,5 @@
-use core_logic::prelude::*;
+use core_ecs::prelude::*;
+use core_state::prelude::*;
 use crossterm::event::{EnableMouseCapture, KeyCode};
 use crossterm::execute;
 use crossterm::terminal::{enable_raw_mode, EnterAlternateScreen};
@@ -20,23 +21,17 @@ pub async fn terminal() -> Result<Terminal<CrosstermBackend<Stdout>>, Error> {
     let mut assets = AssetResources::default();
     assets.load();
 
-    let mut state = AppState::default();
-    state.subscribe();
+    let _state = AppState::default();
 
     let mut manager = InputManager::default();
     manager.register();
 
     loop {
-       // terminal.draw(|f| draw_menu(f, &state))?;
-       // terminal.draw(|f| draw_game(f, &state, &assets))?;
+        terminal.draw(|f| draw_menu(f))?;
+        terminal.draw(|f| draw_game(f, &assets))?;
 
         match manager.event_receiver.recv().await {
             Some(KeyCode::Char('q')) => break,
-            Some(KeyCode::Char('s')) => {
-                state.process(ExternalEvents::OnWorldWillUpdate).await;
-                println!("continue");
-                continue;
-            }
             _ => continue,
         };
     }

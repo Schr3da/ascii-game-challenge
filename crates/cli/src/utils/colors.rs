@@ -1,4 +1,4 @@
-use core_logic::prelude::*;
+use core_ecs::prelude::*;
 use tui::style::Color;
 
 pub fn to_terminal_color(next: &CellColors) -> Color {

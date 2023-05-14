@@ -7,7 +7,7 @@ use tui::Frame;
 
 use crate::export::prelude::*;
 
-pub fn draw_menu<B: Backend>(f: &mut Frame<B>, _state: &AppState) {
+pub fn draw_menu<B: Backend>(f: &mut Frame<B>) {
     let size = f.size();
 
     let block = Block::default().style(Style::default().bg(Color::White).fg(Color::Black));

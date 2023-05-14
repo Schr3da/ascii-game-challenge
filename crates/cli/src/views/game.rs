@@ -7,7 +7,7 @@ use tui::Frame;
 
 use crate::export::prelude::*;
 
-use core_logic::prelude::*;
+use core_ecs::prelude::*;
 
 fn draw_cells<B: Backend>(f: &mut Frame<B>, data: &Vec<Cell>, height: usize) {
     data.iter().enumerate().for_each(|(index, d)| {
@@ -30,7 +30,7 @@ fn draw_cells<B: Backend>(f: &mut Frame<B>, data: &Vec<Cell>, height: usize) {
     });
 }
 
-pub fn draw_game<B: Backend>(f: &mut Frame<B>, _state: &AppState, assets: &AssetResources) {
+pub fn draw_game<B: Backend>(f: &mut Frame<B>, assets: &AssetResources) {
     let size = f.size();
 
     let block = Block::default().style(Style::default().bg(Color::White).fg(Color::White));
