@@ -16,9 +16,9 @@
       },
       {
         "symbol": "a",
-        "background": "white",
+        "background": "black",
         "foreground": "white",
-        "isBold": true 
+        "isBold": true
       }
     ],
     "description": "Wall structure"

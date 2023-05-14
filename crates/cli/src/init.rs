@@ -1,4 +1,4 @@
-use core_logic::prelude::prelude::AssetResources;
+use core_logic::prelude::*;
 use crossterm::event::{EnableMouseCapture, KeyCode};
 use crossterm::execute;
 use crossterm::terminal::{enable_raw_mode, EnterAlternateScreen};

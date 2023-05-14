@@ -1,11 +1,11 @@
+use bevy_ecs::prelude::*;
+use core_serde::prelude::*;
 use std::collections::HashMap;
 
-use core_serde::prelude::*;
-
+use super::prelude::*;
 use crate::prelude::*;
 
-use super::prelude::*;
-
+#[derive(Resource)]
 pub struct AssetResources {
     pub config: AssetConfig,
     pub cell_cache: HashMap<Ascii, Cell>,
