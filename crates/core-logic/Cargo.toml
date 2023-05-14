@@ -6,4 +6,6 @@ edition = "2021"
 [dependencies]
 bevy_ecs = {workspace = true}
 serde = {workspace = true} 
+tokio = {workspace = true}
+async-trait = {workspace = true} 
 core-serde = {path = "../core-serde"}

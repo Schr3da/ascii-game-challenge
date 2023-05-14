@@ -20,17 +20,23 @@ pub async fn terminal() -> Result<Terminal<CrosstermBackend<Stdout>>, Error> {
     let mut assets = AssetResources::default();
     assets.load();
 
-    let state = AppState::default();
+    let mut state = AppState::default();
+    state.subscribe();
 
     let mut manager = InputManager::default();
     manager.register();
 
     loop {
-        terminal.draw(|f| draw_menu(f, &state))?;
-        terminal.draw(|f| draw_game(f, &state, &assets))?;
+       // terminal.draw(|f| draw_menu(f, &state))?;
+       // terminal.draw(|f| draw_game(f, &state, &assets))?;
 
         match manager.event_receiver.recv().await {
             Some(KeyCode::Char('q')) => break,
+            Some(KeyCode::Char('s')) => {
+                state.process(ExternalEvents::OnWorldWillUpdate).await;
+                println!("continue");
+                continue;
+            }
             _ => continue,
         };
     }

@@ -8,7 +8,7 @@ mod systems;
 pub mod prelude {
     pub use super::components::prelude::*;
     pub use super::core::*;
-    pub(crate) use super::events::prelude::*;
+    pub use super::events::prelude::*;
     pub use super::resources::prelude::*;
     pub(crate) use super::schedulers::prelude::*;
     pub(crate) use super::systems::prelude::*;

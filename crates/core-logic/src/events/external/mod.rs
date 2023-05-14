@@ -1,7 +1,7 @@
 mod traits;
-mod subscriber;
+mod types;
 
 pub mod prelude {
   pub use super::traits::*;
-  pub use super::subscriber::*;
+  pub use super::types::*;
 }

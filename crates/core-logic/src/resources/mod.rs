@@ -1,7 +1,7 @@
 pub mod assets;
-pub mod callbacks;
+pub mod subscription;
 
 pub mod prelude {
   pub use super::assets::prelude::*;
-  pub use super::callbacks::*;
+  pub use super::subscription::*;
 }

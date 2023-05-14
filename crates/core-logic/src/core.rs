@@ -1,4 +1,5 @@
 use bevy_ecs::prelude::*;
+use async_trait::async_trait;
 
 use crate::prelude::*;
 
@@ -18,8 +19,8 @@ impl Default for Core {
         assets.load();
         world.insert_resource(assets);
 
-        let subscriber = ExternalSubscriber::default();
-        world.insert_resource(subscriber);
+        let subscription = Subscription::default();
+        world.insert_resource(subscription);
 
         Core {
             world,
@@ -28,20 +29,26 @@ impl Default for Core {
     }
 }
 
+#[async_trait]
 impl ExternalEventHandler for Core {
-    fn handle_event(&mut self, event: ExternalEvents) {
+    async fn handle_event(&mut self, event: ExternalEvents) {
         match event {
-            ExternalEvents::OnSetSubscriber(cb) => self.subscribe(cb),
+            ExternalEvents::OnSetSubscriber(s) => {
+                let mut next = match self.world.get_resource_mut::<Subscription>() {
+                    Some(r) => r,
+                    None => return,
+                };
+                next.sender = s;
+            }
+            ExternalEvents::OnWorldWillUpdate => {
+                self.init_scheduler.run(&mut self.world);
+                let next = match self.world.get_resource_mut::<Subscription>() {
+                    Some(r) => r,
+                    None => return,
+                };
+                let _ = next.sender.send(ExternalEvents::OnWorldDidUpdate).await;
+            }
+            ExternalEvents::OnWorldDidUpdate => {}
         }
-    }
-}
-
-impl Core {
-    fn subscribe(&mut self, cb: SubscriberCallback) {
-        let mut next = match self.world.get_resource_mut::<ExternalSubscriber>() {
-            Some(r) => r,
-            None => return,
-        };
-        next.callback = cb;
     }
 }
