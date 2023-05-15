@@ -21,7 +21,9 @@ impl Default for InputManager {
 }
 
 impl InputManager {
-    pub fn register(&mut self) {
+    pub fn subscribe(&mut self) {
+        self.unsubscribe();
+
         let sender = self.event_sender.clone();
         let thread = task::spawn(async move {
             loop {
@@ -37,7 +39,7 @@ impl InputManager {
         self.task = Some(thread);
     }
 
-    pub fn unregister(&mut self) {
+    pub fn unsubscribe(&mut self) {
         match &self.task {
             Some(t) => t.abort(),
             _ => {}
@@ -49,6 +51,6 @@ impl InputManager {
 
 impl Drop for InputManager {
     fn drop(&mut self) {
-        self.unregister();
+        self.unsubscribe();
     }
 }

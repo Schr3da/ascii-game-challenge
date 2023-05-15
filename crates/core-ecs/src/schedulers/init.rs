@@ -16,7 +16,10 @@ impl Default for InitScheduler {
 
 impl Scheduler for InitScheduler {
     fn register(&mut self) {
-        self.schedule.add_systems(cell_renderer_system());
+        self.schedule.add_systems((
+            cell_renderer_system,
+            external_event_system.after(cell_renderer_system),
+        ));
     }
 
     fn unregister(&mut self) {
@@ -24,6 +27,6 @@ impl Scheduler for InitScheduler {
     }
 
     fn run(&mut self, world: &mut World) {
-        self.schedule.run(world)
+        self.schedule.run(world);
     }
 }

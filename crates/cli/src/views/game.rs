@@ -35,7 +35,7 @@ pub fn draw_game<B: Backend>(f: &mut Frame<B>, assets: &AssetResources) {
 
     let block = Block::default().style(Style::default().bg(Color::White).fg(Color::White));
     f.render_widget(block, size);
-        // 
+    //
     assets
         .asset_cache
         .iter()

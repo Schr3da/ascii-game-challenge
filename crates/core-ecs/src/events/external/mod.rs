@@ -1,9 +1,7 @@
+mod events;
 mod handler;
-mod send;
-mod receive;
 
 pub mod prelude {
-  pub use super::handler::*;
-  pub use super::send::*;
-  pub use super::receive::*;
+    pub use super::events::*;
+    pub use super::handler::*;
 }
