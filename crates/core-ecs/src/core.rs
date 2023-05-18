@@ -58,7 +58,7 @@ impl ShareableSubscriber<EcsEvents> for Core {
     }
 }
 
-impl ExternalEventHandler for Core {
+impl EcsEventHandler for Core {
     fn handle_event(&mut self, event: SendEvents) {
         match event {
             SendEvents::Ui(e) => self.handle_ui_event(e),
