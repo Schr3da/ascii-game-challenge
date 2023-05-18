@@ -24,7 +24,7 @@ pub fn draw_menu<B: Backend>(f: &mut Frame<B>) {
     f.render_widget(title, chunks[0]);
 
     let items = [
-        ListItem::new("1. New Game"),
+        ListItem::new("1. New Game").style(Style::default().bg(Color::Red)),
         ListItem::new("2. Options"),
         ListItem::new("3. Quit"),
     ];

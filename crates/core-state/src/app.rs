@@ -5,13 +5,15 @@ use core_shared::prelude::*;
 use tokio::sync::{mpsc::*, RwLock};
 use tokio::task;
 
+use crate::prelude::*;
+
 pub struct AppState {
     pub ecs: Shared<Core>,
-    pub task: Option<task::JoinHandle<()>>,
-    pub core_event_sender: Sender<ExternalEvents>,
-    pub core_event_receiver: Shared<Receiver<ExternalEvents>>,
-    pub subscription_sender: Sender<SubscriptionEvents>,
-    pub subscription_receiver: Receiver<SubscriptionEvents>,
+    pub ecs_task: Option<task::JoinHandle<()>>,
+    pub ecs_event_sender: Sender<ExternalEvents>,
+    pub ecs_event_receiver: Shared<Receiver<ExternalEvents>>,
+    pub ecs_subscription_sender: Sender<SubscriptionEvents>,
+    pub ecs_subscription_receiver: Receiver<SubscriptionEvents>,
 }
 
 impl Default for AppState {
@@ -21,62 +23,17 @@ impl Default for AppState {
 
         AppState {
             ecs: Core::new_shared(core_event_sender.clone()),
-            task: None,
-            core_event_sender,
-            core_event_receiver: Arc::new(RwLock::new(core_event_receiver)),
-            subscription_sender,
-            subscription_receiver,
+            ecs_task: None,
+            ecs_event_sender: core_event_sender,
+            ecs_event_receiver: Arc::new(RwLock::new(core_event_receiver)),
+            ecs_subscription_sender: subscription_sender,
+            ecs_subscription_receiver: subscription_receiver,
         }
-    }
-}
-
-impl AppState {
-    pub fn subscribe(&mut self) {
-        self.unsubscribe();
-
-        let scoped_ecs = self.ecs.clone();
-
-        let scoped_core_receiver = self.core_event_receiver.clone();
-
-        let scoped_subcription_sender = self.subscription_sender.clone();
-
-        let task = tokio::spawn(async move {
-            let mut core_receiver = scoped_core_receiver.write().await;
-            let mut ecs = scoped_ecs.write().await;
-
-            loop {
-                match core_receiver.recv().await {
-                    Some(ExternalEvents::Send(e)) => ecs.handle_event(e),
-                    Some(ExternalEvents::Subscriber(e)) => {
-                        let _ = scoped_subcription_sender.send(e).await;
-                    }
-                    _ => continue,
-                };
-            }
-        });
-
-        self.task = Some(task);
-    }
-
-    pub fn unsubscribe(&mut self) {
-        match &self.task {
-            Some(t) => t.abort(),
-            _ => {}
-        };
-
-        self.task = None;
-    }
-
-    pub async fn send(&mut self, event: SendEvents) {
-        let _ = self
-            .core_event_sender
-            .send(ExternalEvents::Send(event))
-            .await;
     }
 }
 
 impl Drop for AppState {
     fn drop(&mut self) {
-        self.unsubscribe()
+        <Self as EcsState>::unsubscribe(self);
     }
 }

@@ -7,5 +7,6 @@ edition = "2021"
 
 [dependencies]
 tokio = {workspace = true}
+async-trait = {workspace = true}
 core-shared = {path = "../core-shared"}
 core-ecs = {path = "../core-ecs"}

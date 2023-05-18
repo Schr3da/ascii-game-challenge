@@ -8,15 +8,19 @@ use crate::prelude::*;
 
 pub struct Core {
     pub world: World,
-    pub init_scheduler: InitScheduler,
+    pub render_scheduler: RenderScheduler,
+    pub ui_scheduler: RenderScheduler,
 }
 
 impl Default for Core {
     fn default() -> Self {
         let mut world = World::default();
 
-        let mut init_scheduler = InitScheduler::default();
-        init_scheduler.register();
+        let mut render_scheduler = RenderScheduler::default();
+        render_scheduler.register();
+
+        let mut ui_scheduler = RenderScheduler::default();
+        ui_scheduler.register();
 
         let mut assets = AssetResources::default();
         assets.load();
@@ -24,7 +28,8 @@ impl Default for Core {
 
         Core {
             world,
-            init_scheduler,
+            render_scheduler,
+            ui_scheduler,
         }
     }
 }
@@ -44,8 +49,23 @@ impl ShareableSubscriber<ExternalEvents> for Core {
 impl ExternalEventHandler for Core {
     fn handle_event(&mut self, event: SendEvents) {
         match event {
-            SendEvents::OnWorldWillUpdate => {
-                self.init_scheduler.run(&mut self.world);
+            SendEvents::Ui(e) => self.handle_ui_event(e),
+            SendEvents::Renderer(e) => self.handle_game_event(e),
+        }
+    }
+
+    fn handle_ui_event(&mut self, event: UiEvents) {
+        match event {
+            UiEvents::OnWorldWillUpdate => {
+                self.render_scheduler.run(&mut self.world);
+            }
+        }
+    }
+
+    fn handle_game_event(&mut self, event: RenderEvents) {
+        match event {
+            RenderEvents::OnWorldWillUpdate => {
+                self.render_scheduler.run(&mut self.world);
             }
         }
     }

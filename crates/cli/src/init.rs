@@ -29,16 +29,17 @@ pub async fn terminal() -> Result<Terminal<CrosstermBackend<Stdout>>, Error> {
 
     loop {
         terminal.draw(|f| draw_menu(f))?;
-        terminal.draw(|f| draw_game(f, &assets))?;
 
-        match state.subscription_receiver.try_recv() {
+        match state.ecs_subscription_receiver.try_recv() {
             _ => {}
         };
 
         match input.event_receiver.recv().await {
             Some(KeyCode::Char('q')) => break,
             Some(KeyCode::Char('s')) => {
-                state.send(SendEvents::OnWorldWillUpdate).await;
+                state
+                    .send(SendEvents::Renderer(RenderEvents::OnWorldWillUpdate))
+                    .await;
             }
             _ => {}
         };
