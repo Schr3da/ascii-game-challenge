@@ -1,6 +1,6 @@
 use tui::backend::Backend;
 use tui::layout::{Alignment, Constraint, Direction, Layout};
-use tui::style::{Color, Modifier, Style};
+use tui::style::{Color, Style};
 use tui::text::Spans;
 use tui::widgets::{Block, Borders, List, ListItem, Paragraph};
 use tui::Frame;

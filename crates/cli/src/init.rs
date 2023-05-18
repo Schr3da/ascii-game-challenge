@@ -36,7 +36,7 @@ pub async fn terminal() -> Result<Terminal<CrosstermBackend<Stdout>>, Error> {
     loop {
         let subscription_event = state.ecs_subscription_receiver.recv().await;
         match subscription_handler(subscription_event) {
-            true => draw_to_terminal_handler(&mut terminal),
+            true => draw_to_terminal_handler(&mut terminal, &assets),
             false => break,
         }
 
