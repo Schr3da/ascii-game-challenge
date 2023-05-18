@@ -1,6 +1,6 @@
 use core_ecs::prelude::*;
 use core_state::prelude::*;
-use crossterm::event::{EnableMouseCapture, KeyCode};
+use crossterm::event::EnableMouseCapture;
 use crossterm::execute;
 use crossterm::terminal::{enable_raw_mode, EnterAlternateScreen};
 use std::io::{stdout, Error, Stdout};
@@ -27,22 +27,21 @@ pub async fn terminal() -> Result<Terminal<CrosstermBackend<Stdout>>, Error> {
     let mut input = InputManager::default();
     input.subscribe();
 
+    state
+        .send(SendEvents::General(
+            GeneralEvents::OnApplicationWillInitialise,
+        ))
+        .await;
+
     loop {
-        terminal.draw(|f| draw_menu(f))?;
+        let subscription_event = state.ecs_subscription_receiver.recv().await;
+        match subscription_handler(subscription_event) {
+            true => draw_to_terminal_handler(&mut terminal),
+            false => break,
+        }
 
-        match state.ecs_subscription_receiver.try_recv() {
-            _ => {}
-        };
-
-        match input.event_receiver.recv().await {
-            Some(KeyCode::Char('q')) => break,
-            Some(KeyCode::Char('s')) => {
-                state
-                    .send(SendEvents::Renderer(RenderEvents::OnWorldWillUpdate))
-                    .await;
-            }
-            _ => {}
-        };
+        let input_event = input.event_receiver.recv().await;
+        key_pressed_handler(input_event, &mut state).await;
     }
 
     Ok(terminal)

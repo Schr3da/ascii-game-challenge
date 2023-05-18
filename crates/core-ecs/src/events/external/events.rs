@@ -1,28 +1,15 @@
-
-pub enum RenderEvents {
-    OnWorldWillUpdate,
-}
-
-pub enum UiEvents {
-    OnWorldWillUpdate,
-}
+use crate::prelude::*;
 
 pub enum SendEvents {
+    General(GeneralEvents),
     Ui(UiEvents),
     Renderer(RenderEvents),
 }
 
-pub enum UiSubscription {
-
-}
-
-pub enum RenderSubscription {
-    OnWorldDidUpdate,
-}
-
 pub enum SubscriptionEvents {
+    General(GeneralSubscription),
     Ui(UiSubscription),
-    Game(RenderSubscription),
+    Renderer(RenderSubscription),
 }
 
 pub enum ExternalEvents {

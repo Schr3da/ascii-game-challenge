@@ -2,23 +2,23 @@ use bevy_ecs::prelude::*;
 
 use crate::prelude::*;
 
-pub struct UiScheduler {
+pub struct RenderScheduler {
     pub schedule: Schedule,
 }
 
-impl Default for UiScheduler {
+impl Default for RenderScheduler {
     fn default() -> Self {
         let schedule = Schedule::default();
 
-        UiScheduler{ schedule }
+        RenderScheduler { schedule }
     }
 }
 
-impl Scheduler for UiScheduler{
+impl Scheduler for RenderScheduler {
     fn register(&mut self) {
         self.schedule.add_systems((
             cell_renderer_system,
-            external_event_system.after(cell_renderer_system),
+            world_did_update_system.after(cell_renderer_system),
         ));
     }
 
