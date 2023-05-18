@@ -21,16 +21,16 @@ impl Default for Core {
         let mut world = World::default();
 
         let mut init_scheduler = InitScheduler::default();
-        init_scheduler.register();
+        init_scheduler.setup();
 
         let mut render_scheduler = RenderScheduler::default();
-        render_scheduler.register();
+        render_scheduler.setup();
 
         let mut ui_scheduler = UiScheduler::default();
-        ui_scheduler.register();
+        ui_scheduler.setup();
 
         let mut general_scheduler = GeneralScheduler::default();
-        general_scheduler.register();
+        general_scheduler.setup();
 
         let mut assets = AssetResources::default();
         assets.load();

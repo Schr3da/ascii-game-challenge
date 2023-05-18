@@ -15,15 +15,11 @@ impl Default for GeneralScheduler {
 }
 
 impl Scheduler for GeneralScheduler {
-    fn register(&mut self) {
+    fn setup(&mut self) {
         self.schedule.add_systems((
             on_application_will_close_system,
             on_application_did_close_system.after(on_application_will_close_system),
         ));
-    }
-
-    fn unregister(&mut self) {
-        todo!()
     }
 
     fn run(&mut self, world: &mut World) {

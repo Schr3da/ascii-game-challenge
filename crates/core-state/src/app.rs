@@ -36,6 +36,6 @@ impl Default for AppState {
 
 impl Drop for AppState {
     fn drop(&mut self) {
-        <Self as EcsState>::unsubscribe(self);
+        self.unsubscribe();
     }
 }

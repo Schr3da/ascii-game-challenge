@@ -16,7 +16,7 @@ pub trait EcsState {
 #[async_trait]
 impl EcsState for AppState {
     fn subscribe(&mut self) {
-        <Self as EcsState>::unsubscribe(self);
+        self.unsubscribe();
 
         let scoped_ecs = self.ecs.clone();
 
