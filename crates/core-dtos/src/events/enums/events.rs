@@ -12,7 +12,7 @@ pub enum SubscriptionEvents {
     Renderer(RenderSubscription),
 }
 
-pub enum ExternalEvents {
+pub enum EcsEvents {
     Send(SendEvents),
     Subscriber(SubscriptionEvents),
 }

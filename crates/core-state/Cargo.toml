@@ -10,3 +10,4 @@ tokio = {workspace = true}
 async-trait = {workspace = true}
 core-shared = {path = "../core-shared"}
 core-ecs = {path = "../core-ecs"}
+core-dtos = {path = "../core-dtos"}

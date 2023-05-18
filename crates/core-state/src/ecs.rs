@@ -1,6 +1,6 @@
 use async_trait::async_trait;
 
-use core_ecs::prelude::*;
+use core_dtos::prelude::*;
 
 use crate::prelude::*;
 
@@ -30,9 +30,9 @@ impl EcsState for AppState {
 
             loop {
                 match core_receiver.recv().await {
-                    Some(ExternalEvents::Send(e)) => ecs.handle_event(e),
-                    Some(ExternalEvents::Subscriber(e)) => {
-                        let _ = scoped_subcription_sender.send(e).await;
+                    Some(EcsEvents::Send(e)) => ecs.handle_event(e),
+                    Some(EcsEvents::Subscriber(e)) => {
+                        _ = scoped_subcription_sender.send(e).await;
                     }
                     _ => continue,
                 };
@@ -52,9 +52,9 @@ impl EcsState for AppState {
     }
 
     async fn send(&mut self, event: SendEvents) {
-        let _ = self
+        _ = self
             .ecs_event_sender
-            .send(ExternalEvents::Send(event))
+            .send(EcsEvents::Send(event))
             .await;
     }
 }

@@ -32,7 +32,7 @@ impl InputManager {
                     _ => continue,
                 };
 
-                let _ = sender.send(event.code).await;
+                _ = sender.send(event.code).await;
             }
         });
 

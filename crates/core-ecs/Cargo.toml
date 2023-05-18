@@ -9,3 +9,4 @@ serde = {workspace = true}
 tokio = {workspace = true}
 core-serde = {path = "../core-serde"}
 core-shared = {path = "../core-shared"}
+core-dtos = {path = "../core-dtos"}

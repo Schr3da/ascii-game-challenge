@@ -1,11 +1,13 @@
 use bevy_ecs::prelude::*;
 
+use core_dtos::prelude::*;
+
 use crate::prelude::*;
 
 pub fn world_did_update_system(subscription: ResMut<Subscriber>) {
-    let _ = subscription
+    _ = subscription
         .sender
-        .blocking_send(ExternalEvents::Subscriber(SubscriptionEvents::Renderer(
+        .blocking_send(EcsEvents::Subscriber(SubscriptionEvents::Renderer(
             RenderSubscription::OnWorldDidUpdate,
         )));
 }

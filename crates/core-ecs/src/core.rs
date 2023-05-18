@@ -4,6 +4,8 @@ use std::sync::Arc;
 use tokio::sync::mpsc::*;
 use tokio::sync::*;
 
+use core_dtos::prelude::*;
+
 use crate::prelude::*;
 
 pub struct Core {
@@ -44,10 +46,10 @@ impl Default for Core {
     }
 }
 
-impl ShareableSubscriber<ExternalEvents> for Core {
+impl ShareableSubscriber<EcsEvents> for Core {
     type Item = Self;
 
-    fn new_shared(subscriber: Sender<ExternalEvents>) -> Shared<Self::Item> {
+    fn new_shared(subscriber: Sender<EcsEvents>) -> Shared<Self::Item> {
         let mut ecs = Core::default();
 
         ecs.world.insert_resource(Subscriber { sender: subscriber });

@@ -15,3 +15,4 @@ core-ecs = {path = "../core-ecs"}
 core-serde = {path = "../core-serde"}
 core-state = {path = "../core-state"}
 core-shared = {path = "../core-shared"}
+core-dtos = {path = "../core-dtos"}

@@ -1,4 +1,4 @@
-use core_ecs::prelude::*;
+use core_dtos::prelude::*;
 
 pub fn subscription_handler(event: Option<SubscriptionEvents>) -> bool {
     let unwrapped_event = match event {
