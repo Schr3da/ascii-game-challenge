@@ -52,34 +52,48 @@ impl ShareableSubscriber<EcsEvents> for Core {
     fn new_shared(subscriber: Sender<EcsEvents>) -> Shared<Self::Item> {
         let mut ecs = Core::default();
 
-        ecs.world.insert_resource(Subscriber { sender: subscriber });
+        let subsrciber_resource = Subscriber::new(subscriber);
+
+        ecs.world.insert_resource(subsrciber_resource);
 
         Arc::new(RwLock::new(ecs))
     }
 }
 
-impl EcsEventHandler for Core {
+impl EventHandler for Core {
+    fn did_receive(&mut self, event: &SendEvents) {
+        match self.world.get_resource_mut::<Subscriber>() {
+            Some(mut r) => {
+                r.previous_event = r.next_event.clone();
+                r.next_event = Some(event.clone());
+            }
+            None => println!("subscriber resource not found"),
+        };
+    }
+
     fn handle_event(&mut self, event: SendEvents) {
+        self.did_receive(&event);
+
         match event {
             SendEvents::Ui(e) => self.handle_ui_event(e),
-            SendEvents::Renderer(e) => self.handle_game_event(e),
+            SendEvents::Renderer(e) => self.handle_renderer_event(e),
             SendEvents::General(e) => self.handle_general_event(e),
         }
     }
+}
 
+impl Core {
     fn handle_ui_event(&mut self, event: UiEvents) {
         match event {
             UiEvents::OnClick => {
-                self.render_scheduler.run(&mut self.world);
+                self.ui_scheduler.run(&mut self.world);
             }
         }
     }
 
-    fn handle_game_event(&mut self, event: RenderEvents) {
+    fn handle_renderer_event(&mut self, event: RenderEvents) {
         match event {
-            RenderEvents::OnWorldWillUpdate => {
-                self.render_scheduler.run(&mut self.world);
-            }
+            RenderEvents::OnWorldWillUpdate => self.render_scheduler.run(&mut self.world),
         }
     }
 

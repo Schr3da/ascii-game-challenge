@@ -16,7 +16,8 @@ impl Default for UiScheduler {
 
 impl Scheduler for UiScheduler {
     fn register(&mut self) {
-        self.schedule.add_systems(());
+        self.schedule
+            .add_systems((on_focus_next_system, on_click_system));
     }
 
     fn unregister(&mut self) {

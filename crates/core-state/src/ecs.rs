@@ -52,9 +52,6 @@ impl EcsState for AppState {
     }
 
     async fn send(&mut self, event: SendEvents) {
-        _ = self
-            .ecs_event_sender
-            .send(EcsEvents::Send(event))
-            .await;
+        _ = self.ecs_event_sender.send(EcsEvents::Send(event)).await;
     }
 }
