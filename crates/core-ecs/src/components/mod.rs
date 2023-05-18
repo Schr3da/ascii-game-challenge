@@ -1,15 +1,7 @@
-mod ascii;
-mod asset;
-mod cell;
-mod color;
-mod rect;
-mod sprite;
+mod primitives;
+mod renderer;
 
 pub mod prelude {
-    pub use super::ascii::*;
-    pub use super::asset::*;
-    pub use super::cell::*;
-    pub use super::color::*;
-    pub use super::rect::*;
-    pub use super::sprite::*;
+    pub use super::primitives::prelude::*;
+    pub use super::renderer::prelude::*;
 }
