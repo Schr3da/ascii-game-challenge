@@ -17,8 +17,8 @@ impl Default for InitScheduler {
 impl Scheduler for InitScheduler {
     fn register(&mut self) {
         self.schedule.add_systems((
-            application_will_initialise,
-            application_did_initialise.after(application_will_close),
+            on_application_will_initialise_system,
+            on_application_did_initialise_system.after(on_application_will_close_system),
         ));
     }
 

@@ -17,8 +17,8 @@ impl Default for GeneralScheduler {
 impl Scheduler for GeneralScheduler {
     fn register(&mut self) {
         self.schedule.add_systems((
-            application_will_close,
-            application_did_close.after(application_will_close),
+            on_application_will_close_system,
+            on_application_did_close_system.after(on_application_will_close_system),
         ));
     }
 

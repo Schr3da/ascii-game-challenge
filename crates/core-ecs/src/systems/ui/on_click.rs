@@ -1,3 +1,3 @@
 pub fn on_click_system() {
-    println!("handle click");
+    println!("on_click_system");
 }

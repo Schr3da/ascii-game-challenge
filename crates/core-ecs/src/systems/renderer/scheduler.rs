@@ -17,8 +17,8 @@ impl Default for RenderScheduler {
 impl Scheduler for RenderScheduler {
     fn register(&mut self) {
         self.schedule.add_systems((
-            cell_renderer_system,
-            world_did_update_system.after(cell_renderer_system),
+            on_update_cells_system,
+            on_renderer_did_update_system.after(on_update_cells_system),
         ));
     }
 

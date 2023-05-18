@@ -1,9 +1,9 @@
-mod cell_renderer;
+mod on_renderer_did_update;
+mod on_update_cells;
 mod scheduler;
-mod world_did_update;
 
 pub mod prelude {
-    pub use super::cell_renderer::*;
+    pub use super::on_renderer_did_update::*;
+    pub use super::on_update_cells::*;
     pub use super::scheduler::*;
-    pub use super::world_did_update::*;
 }
