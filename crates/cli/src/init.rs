@@ -34,9 +34,15 @@ pub async fn terminal() -> Result<Terminal<CrosstermBackend<Stdout>>, Error> {
         ))
         .await;
 
+    state
+        .send(SendEvents::General(
+            GeneralEvents::OnApplicationWillInitialise,
+        ))
+        .await;
+
     loop {
-        let subscription_event = state.ecs_subscription_receiver.recv().await;
-        match subscription_handler(subscription_event) {
+        let subscription_event = state.ecs_subscription_receiver.try_recv();
+        match subscription_handler(subscription_event, &mut state) {
             true => draw_to_terminal_handler(&mut terminal, &assets),
             false => break,
         }

@@ -1,9 +1,15 @@
-use core_dtos::prelude::*;
+use tokio::sync::mpsc::error::TryRecvError;
 
-pub fn subscription_handler(event: Option<SubscriptionEvents>) -> bool {
+use core_dtos::prelude::*;
+use core_state::prelude::*;
+
+pub fn subscription_handler(
+    event: Result<SubscriptionEvents, TryRecvError>,
+    _state: &mut AppState,
+) -> bool {
     let unwrapped_event = match event {
-        Some(e) => e,
-        None => return true,
+        Ok(e) => e,
+        Err(_) => return true,
     };
 
     let next = match unwrapped_event {

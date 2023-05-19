@@ -1,7 +1,7 @@
 use bevy_ecs::prelude::*;
 
-#[derive(Component)]
-pub struct UiState {
+#[derive(Default, Component)]
+pub struct UiViewState {
     pub selected_id: String,
-    pub path: String,
+    pub path: Vec<String>,
 }
