@@ -32,27 +32,16 @@ pub async fn terminal() -> Result<Terminal<CrosstermBackend<Stdout>>, Error> {
         ))
         .await;
 
-    state
-        .send(SendEvents::General(
-            GeneralEvents::OnApplicationWillInitialise,
-        ))
-        .await;
-
     loop {
         let subscription_event = state.ecs_subscription_receiver.try_recv();
-
-        let application_should_continue =
-            subscription_handler(subscription_event, &mut terminal, &mut state).await;
-
-        if !application_should_continue {
+        let will_exit = subscription_handler(subscription_event, &mut terminal, &mut state).await;
+        if !will_exit {
             break;
         }
 
         let input_event = input.event_receiver.try_recv();
-
-        let did_press_key = key_pressed_handler(input_event, &mut state).await;
-
-        if !did_press_key {
+        let did_receive_input = input_handler(input_event, &mut state).await;
+        if !did_receive_input {
             sleep(Duration::from_millis(16)).await;
         }
     }
