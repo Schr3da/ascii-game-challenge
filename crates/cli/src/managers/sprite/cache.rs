@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use core_ecs::prelude::AssetTypes;
+use core_dtos::prelude::*;
 
 pub struct _SpriteManager {
     pub cache: HashMap<AssetTypes, String>,

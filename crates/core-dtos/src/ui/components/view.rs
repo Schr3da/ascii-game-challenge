@@ -1,15 +1,14 @@
 use bevy_ecs::prelude::Component;
-use core_dtos::prelude::*;
 
 use crate::prelude::*;
 
-#[derive(Component)]
+#[derive(Clone, Component)]
 pub enum UiViewChild {
     List(UiList),
     Label(UiLabel),
 }
 
-#[derive(Component)]
+#[derive(Clone, Component)]
 pub struct UiView {
     pub id: UiViewIds,
     pub state: UiViewState,

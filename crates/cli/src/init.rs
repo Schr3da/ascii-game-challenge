@@ -42,12 +42,15 @@ pub async fn terminal() -> Result<Terminal<CrosstermBackend<Stdout>>, Error> {
 
     loop {
         let subscription_event = state.ecs_subscription_receiver.try_recv();
-        match subscription_handler(subscription_event, &mut state) {
-            true => draw_to_terminal_handler(&mut terminal, &assets),
-            false => break,
+
+        let application_should_continue =
+            subscription_handler(subscription_event, &mut terminal, &mut state).await;
+
+        if !application_should_continue {
+            break;
         }
 
-        let input_event = input.event_receiver.recv().await;
+        let input_event = input.event_receiver.try_recv();
         key_pressed_handler(input_event, &mut state).await;
     }
 

@@ -1,3 +1,4 @@
+use core_dtos::prelude::UiView;
 use tui::backend::Backend;
 use tui::layout::{Alignment, Constraint, Direction, Layout};
 use tui::style::{Color, Style};
@@ -5,7 +6,7 @@ use tui::text::Spans;
 use tui::widgets::{Block, Borders, List, ListItem, Paragraph};
 use tui::Frame;
 
-pub fn draw_menu<B: Backend>(f: &mut Frame<B>) {
+pub fn draw_menu<B: Backend>(f: &mut Frame<B>, _data: UiView) {
     let size = f.size();
 
     let block = Block::default().style(Style::default().bg(Color::White).fg(Color::Black));

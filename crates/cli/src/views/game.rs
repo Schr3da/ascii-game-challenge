@@ -7,9 +7,10 @@ use tui::Frame;
 
 use crate::export::prelude::*;
 
+use core_dtos::prelude::*;
 use core_ecs::prelude::*;
 
-fn draw_cells<B: Backend>(f: &mut Frame<B>, data: &Vec<Cell>, height: usize) {
+fn _draw_cells<B: Backend>(f: &mut Frame<B>, data: &Vec<Cell>, height: usize) {
     data.iter().enumerate().for_each(|(index, d)| {
         let style = match d.is_bold {
             true => Style::default().add_modifier(Modifier::BOLD),
@@ -20,8 +21,8 @@ fn draw_cells<B: Backend>(f: &mut Frame<B>, data: &Vec<Cell>, height: usize) {
 
         let next = Block::default().title(title).style(
             Style::default()
-                .bg(to_terminal_color(&d.background))
-                .fg(to_terminal_color(&d.foreground)),
+                .bg(_to_terminal_color(&d.background))
+                .fg(_to_terminal_color(&d.foreground)),
         );
 
         let rect: Rect = Rect::new(index as u16, height as u16, 1, 1);
@@ -30,7 +31,7 @@ fn draw_cells<B: Backend>(f: &mut Frame<B>, data: &Vec<Cell>, height: usize) {
     });
 }
 
-pub fn draw_game<B: Backend>(f: &mut Frame<B>, assets: &AssetResources) {
+pub fn _draw_game<B: Backend>(f: &mut Frame<B>, assets: &AssetResources) {
     let size = f.size();
 
     let block = Block::default().style(Style::default().bg(Color::White).fg(Color::White));
@@ -41,8 +42,8 @@ pub fn draw_game<B: Backend>(f: &mut Frame<B>, assets: &AssetResources) {
         .iter()
         .enumerate()
         .for_each(|(_index, (_, d))| {
-            draw_cells(f, &d.cells, 0);
-            draw_cells(f, &d.cells, 1);
-            draw_cells(f, &d.cells, 2);
+            _draw_cells(f, &d.cells, 0);
+            _draw_cells(f, &d.cells, 1);
+            _draw_cells(f, &d.cells, 2);
         });
 }

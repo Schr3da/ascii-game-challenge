@@ -1,14 +1,21 @@
 use std::io::Stdout;
 
-use core_ecs::prelude::AssetResources;
+use core_dtos::prelude::{UiView, UiViewIds};
 use tui::{backend::CrosstermBackend, Terminal};
 
 use crate::export::prelude::*;
 
 pub fn draw_to_terminal_handler(
+    view: Option<UiView>,
     terminal: &mut Terminal<CrosstermBackend<Stdout>>,
-    assets: &AssetResources,
 ) {
-    _ = terminal.draw(|f| draw_menu(f));
-    _ = terminal.draw(|f| draw_game(f, assets));
+    let next = match view {
+        Some(v) => v,
+        None => return,
+    };
+
+    match next.id {
+        UiViewIds::Main => _ = terminal.draw(|f| draw_menu(f, next)),
+        UiViewIds::Options => return,
+    };
 }

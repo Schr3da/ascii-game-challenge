@@ -1,3 +1,5 @@
+use crate::prelude::*;
+
 #[derive(Clone)]
 pub enum RenderEvents {
     OnWorldWillUpdate,
@@ -5,5 +7,5 @@ pub enum RenderEvents {
 
 #[derive(Clone)]
 pub enum RenderSubscription {
-    OnWorldDidUpdate,
+    OnWorldDidUpdate(Option<UiView>),
 }

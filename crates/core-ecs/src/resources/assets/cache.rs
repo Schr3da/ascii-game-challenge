@@ -1,9 +1,9 @@
 use bevy_ecs::prelude::*;
+use core_dtos::prelude::*;
 use core_serde::prelude::*;
 use std::collections::HashMap;
 
 use super::prelude::*;
-use crate::prelude::*;
 
 #[derive(Resource)]
 pub struct AssetResources {

@@ -1,7 +1,5 @@
 use core_dtos::prelude::*;
 
-use crate::prelude::*;
-
 pub fn main_view() -> UiView {
     UiView {
         id: UiViewIds::Main,

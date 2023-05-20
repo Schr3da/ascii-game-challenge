@@ -36,6 +36,12 @@ impl Default for Core {
         assets.load();
         world.insert_resource(assets);
 
+        let ui_store_resource = UiStore::default();
+        world.insert_resource(ui_store_resource);
+
+        world.spawn(main_view());
+        world.spawn(options_view());
+
         Core {
             world,
             init_scheduler,
@@ -53,7 +59,6 @@ impl ShareableSubscriber<EcsEvents> for Core {
         let mut ecs = Core::default();
 
         let subsrciber_resource = Subscriber::new(subscriber);
-
         ecs.world.insert_resource(subsrciber_resource);
 
         Arc::new(RwLock::new(ecs))
