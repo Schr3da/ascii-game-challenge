@@ -1,5 +1,4 @@
 use core_dtos::prelude::*;
-use core_ecs::prelude::*;
 use core_state::prelude::*;
 use crossterm::event::EnableMouseCapture;
 use crossterm::execute;
@@ -20,9 +19,6 @@ pub async fn terminal() -> Result<Terminal<CrosstermBackend<Stdout>>, Error> {
 
     let backend = CrosstermBackend::new(stdout);
     let mut terminal = Terminal::new(backend)?;
-
-    let mut assets = AssetResources::default();
-    assets.load();
 
     let mut state = AppState::default();
     state.subscribe();
