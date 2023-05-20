@@ -5,6 +5,8 @@ use crossterm::event::EnableMouseCapture;
 use crossterm::execute;
 use crossterm::terminal::{enable_raw_mode, EnterAlternateScreen};
 use std::io::{stdout, Error, Stdout};
+use std::time::Duration;
+use tokio::time::sleep;
 use tui::backend::CrosstermBackend;
 use tui::Terminal;
 
@@ -51,7 +53,12 @@ pub async fn terminal() -> Result<Terminal<CrosstermBackend<Stdout>>, Error> {
         }
 
         let input_event = input.event_receiver.try_recv();
-        key_pressed_handler(input_event, &mut state).await;
+
+        let did_press_key = key_pressed_handler(input_event, &mut state).await;
+
+        if !did_press_key {
+            sleep(Duration::from_millis(16)).await;
+        }
     }
 
     Ok(terminal)

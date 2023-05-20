@@ -4,10 +4,13 @@ use core_dtos::prelude::*;
 use core_state::prelude::*;
 use tokio::sync::mpsc::error::TryRecvError;
 
-pub async fn key_pressed_handler(event: Result<KeyCode, TryRecvError>, state: &mut AppState) {
+pub async fn key_pressed_handler(
+    event: Result<KeyCode, TryRecvError>,
+    state: &mut AppState,
+) -> bool {
     let next = match event {
         Ok(e) => e,
-        Err(_) => return,
+        Err(_) => return false,
     };
 
     match next {
@@ -22,6 +25,8 @@ pub async fn key_pressed_handler(event: Result<KeyCode, TryRecvError>, state: &m
                 .await;
         }
         KeyCode::Enter => state.send(SendEvents::Ui(UiEvents::OnClick)).await,
-        _ => {}
+        _ => return false,
     };
+
+    true
 }
