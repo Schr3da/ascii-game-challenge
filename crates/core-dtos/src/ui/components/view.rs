@@ -2,13 +2,13 @@ use bevy_ecs::prelude::Component;
 
 use crate::prelude::*;
 
-#[derive(Clone, Component)]
+#[derive(Debug, Clone, Component)]
 pub enum UiViewChild {
     List(UiList),
     Label(UiLabel),
 }
 
-#[derive(Clone, Component)]
+#[derive(Debug, Clone, Component)]
 pub struct UiView {
     pub id: UiViewIds,
     pub state: UiViewState,
