@@ -1,7 +1,5 @@
 use tui::backend::Backend;
-use tui::layout::Rect;
-use tui::style::{Color, Modifier, Style};
-use tui::text::Span;
+use tui::style::{Color, Style};
 use tui::widgets::Block;
 use tui::Frame;
 
