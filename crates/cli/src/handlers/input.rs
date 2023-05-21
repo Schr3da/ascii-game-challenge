@@ -11,17 +11,13 @@ pub async fn input_handler(event: Result<KeyCode, TryRecvError>, state: &mut App
     };
 
     match next {
-        KeyCode::Char('q') => {
-            let next_state_event = SendEvents::General(GeneralEvents::OnApplicationWillClose);
-            state.send(next_state_event).await;
-        }
         KeyCode::Char('s') => {
-            let next_state_event = SendEvents::Renderer(RenderEvents::OnWorldWillUpdate);
-            state.send(next_state_event).await;
+            let event = SendEvents::Renderer(RenderEvents::OnWorldWillUpdate);
+            state.send(event).await;
         }
         KeyCode::Enter => {
-            let next_state_event = SendEvents::Ui(UiEvents::OnClick);
-            state.send(next_state_event).await;
+            let event = SendEvents::Ui(UiEvents::OnClick(ViewComponentIds::Main(MainMenu::Quit)));
+            state.send(event).await;
         }
         _ => {}
     };

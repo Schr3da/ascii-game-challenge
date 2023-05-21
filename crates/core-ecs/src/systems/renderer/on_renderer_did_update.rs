@@ -13,9 +13,11 @@ pub fn on_renderer_did_update_system(
 
     let view = views_query.iter().find(|v| v.id == current_view).cloned();
 
+    let current_event = subscription.next_event.clone();
+
     _ = subscription
         .sender
         .blocking_send(EcsEvents::Subscriber(SubscriptionEvents::Renderer(
-            RenderSubscription::OnWorldDidUpdate(view),
+            RenderSubscription::OnWorldDidUpdate(view, current_event),
         )));
 }

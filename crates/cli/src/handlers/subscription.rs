@@ -28,7 +28,7 @@ async fn handle_renderer(
     terminal: &mut Terminal<CrosstermBackend<Stdout>>,
 ) -> bool {
     match event {
-        RenderSubscription::OnWorldDidUpdate(v) => draw_to_terminal_handler(v, terminal),
+        RenderSubscription::OnWorldDidUpdate(v, _) => draw_to_terminal_handler(v, terminal),
     };
 
     true

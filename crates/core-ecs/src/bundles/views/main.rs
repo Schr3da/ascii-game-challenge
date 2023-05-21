@@ -4,7 +4,7 @@ pub fn main_view() -> UiView {
     UiView {
         id: UiViewIds::Main,
         state: UiViewState {
-            selected_id: ViewComponentIds::Main(MainMenu::NewGame),
+            selected_id: ViewComponentIds::Main(MainMenu::Quit),
         },
         children: vec![
             UiViewChild::Label(UiLabel {

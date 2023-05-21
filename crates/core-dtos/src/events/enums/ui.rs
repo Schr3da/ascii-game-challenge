@@ -1,6 +1,8 @@
+use crate::prelude::*;
+
 #[derive(Clone)]
 pub enum UiEvents {
-    OnClick,
+    OnClick(ViewComponentIds),
 }
 
 #[derive(Clone)]

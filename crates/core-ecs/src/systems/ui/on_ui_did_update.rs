@@ -14,11 +14,11 @@ pub fn on_ui_did_update_system(
         .find(|v| v.id == store.current_view)
         .cloned();
 
-    println!("{:?}", store);
+    let current = subscription.next_event.clone();
 
     _ = subscription
         .sender
         .blocking_send(EcsEvents::Subscriber(SubscriptionEvents::Renderer(
-            RenderSubscription::OnWorldDidUpdate(view),
+            RenderSubscription::OnWorldDidUpdate(view, current),
         )));
 }
