@@ -1,6 +1,7 @@
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum UiViewIds {
     Main,
+    Game,
     Options,
 }
 

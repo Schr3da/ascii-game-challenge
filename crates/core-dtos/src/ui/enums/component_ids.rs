@@ -4,6 +4,7 @@ use crate::prelude::*;
 pub enum ViewComponentIds {
     Main(MainMenu),
     Options(OptionMenu),
+    Game(InGameIds),
 }
 
 impl Default for ViewComponentIds {

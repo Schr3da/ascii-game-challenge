@@ -17,5 +17,6 @@ pub fn draw_to_terminal_handler(
     match next.id {
         UiViewIds::Main => _ = terminal.draw(|f| draw_menu(f, next)),
         UiViewIds::Options => return,
+        UiViewIds::Game => return,
     };
 }
