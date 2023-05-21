@@ -11,10 +11,6 @@ pub async fn input_handler(event: Result<KeyCode, TryRecvError>, app_state: &mut
     };
 
     match next {
-        KeyCode::Char('s') => {
-            let event = SendEvents::Renderer(RenderEvents::OnWorldWillUpdate);
-            app_state.send(event).await;
-        }
         KeyCode::Enter => {
             if let Some(s) = &app_state.ecs_current_view_state {
                 let event = SendEvents::Ui(UiEvents::OnClick(s.selected_id.clone()));
