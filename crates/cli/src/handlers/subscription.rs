@@ -25,10 +25,18 @@ async fn handle_ui(_event: UiSubscription) -> bool {
 
 async fn handle_renderer(
     event: RenderSubscription,
+    app_state: &mut AppState,
     terminal: &mut Terminal<CrosstermBackend<Stdout>>,
 ) -> bool {
     match event {
-        RenderSubscription::OnWorldDidUpdate(v, _) => draw_to_terminal_handler(v, terminal),
+        RenderSubscription::OnWorldDidUpdate(v) => {
+            app_state.ecs_current_view_state = match &v {
+                Some(UiView { state, .. }) => Some(state.clone()),
+                _ => None,
+            };
+
+            draw_to_terminal_handler(terminal, &v)
+        }
     };
 
     true
@@ -47,6 +55,6 @@ pub async fn subscription_handler(
     match unwrapped_event {
         SubscriptionEvents::General(e) => handle_general(e, state).await,
         SubscriptionEvents::Ui(e) => handle_ui(e).await,
-        SubscriptionEvents::Renderer(e) => handle_renderer(e, terminal).await,
+        SubscriptionEvents::Renderer(e) => handle_renderer(e, state, terminal).await,
     }
 }

@@ -16,6 +16,7 @@ pub struct AppState {
     pub ecs_event_receiver: Shared<Receiver<EcsEvents>>,
     pub ecs_subscription_sender: Sender<SubscriptionEvents>,
     pub ecs_subscription_receiver: Receiver<SubscriptionEvents>,
+    pub ecs_current_view_state: Option<UiViewState>,
 }
 
 impl Default for AppState {
@@ -24,12 +25,13 @@ impl Default for AppState {
         let (subscription_sender, subscription_receiver) = channel::<SubscriptionEvents>(2);
 
         AppState {
-            ecs: Core::new_shared(core_event_sender.clone()),
             ecs_task: None,
+            ecs: Core::new_shared(core_event_sender.clone()),
             ecs_event_sender: core_event_sender,
             ecs_event_receiver: Arc::new(RwLock::new(core_event_receiver)),
             ecs_subscription_sender: subscription_sender,
             ecs_subscription_receiver: subscription_receiver,
+            ecs_current_view_state: None,
         }
     }
 }

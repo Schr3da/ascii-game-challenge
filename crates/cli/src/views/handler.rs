@@ -6,8 +6,8 @@ use tui::{backend::CrosstermBackend, Terminal};
 use crate::export::prelude::*;
 
 pub fn draw_to_terminal_handler(
-    view: Option<UiView>,
     terminal: &mut Terminal<CrosstermBackend<Stdout>>,
+    view: &Option<UiView>,
 ) {
     let next = match view {
         Some(v) => v,
@@ -16,7 +16,7 @@ pub fn draw_to_terminal_handler(
 
     match next.id {
         UiViewIds::Main => _ = terminal.draw(|f| draw_menu(f, next)),
-        UiViewIds::Options => return,
-        UiViewIds::Game => return,
+        UiViewIds::Options => _ = terminal.draw(|f| draw_options(f, next)),
+        UiViewIds::Game => _ = terminal.draw(|f| draw_game(f, next)),
     };
 }

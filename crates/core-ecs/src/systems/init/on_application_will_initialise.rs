@@ -12,13 +12,13 @@ pub fn on_application_will_initialise_system(
     for mut v in query.iter_mut() {
         v.state = match v.id {
             UiViewIds::Main => UiViewState {
-                selected_id: ViewComponentIds::Main(MainMenu::Quit),
-            },
-            UiViewIds::Game => UiViewState {
-                selected_id: ViewComponentIds::Game(InGameIds::None),
+                selected_id: ViewComponentIds::Main(MainMenu::NewGame),
             },
             UiViewIds::Options => UiViewState {
                 selected_id: ViewComponentIds::Options(OptionMenu::Back),
+            },
+            UiViewIds::Game => UiViewState {
+                selected_id: ViewComponentIds::Game(InGameIds::None),
             },
         };
     }

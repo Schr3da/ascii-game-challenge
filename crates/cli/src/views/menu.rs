@@ -7,7 +7,7 @@ use tui::Frame;
 
 use core_dtos::prelude::*;
 
-pub fn draw_menu<B: Backend>(f: &mut Frame<B>, data: UiView) {
+pub fn draw_menu<B: Backend>(f: &mut Frame<B>, data: &UiView) {
     let size = f.size();
 
     let block = Block::default().style(Style::default().bg(Color::White).fg(Color::Black));
@@ -36,18 +36,19 @@ pub fn draw_menu<B: Backend>(f: &mut Frame<B>, data: UiView) {
         ])
         .split(parent_layout[1]);
 
-    let selected_id = data.state.selected_id;
+    let selected_id = data.state.selected_id.clone();
 
-    data.children.into_iter().for_each(|c| {
+    data.children.iter().for_each(|c| {
         match c {
             UiViewChild::Label(l) => {
-                let title = Paragraph::new(Spans::from(l.text)).alignment(Alignment::Center);
+                let title =
+                    Paragraph::new(Spans::from(l.text.clone())).alignment(Alignment::Center);
                 f.render_widget(title, parent_layout[0]);
             }
             UiViewChild::List(l) => {
                 let items: Vec<ListItem> = l
                     .children
-                    .into_iter()
+                    .iter()
                     .enumerate()
                     .map(|(index, label)| {
                         let text = format!(" {}. {}", index + 1, label.text);

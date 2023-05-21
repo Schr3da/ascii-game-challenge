@@ -41,6 +41,7 @@ impl Default for Core {
 
         world.spawn(main_view());
         world.spawn(options_view());
+        world.spawn(game_view());
 
         Core {
             world,

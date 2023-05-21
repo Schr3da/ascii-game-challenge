@@ -4,7 +4,7 @@ use core_dtos::prelude::*;
 use core_state::prelude::*;
 use tokio::sync::mpsc::error::TryRecvError;
 
-pub async fn input_handler(event: Result<KeyCode, TryRecvError>, state: &mut AppState) -> bool {
+pub async fn input_handler(event: Result<KeyCode, TryRecvError>, app_state: &mut AppState) -> bool {
     let next = match event {
         Ok(e) => e,
         Err(_) => return false,
@@ -13,11 +13,13 @@ pub async fn input_handler(event: Result<KeyCode, TryRecvError>, state: &mut App
     match next {
         KeyCode::Char('s') => {
             let event = SendEvents::Renderer(RenderEvents::OnWorldWillUpdate);
-            state.send(event).await;
+            app_state.send(event).await;
         }
         KeyCode::Enter => {
-            let event = SendEvents::Ui(UiEvents::OnClick(ViewComponentIds::Main(MainMenu::Quit)));
-            state.send(event).await;
+            if let Some(s) = &app_state.ecs_current_view_state {
+                let event = SendEvents::Ui(UiEvents::OnClick(s.selected_id.clone()));
+                app_state.send(event).await;
+            };
         }
         _ => {}
     };
