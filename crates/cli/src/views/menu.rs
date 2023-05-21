@@ -1,4 +1,3 @@
-use core_dtos::prelude::UiView;
 use tui::backend::Backend;
 use tui::layout::{Alignment, Constraint, Direction, Layout};
 use tui::style::{Color, Style};
@@ -6,7 +5,9 @@ use tui::text::Spans;
 use tui::widgets::{Block, Borders, List, ListItem, Paragraph};
 use tui::Frame;
 
-pub fn draw_menu<B: Backend>(f: &mut Frame<B>, _data: UiView) {
+use core_dtos::prelude::*;
+
+pub fn draw_menu<B: Backend>(f: &mut Frame<B>, data: UiView) {
     let size = f.size();
 
     let block = Block::default().style(Style::default().bg(Color::White).fg(Color::Black));
@@ -25,12 +26,8 @@ pub fn draw_menu<B: Backend>(f: &mut Frame<B>, _data: UiView) {
         )
         .split(size);
 
-    let title = Paragraph::new(Spans::from("")).alignment(Alignment::Center);
-
-    f.render_widget(title, parent_layout[0]);
-
     let list_layout = Layout::default()
-        .margin(0)
+        .margin(1)
         .direction(Direction::Horizontal)
         .constraints([
             Constraint::Percentage(20),
@@ -39,20 +36,41 @@ pub fn draw_menu<B: Backend>(f: &mut Frame<B>, _data: UiView) {
         ])
         .split(parent_layout[1]);
 
-    let items = [
-        ListItem::new("1. New Game").style(Style::default().bg(Color::Red)),
-        ListItem::new("2. Options"),
-        ListItem::new("3. Quit"),
-    ];
+    let selected_id = data.state.selected_id;
 
-    let list = List::new(items)
-        .block(
-            Block::default()
-                .title("Main Menu")
-                .title_alignment(Alignment::Center)
-                .borders(Borders::ALL),
-        )
-        .style(Style::default().fg(Color::Black));
+    data.children.into_iter().for_each(|c| {
+        match c {
+            UiViewChild::Label(l) => {
+                let title = Paragraph::new(Spans::from(l.text)).alignment(Alignment::Center);
+                f.render_widget(title, parent_layout[0]);
+            }
+            UiViewChild::List(l) => {
+                let items: Vec<ListItem> = l
+                    .children
+                    .into_iter()
+                    .enumerate()
+                    .map(|(index, label)| {
+                        let text = format!(" {}. {}", index + 1, label.text);
 
-    f.render_widget(list, list_layout[1]);
+                        match selected_id == label.id {
+                            true => ListItem::new(text)
+                                .style(Style::default().bg(Color::Red).fg(Color::White)),
+                            false => ListItem::new(text),
+                        }
+                    })
+                    .collect();
+
+                let list = List::new(items)
+                    .block(
+                        Block::default()
+                            .title("Main Menu")
+                            .title_alignment(Alignment::Center)
+                            .borders(Borders::ALL),
+                    )
+                    .style(Style::default().fg(Color::Black));
+
+                f.render_widget(list, list_layout[1]);
+            }
+        };
+    });
 }

@@ -4,6 +4,6 @@ use crate::prelude::*;
 
 #[derive(Debug, Clone, Component)]
 pub struct UiList {
-    pub id: String,
+    pub id: ViewComponentIds,
     pub children: Vec<UiLabel>,
 }
