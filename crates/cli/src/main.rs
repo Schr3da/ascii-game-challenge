@@ -10,5 +10,6 @@ mod views;
 #[tokio::main]
 async fn main() -> Result<(), std::io::Error> {
     let terminal = init::terminal().await?;
-    shutdown::terminal(terminal)
+    shutdown::terminal(terminal)?;
+    std::process::exit(0);
 }

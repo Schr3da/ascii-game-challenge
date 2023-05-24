@@ -4,7 +4,7 @@ pub enum GeneralEvents {
     OnApplicationWillClose,
 }
 
-#[derive(Clone)]
+#[derive(Clone, Eq, PartialEq)]
 pub enum GeneralSubscription {
     OnApplicationDidInitialise,
     OnApplicationDidClose,

@@ -6,5 +6,5 @@ pub enum UiEvents {
     OnClick(ViewComponentIds),
 }
 
-#[derive(Clone)]
+#[derive(Clone, Eq, PartialEq)]
 pub enum UiSubscription {}
