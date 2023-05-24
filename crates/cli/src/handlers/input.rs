@@ -11,11 +11,11 @@ pub async fn input_handler(event: Result<KeyCode, TryRecvError>, app_state: &mut
     };
 
     match next {
-        KeyCode::Tab => {
+        KeyCode::Down | KeyCode::Tab => {
             let event = SendEvents::Ui(UiEvents::OnSelect(SelectionDirections::Next));
             app_state.send(event).await;
         }
-        KeyCode::BackTab => {
+        KeyCode::Up | KeyCode::BackTab => {
             let event = SendEvents::Ui(UiEvents::OnSelect(SelectionDirections::Previous));
             app_state.send(event).await;
         }
