@@ -13,12 +13,15 @@ pub fn on_application_will_initialise_system(
         v.state = match v.id {
             UiViewIds::Main => UiViewState {
                 selected_id: ViewComponentIds::Main(MainMenu::NewGame),
+                selectable_ids: MainMenu::get_selectable_items(),
             },
             UiViewIds::Options => UiViewState {
                 selected_id: ViewComponentIds::Options(OptionMenu::Back),
+                selectable_ids: OptionMenu::get_selectable_items(),
             },
             UiViewIds::Game => UiViewState {
                 selected_id: ViewComponentIds::Game(InGameIds::None),
+                selectable_ids: InGameIds::get_selectable_items(),
             },
         };
     }

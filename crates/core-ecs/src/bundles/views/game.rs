@@ -5,7 +5,11 @@ pub fn game_view() -> UiView {
         id: UiViewIds::Game,
         state: UiViewState {
             selected_id: ViewComponentIds::Game(InGameIds::None),
+            selectable_ids: Vec::new(),
         },
-        children: vec![],
+        children: vec![UiViewChild::Label(UiLabel {
+            id: ViewComponentIds::Game(InGameIds::Title),
+            text: InGameIds::Title.to_string(),
+        })],
     }
 }

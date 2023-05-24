@@ -10,7 +10,7 @@ pub struct InputManager {
 
 impl Default for InputManager {
     fn default() -> Self {
-        let (event_sender, event_receiver) = channel::<KeyCode>(2);
+        let (event_sender, event_receiver) = channel::<KeyCode>(10);
 
         InputManager {
             task: Option::None,

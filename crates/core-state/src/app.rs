@@ -21,8 +21,8 @@ pub struct AppState {
 
 impl Default for AppState {
     fn default() -> Self {
-        let (core_event_sender, core_event_receiver) = channel::<EcsEvents>(2);
-        let (subscription_sender, subscription_receiver) = channel::<SubscriptionEvents>(2);
+        let (core_event_sender, core_event_receiver) = channel::<EcsEvents>(10);
+        let (subscription_sender, subscription_receiver) = channel::<SubscriptionEvents>(10);
 
         AppState {
             ecs_task: None,

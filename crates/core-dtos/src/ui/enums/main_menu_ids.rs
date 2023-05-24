@@ -1,3 +1,5 @@
+use crate::prelude::{ToSelectable, ViewComponentIds};
+
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum MainMenu {
     Title,
@@ -16,5 +18,17 @@ impl ToString for MainMenu {
             Self::Options => "Options".to_string(),
             Self::Quit => "Quit".to_string(),
         }
+    }
+}
+
+impl ToSelectable for MainMenu {
+    type Item = ViewComponentIds;
+
+    fn get_selectable_items() -> Vec<ViewComponentIds> {
+        vec![
+            ViewComponentIds::Main(MainMenu::NewGame),
+            ViewComponentIds::Main(MainMenu::Options),
+            ViewComponentIds::Main(MainMenu::Quit),
+        ]
     }
 }
