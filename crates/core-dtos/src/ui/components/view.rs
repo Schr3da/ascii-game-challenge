@@ -6,11 +6,13 @@ use crate::prelude::*;
 pub enum UiViewChild {
     List(UiList),
     Label(UiLabel),
+    Section(UiView),
 }
 
 #[derive(Debug, PartialEq, Eq, Clone, Component)]
 pub struct UiView {
     pub id: UiViewIds,
+    pub layout: UiLayout,
     pub state: UiViewState,
     pub children: Vec<UiViewChild>,
 }

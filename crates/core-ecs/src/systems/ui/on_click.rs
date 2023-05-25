@@ -11,13 +11,13 @@ pub fn on_click_system(mut store: ResMut<UiStore>, subscriber: Res<Subscriber>) 
     };
 
     match next {
-        ViewComponentIds::Main(MainMenu::NewGame) => {
+        ViewComponentIds::Main(MainMenuIds::NewGame) => {
             store.current_view = UiViewIds::Game;
         }
-        ViewComponentIds::Main(MainMenu::Options) => {
+        ViewComponentIds::Main(MainMenuIds::Options) => {
             store.current_view = UiViewIds::Options;
         }
-        ViewComponentIds::Main(MainMenu::Quit) => {
+        ViewComponentIds::Main(MainMenuIds::Quit) => {
             _ = subscriber
                 .sender
                 .blocking_send(EcsEvents::Send(SendEvents::General(

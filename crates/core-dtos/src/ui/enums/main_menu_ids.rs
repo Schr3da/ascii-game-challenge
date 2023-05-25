@@ -1,7 +1,7 @@
 use crate::prelude::{ToSelectable, ViewComponentIds};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub enum MainMenu {
+pub enum MainMenuIds {
     Title,
     MenuList,
     NewGame,
@@ -9,7 +9,7 @@ pub enum MainMenu {
     Quit,
 }
 
-impl ToString for MainMenu {
+impl ToString for MainMenuIds {
     fn to_string(&self) -> String {
         match self {
             Self::Title => "Ascii Game Challenge".to_string(),
@@ -21,14 +21,14 @@ impl ToString for MainMenu {
     }
 }
 
-impl ToSelectable for MainMenu {
+impl ToSelectable for MainMenuIds {
     type Item = ViewComponentIds;
 
     fn get_selectable_items() -> Vec<ViewComponentIds> {
         vec![
-            ViewComponentIds::Main(MainMenu::NewGame),
-            ViewComponentIds::Main(MainMenu::Options),
-            ViewComponentIds::Main(MainMenu::Quit),
+            ViewComponentIds::Main(MainMenuIds::NewGame),
+            ViewComponentIds::Main(MainMenuIds::Options),
+            ViewComponentIds::Main(MainMenuIds::Quit),
         ]
     }
 }

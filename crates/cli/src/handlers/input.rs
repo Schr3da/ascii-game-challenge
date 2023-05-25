@@ -25,6 +25,10 @@ pub async fn input_handler(event: Result<KeyCode, TryRecvError>, app_state: &mut
                 app_state.send(event).await;
             };
         }
+        KeyCode::Char('q') => {
+            let event = SendEvents::Ui(UiEvents::OnClick(ViewComponentIds::Main(MainMenuIds::Quit)));
+            app_state.send(event).await;
+        }
         _ => {}
     };
 

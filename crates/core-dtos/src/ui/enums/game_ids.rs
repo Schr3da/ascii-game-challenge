@@ -1,12 +1,12 @@
 use crate::prelude::*;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub enum InGameIds {
+pub enum GameIds {
     Title,
     None,
 }
 
-impl ToString for InGameIds {
+impl ToString for GameIds {
     fn to_string(&self) -> String {
         match self {
             Self::Title => "Game View".to_string(),
@@ -15,7 +15,7 @@ impl ToString for InGameIds {
     }
 }
 
-impl ToSelectable for InGameIds {
+impl ToSelectable for GameIds {
     type Item = ViewComponentIds;
 
     fn get_selectable_items() -> Vec<ViewComponentIds> {

@@ -12,16 +12,16 @@ pub fn on_application_will_initialise_system(
     for mut v in query.iter_mut() {
         v.state = match v.id {
             UiViewIds::Main => UiViewState {
-                selected_id: ViewComponentIds::Main(MainMenu::NewGame),
-                selectable_ids: MainMenu::get_selectable_items(),
+                selected_id: ViewComponentIds::Main(MainMenuIds::NewGame),
+                selectable_ids: MainMenuIds::get_selectable_items(),
             },
             UiViewIds::Options => UiViewState {
-                selected_id: ViewComponentIds::Options(OptionMenu::Back),
-                selectable_ids: OptionMenu::get_selectable_items(),
+                selected_id: ViewComponentIds::Options(OptionMenuIds::Back),
+                selectable_ids: OptionMenuIds::get_selectable_items(),
             },
             UiViewIds::Game => UiViewState {
-                selected_id: ViewComponentIds::Game(InGameIds::None),
-                selectable_ids: InGameIds::get_selectable_items(),
+                selected_id: ViewComponentIds::Game(GameIds::None),
+                selectable_ids: GameIds::get_selectable_items(),
             },
         };
     }

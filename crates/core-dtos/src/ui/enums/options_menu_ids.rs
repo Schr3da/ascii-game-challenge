@@ -1,13 +1,13 @@
 use crate::prelude::*;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub enum OptionMenu {
+pub enum OptionMenuIds {
     Title,
     OptionList,
     Back,
 }
 
-impl ToString for OptionMenu {
+impl ToString for OptionMenuIds {
     fn to_string(&self) -> String {
         match self {
             Self::Title => "Options".to_string(),
@@ -17,7 +17,7 @@ impl ToString for OptionMenu {
     }
 }
 
-impl ToSelectable for OptionMenu {
+impl ToSelectable for OptionMenuIds {
     type Item = ViewComponentIds;
 
     fn get_selectable_items() -> Vec<ViewComponentIds> {
