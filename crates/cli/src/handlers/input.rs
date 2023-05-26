@@ -4,11 +4,10 @@ use core_dtos::prelude::*;
 use core_state::prelude::*;
 use tokio::sync::mpsc::error::TryRecvError;
 
-pub async fn input_handler(event: Result<KeyCode, TryRecvError>, app_state: &mut AppState) -> bool {
-    let next = match event {
-        Ok(e) => e,
-        Err(_) => return false,
-    };
+use crate::export::prelude::*;
+
+async fn handle_keyboard_event(event: KeyEvent, app_state: &mut AppState) -> bool {
+    let next = event.code;
 
     match next {
         KeyCode::Down | KeyCode::Tab => {
@@ -26,11 +25,45 @@ pub async fn input_handler(event: Result<KeyCode, TryRecvError>, app_state: &mut
             };
         }
         KeyCode::Char('q') => {
-            let event = SendEvents::Ui(UiEvents::OnClick(ViewComponentIds::Main(MainMenuIds::Quit)));
+            let event =
+                SendEvents::Ui(UiEvents::OnClick(ViewComponentIds::Main(MainMenuIds::Quit)));
             app_state.send(event).await;
         }
-        _ => {}
+        _ => return false,
     };
 
     true
+}
+
+async fn handle_mouse_event(event: MouseEvent, _app_state: &mut AppState) -> bool {
+    let _x = event.column;
+    let _y = event.row;
+
+    true
+}
+
+async fn handle_window_event(event: WindowEvents, app_state: &mut AppState) -> bool {
+    match event {
+        WindowEvents::Resize(w, h) => {
+            app_state
+                .send(SendEvents::General(GeneralEvents::OnApplicationResize(
+                    w, h,
+                )))
+                .await
+        }
+    };
+
+    true
+}
+
+pub async fn input_handler(
+    event: Result<InpuEvents, TryRecvError>,
+    app_state: &mut AppState,
+) -> bool {
+    match event {
+        Ok(InpuEvents::Keyboard(e)) => handle_keyboard_event(e, app_state).await,
+        Ok(InpuEvents::Mouse(e)) => handle_mouse_event(e, app_state).await,
+        Ok(InpuEvents::Window(e)) => handle_window_event(e, app_state).await,
+        Err(_) => false,
+    }
 }

@@ -1,16 +1,24 @@
-use crossterm::event::{self, Event, KeyCode};
+use crossterm::event::{Event, KeyEvent, MouseEvent};
 use tokio::sync::mpsc::*;
 use tokio::task;
 
+use core_dtos::prelude::*;
+
+pub enum InpuEvents {
+    Keyboard(KeyEvent),
+    Mouse(MouseEvent),
+    Window(WindowEvents),
+}
+
 pub struct InputManager {
     pub task: Option<task::JoinHandle<()>>,
-    pub event_sender: Sender<KeyCode>,
-    pub event_receiver: Receiver<KeyCode>,
+    pub event_sender: Sender<InpuEvents>,
+    pub event_receiver: Receiver<InpuEvents>,
 }
 
 impl Default for InputManager {
     fn default() -> Self {
-        let (event_sender, event_receiver) = channel::<KeyCode>(10);
+        let (event_sender, event_receiver) = channel::<InpuEvents>(10);
 
         InputManager {
             task: Option::None,
@@ -27,12 +35,16 @@ impl InputManager {
         let sender = self.event_sender.clone();
         let thread = task::spawn(async move {
             loop {
-                let event = match event::read() {
-                    Ok(Event::Key(e)) => e,
+                let event = match crossterm::event::read() {
+                    Ok(Event::Key(e)) => InpuEvents::Keyboard(e),
+                    Ok(Event::Mouse(e)) => InpuEvents::Mouse(e),
+                    Ok(Event::Resize(columns, rows)) => {
+                        InpuEvents::Window(WindowEvents::Resize(columns, rows))
+                    }
                     _ => continue,
                 };
 
-                _ = sender.send(event.code).await;
+                _ = sender.send(event).await;
             }
         });
 

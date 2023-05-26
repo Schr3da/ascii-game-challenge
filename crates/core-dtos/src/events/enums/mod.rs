@@ -4,6 +4,7 @@ mod layout;
 mod render;
 mod select;
 mod ui;
+mod window;
 
 pub mod prelude {
     pub use super::events::*;
@@ -12,4 +13,5 @@ pub mod prelude {
     pub use super::render::*;
     pub use super::select::*;
     pub use super::ui::*;
+    pub use super::window::*;
 }

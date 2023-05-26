@@ -105,6 +105,7 @@ impl Core {
 
     fn handle_general_event(&mut self, event: GeneralEvents) {
         match event {
+            GeneralEvents::OnApplicationResize(_, _) => self.init_scheduler.run(&mut self.world),
             GeneralEvents::OnApplicationWillInitialise => self.init_scheduler.run(&mut self.world),
             GeneralEvents::OnApplicationWillClose => self.general_scheduler.run(&mut self.world),
         }
