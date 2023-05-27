@@ -5,7 +5,6 @@ pub enum GameIds {
     Time,
     Turns,
     Canvas,
-    Build,
     Menu,
     Stones,
     Wood,
@@ -18,8 +17,7 @@ impl ToString for GameIds {
         match self {
             Self::Time => "Time".to_string(),
             Self::Turns => "Turns".to_string(),
-            Self::Build => "Build".to_string(),
-            Self::Menu => "Menu".to_string(),
+            Self::Menu => "[ESC] Menu".to_string(),
             Self::Stones => "Stones".to_string(),
             Self::Wood => "Wood".to_string(),
             Self::Food => "Gold".to_string(),

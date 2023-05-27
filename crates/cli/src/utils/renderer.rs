@@ -61,13 +61,13 @@ pub fn render_view<B: Backend>(
             }
             UiViewChild::Placeholder => {
                 let block =
-                    Block::default().style(Style::default().bg(Color::Black).fg(Color::White));
+                    Block::default().style(Style::default().bg(Color::White).fg(Color::Black));
                 context.render_widget(block, view_layout[i]);
             },
 
             UiViewChild::GameCanvas=> {
                 let block =
-                    Block::default().style(Style::default().bg(Color::White).fg(Color::White));
+                    Block::default().style(Style::default().bg(Color::Gray).fg(Color::Gray));
                 context.render_widget(block, view_layout[i]);
             }
         };
