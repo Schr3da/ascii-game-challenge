@@ -13,6 +13,9 @@ impl Default for LayoutAlignments {
 #[derive(Debug, Eq, PartialEq, Clone)]
 pub enum LayoutConstraints {
     Percentage(u16),
+    Value(u16),
+    MinValue(u16),
+    MaxValue(u16),
 }
 
 impl Default for LayoutConstraints {

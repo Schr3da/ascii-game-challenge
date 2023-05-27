@@ -23,8 +23,13 @@ pub fn render_view<B: Backend>(
                 render_view(context, view_layout[i], v);
             }
             UiViewChild::Label(l) => {
-                let title =
-                    Paragraph::new(Spans::from(l.text.clone())).alignment(Alignment::Center);
+                let alignment = match l.alignment {
+                    TextAlignment::Center => Alignment::Center,
+                    TextAlignment::Left => Alignment::Left,
+                    TextAlignment::Right => Alignment::Right,
+                };
+
+                let title = Paragraph::new(Spans::from(l.text.clone())).alignment(alignment);
                 context.render_widget(title, view_layout[i]);
             }
             UiViewChild::List(l) => {
@@ -53,6 +58,17 @@ pub fn render_view<B: Backend>(
                     .style(Style::default().fg(Color::Black));
 
                 context.render_widget(list, view_layout[i]);
+            }
+            UiViewChild::Placeholder => {
+                let block =
+                    Block::default().style(Style::default().bg(Color::Black).fg(Color::White));
+                context.render_widget(block, view_layout[i]);
+            },
+
+            UiViewChild::GameCanvas=> {
+                let block =
+                    Block::default().style(Style::default().bg(Color::White).fg(Color::White));
+                context.render_widget(block, view_layout[i]);
             }
         };
     });

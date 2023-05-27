@@ -7,6 +7,8 @@ pub enum UiViewChild {
     List(UiList),
     Label(UiLabel),
     Section(UiView),
+    Placeholder,
+    GameCanvas,
 }
 
 #[derive(Debug, PartialEq, Eq, Clone, Component)]

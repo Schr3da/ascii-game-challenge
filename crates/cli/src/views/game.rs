@@ -10,11 +10,11 @@ use core_dtos::prelude::*;
 pub fn render_game<B: Backend>(context: &mut Frame<B>, view: &UiView) {
     let size = context.size();
 
-    let block = Block::default().style(Style::default().bg(Color::White).fg(Color::White));
+    let block = Block::default().style(Style::default().bg(Color::Black).fg(Color::White));
     context.render_widget(block, size);
 
     let root_layout = Layout::default()
-        .margin(0)
+        .horizontal_margin(2)
         .direction(Direction::Vertical)
         .constraints([Constraint::Percentage(100)].as_ref())
         .split(size);

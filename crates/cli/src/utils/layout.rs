@@ -15,8 +15,11 @@ pub fn generate_layout(view: &UiView, size: tui::layout::Rect) -> Vec<tui::layou
     let constraints: Vec<Constraint> = layout
         .constraints
         .iter()
-        .map(|c| match c {
-            LayoutConstraints::Percentage(v) => Constraint::Percentage(v.clone()),
+        .map(|c| match c.clone() {
+            LayoutConstraints::Percentage(v) => Constraint::Percentage(v),
+            LayoutConstraints::MinValue(v) => Constraint::Min(v),
+            LayoutConstraints::MaxValue(v) => Constraint::Max(v),
+            LayoutConstraints::Value(v) => Constraint::Length(v),
         })
         .collect();
 

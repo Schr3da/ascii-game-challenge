@@ -24,6 +24,7 @@ pub fn main_view() -> UiView {
             UiViewChild::Label(UiLabel {
                 id: ViewComponentIds::Main(MainMenuIds::Title),
                 text: "Ascii game challenge".to_string(),
+                alignment: TextAlignment::Center,
             }),
             UiViewChild::List(UiList {
                 id: ViewComponentIds::Main(MainMenuIds::MenuList),
@@ -32,14 +33,17 @@ pub fn main_view() -> UiView {
                     UiLabel {
                         id: ViewComponentIds::Main(MainMenuIds::NewGame),
                         text: "New Game".to_string(),
+                        alignment: TextAlignment::Left,
                     },
                     UiLabel {
                         id: ViewComponentIds::Main(MainMenuIds::Options),
                         text: "Options".to_string(),
+                        alignment: TextAlignment::Left,
                     },
                     UiLabel {
                         id: ViewComponentIds::Main(MainMenuIds::Quit),
                         text: "Quit".to_string(),
+                        alignment: TextAlignment::Left,
                     },
                 ],
             }),

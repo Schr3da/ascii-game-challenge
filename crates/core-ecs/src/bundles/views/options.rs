@@ -20,6 +20,7 @@ pub fn options_view() -> UiView {
             UiViewChild::Label(UiLabel {
                 id: ViewComponentIds::Options(OptionMenuIds::Title),
                 text: "Options".to_string(),
+                alignment: TextAlignment::Center,
             }),
             UiViewChild::List(UiList {
                 id: ViewComponentIds::Options(OptionMenuIds::OptionList),
