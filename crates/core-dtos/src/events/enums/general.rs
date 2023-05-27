@@ -1,7 +1,7 @@
 #[derive(Clone)]
 pub enum GeneralEvents {
     OnApplicationResize(u16, u16),
-    OnApplicationWillInitialise,
+    OnApplicationWillInitialise(u16, u16),
     OnApplicationWillClose,
 }
 

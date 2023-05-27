@@ -26,9 +26,11 @@ pub async fn terminal() -> Result<Terminal<CrosstermBackend<Stdout>>, Error> {
     let mut input = InputManager::default();
     input.subscribe();
 
+    let size = terminal.size().unwrap_or_default();
+
     state
         .send(SendEvents::General(
-            GeneralEvents::OnApplicationWillInitialise,
+            GeneralEvents::OnApplicationWillInitialise(size.width, size.height),
         ))
         .await;
 

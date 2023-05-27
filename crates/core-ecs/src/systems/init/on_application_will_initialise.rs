@@ -4,10 +4,20 @@ use core_dtos::prelude::*;
 use crate::prelude::*;
 
 pub fn on_application_will_initialise_system(
+    subscriber: Res<Subscriber>,
     mut store: ResMut<UiStore>,
     mut query: Query<&mut UiView>,
 ) {
+    let (width, height) = match subscriber.next_event {
+        Some(SendEvents::General(GeneralEvents::OnApplicationWillInitialise(w, h))) => (w, h),
+        _ => (0, 0),
+    };
+
+    store.width = width;
+    store.height = height;
     store.current_view = UiViewIds::Main;
+
+    println!("{:?}, {:?}", width, height);
 
     for mut v in query.iter_mut() {
         v.state = match v.id {
