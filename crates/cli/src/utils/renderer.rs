@@ -63,9 +63,8 @@ pub fn render_view<B: Backend>(
                 let block =
                     Block::default().style(Style::default().bg(Color::White).fg(Color::Black));
                 context.render_widget(block, view_layout[i]);
-            },
-
-            UiViewChild::GameCanvas=> {
+            }
+            UiViewChild::GameCanvas(_c, _r) => {
                 let block =
                     Block::default().style(Style::default().bg(Color::Gray).fg(Color::Gray));
                 context.render_widget(block, view_layout[i]);

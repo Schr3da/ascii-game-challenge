@@ -17,8 +17,6 @@ pub fn on_application_will_initialise_system(
     store.height = height;
     store.current_view = UiViewIds::Main;
 
-    println!("{:?}, {:?}", width, height);
-
     for mut v in query.iter_mut() {
         v.state = match v.id {
             UiViewIds::Main => UiViewState {
