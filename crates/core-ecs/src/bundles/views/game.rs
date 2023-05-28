@@ -86,6 +86,15 @@ pub fn game_view() -> UiView {
             selected_id: ViewComponentIds::Game(GameIds::None),
             selectable_ids: Vec::new(),
         },
-        children: vec![get_top_bar(), UiViewChild::GameCanvas(0,0), get_bottom_bar()],
+        children: vec![
+            get_top_bar(),
+            UiViewChild::GameCanvas(Rect {
+                x: 0,
+                y: 1,
+                width: 0,
+                height: 0,
+            }),
+            get_bottom_bar(),
+        ],
     }
 }

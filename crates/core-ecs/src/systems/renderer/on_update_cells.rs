@@ -16,10 +16,27 @@ pub fn on_update_cells_system(store: Res<UiStore>, mut views_query: Query<&mut U
         None => return,
     };
 
+    let _first = view
+        .layout
+        .constraints
+        .first()
+        .unwrap_or(&LayoutConstraints::default());
+
+    let _last = view
+        .layout
+        .constraints
+        .last()
+        .unwrap_or(&LayoutConstraints::default());
+
     for child in &mut view.children {
         match child {
-            UiViewChild::GameCanvas(_, _) => {
-                *child = UiViewChild::GameCanvas(store.width, store.height);
+            UiViewChild::GameCanvas(_) => {
+                *child = UiViewChild::GameCanvas(Rect {
+                    x: 0,
+                    y: 1,
+                    width: store.width as i32,
+                    height: (store.height - 1) as i32,
+                });
                 break;
             }
             _ => {}
