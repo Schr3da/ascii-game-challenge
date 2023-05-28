@@ -1,7 +1,13 @@
 [workspace]
 resolver = "2"
 members = [
-  "crates/*",
+  "crates/cli",
+  "crates/core-dtos",
+  "crates/core-ecs",
+  "crates/core-serde",
+  "crates/core-shared",
+  "crates/core-state",
+  "crates/app/src-tauri"
 ]
 
 [workspace.dependencies]

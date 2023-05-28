@@ -60,7 +60,7 @@ fn render_canvas<B: Backend>(context: &mut Frame<B>, frame: &core_dtos::prelude:
     for y in frame.y..frame.height {
         for x in 0..frame.width {
             let block = Block::default()
-                .title("~")
+                .title("•")
                 .style(Style::default().bg(Color::Gray).fg(Color::Black));
 
             context.render_widget(
