@@ -26,13 +26,13 @@ async fn handle_renderer(
     match event {
         RenderSubscription::OnWorldDidUpdate(v) => {
             let view = match &v {
-                Some(UiView { state, .. }) => state,
+                Some(v) => v,
                 _ => return true,
             };
 
-            app_state.ecs_current_view_state = Some(view.clone());
+            app_state.ecs_current_view_state = Some(view.state.clone());
 
-            window.emit_all("OnWorldDidUpdate", "".to_string()).unwrap();
+            window.emit_all("OnWorldDidUpdate", view).unwrap();
         }
     };
 
