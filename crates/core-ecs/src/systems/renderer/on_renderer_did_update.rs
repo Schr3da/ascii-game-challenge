@@ -11,7 +11,7 @@ pub fn on_renderer_did_update_system(
 ) {
     let current_view = store.current_view.clone();
 
-    let view = views_query.iter().find(|v| v.id == current_view)        .cloned();
+    let view = views_query.iter().find(|v| v.id == current_view).cloned();
 
     _ = subscription
         .sender

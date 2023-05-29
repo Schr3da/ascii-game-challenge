@@ -1,15 +1,25 @@
-// Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-// Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-#[tauri::command]
-fn greet(name: &str) -> String {
-    format!("Hello, {}! You've been greeted from Rust!", name)
-}
+mod export;
+mod init;
+mod js_api;
+mod signal;
+mod subscription;
+
+use crate::export::prelude::*;
+use tauri::Manager;
 
 fn main() {
+    let (signal, signal_receiver) = JsSignal::new();
+
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![greet])
+        .manage(signal)
+        .setup(move |app| {
+            let main_window = app.get_window("main").unwrap();
+            init::run(main_window, signal_receiver);
+            Ok(())
+        })
+        .invoke_handler(tauri::generate_handler![did_webview_mount])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

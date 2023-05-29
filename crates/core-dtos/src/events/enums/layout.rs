@@ -1,4 +1,6 @@
-#[derive(Debug, Eq, PartialEq, Clone)]
+use serde::{Deserialize, Serialize};
+
+#[derive(Debug, Eq, PartialEq, Clone, Serialize, Deserialize)]
 pub enum LayoutAlignments {
     Horizontal,
     Vertical,
@@ -10,7 +12,7 @@ impl Default for LayoutAlignments {
     }
 }
 
-#[derive(Debug, Eq, PartialEq, Clone)]
+#[derive(Debug, Eq, PartialEq, Clone, Serialize, Deserialize)]
 pub enum LayoutConstraints {
     Percentage(u16),
     Value(u16),

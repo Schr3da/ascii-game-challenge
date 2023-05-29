@@ -1,6 +1,8 @@
+use serde::{Deserialize, Serialize};
+
 use crate::prelude::{ToSelectable, ViewComponentIds};
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum MainMenuIds {
     Title,
     MenuList,
