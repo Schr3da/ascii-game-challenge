@@ -1,8 +1,9 @@
 use serde::{Deserialize, Serialize};
+use tsify::Tsify;
 
 use crate::prelude::*;
 
-#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize, Tsify)]
 pub enum ViewComponentIds {
     Main(MainMenuIds),
     Options(OptionMenuIds),

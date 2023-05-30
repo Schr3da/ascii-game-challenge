@@ -1,8 +1,10 @@
 use std::fmt;
 
+use tsify::Tsify;
+
 use serde::{de::Visitor, *};
 
-#[derive(Debug, Clone, Serialize, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Serialize, PartialEq, Eq, Hash, Tsify)]
 #[serde(rename_all = "camelCase")]
 pub enum Ascii {
     Space,

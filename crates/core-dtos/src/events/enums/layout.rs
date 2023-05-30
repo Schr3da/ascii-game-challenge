@@ -1,6 +1,8 @@
+use tsify::Tsify;
+
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Eq, PartialEq, Clone, Serialize, Deserialize)]
+#[derive(Debug, Eq, PartialEq, Clone, Serialize, Deserialize, Tsify)]
 pub enum LayoutAlignments {
     Horizontal,
     Vertical,
@@ -12,7 +14,7 @@ impl Default for LayoutAlignments {
     }
 }
 
-#[derive(Debug, Eq, PartialEq, Clone, Serialize, Deserialize)]
+#[derive(Debug, Eq, PartialEq, Clone, Serialize, Deserialize, Tsify)]
 pub enum LayoutConstraints {
     Percentage(u16),
     Value(u16),

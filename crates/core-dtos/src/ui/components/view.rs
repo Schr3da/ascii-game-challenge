@@ -1,9 +1,10 @@
 use bevy_ecs::prelude::Component;
 use serde::{Deserialize, Serialize};
+use tsify::Tsify;
 
 use crate::prelude::*;
 
-#[derive(Debug, PartialEq, Eq, Clone, Component, Serialize, Deserialize)]
+#[derive(Debug, PartialEq, Eq, Clone, Component, Serialize, Deserialize, Tsify)]
 pub enum UiViewChild {
     List(UiList),
     Label(UiLabel),
@@ -12,7 +13,7 @@ pub enum UiViewChild {
     GameCanvas(Rect),
 }
 
-#[derive(Debug, PartialEq, Eq, Clone, Component, Serialize, Deserialize)]
+#[derive(Debug, PartialEq, Eq, Clone, Component, Serialize, Deserialize, Tsify)]
 pub struct UiView {
     pub id: UiViewIds,
     pub layout: UiLayout,

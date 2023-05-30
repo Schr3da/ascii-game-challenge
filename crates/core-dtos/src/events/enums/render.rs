@@ -1,12 +1,14 @@
-use crate::prelude::*;
+use tsify::Tsify;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone)]
+use crate::prelude::*;
+
+#[derive(Clone, Tsify)]
 pub enum RenderEvents {
     OnWorldWillUpdate,
 }
 
-#[derive(Clone, Eq, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Eq, PartialEq, Serialize, Deserialize, Tsify)]
 pub enum RenderSubscription {
     OnWorldDidUpdate(Option<UiView>),
 }

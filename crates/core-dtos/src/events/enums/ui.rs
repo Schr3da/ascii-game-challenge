@@ -1,10 +1,14 @@
+use tsify::Tsify;
+
 use crate::prelude::*;
 
-#[derive(Clone)]
+#[derive(Clone, Tsify)]
 pub enum UiEvents {
     OnSelect(SelectionDirections),
     OnClick(ViewComponentIds),
 }
 
-#[derive(Clone, Eq, PartialEq)]
-pub enum UiSubscription {}
+#[derive(Clone, Eq, PartialEq, Tsify)]
+pub enum UiSubscription {
+    UnknownUiSubscription
+}
