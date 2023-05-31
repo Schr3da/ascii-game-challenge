@@ -1,19 +1,17 @@
-import { invoke } from "@tauri-apps/api";
-import { listen } from "@tauri-apps/api/event";
-import { useCallback, useEffect } from "react";
-import { SubscriptionCallback } from "./useSubscribe.types";
+import { useEffect } from "react";
+import { SubscriptionCallback, sharedInstance } from "../../services";
 
 export const useSubscribe = (cb: SubscriptionCallback) => {
-  const handleDidMount = useCallback(() => {
-    invoke("did_webview_mount", { isMounted: true });
-  }, []);
-
-  const handleSubscribe = useCallback(async () => {
-    await listen("OnWorldDidUpdate", cb);
-  }, [cb]);
-
   useEffect(() => {
-    handleSubscribe();
-    handleDidMount();
-  }, []);
+    let id = "";
+    sharedInstance().then((instance) => {
+      id = instance.subscribe(cb);
+    });
+
+    return () => {
+      sharedInstance().then((instance) => {
+        instance.unsubscribe(id);
+      });
+    }
+  }, [cb]);
 }

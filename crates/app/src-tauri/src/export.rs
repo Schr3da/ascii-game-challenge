@@ -3,4 +3,5 @@ pub mod prelude {
     pub use crate::js_api::prelude::*;
     pub use crate::signal::*;
     pub use crate::subscription::*;
+    pub use crate::webview::*;
 }

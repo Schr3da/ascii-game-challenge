@@ -1,17 +1,21 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 
-import { useDidMount, useSubscribe } from "./hooks";
+import { useSubscribe } from "./hooks";
+import { SubscriptionEvents } from "./shared";
 
 const App = () => {
+  let [data, setData] = useState<any[]>([]);
 
-  const processEvent = useCallback((event: {}) => {
-    console.log("received event", event);
-  }, []);
+  const processEvent = useCallback(
+    (event: SubscriptionEvents) => {
+      setData([...data, event]);
+    },
+    [data]
+  );
 
   useSubscribe(processEvent);
-  useDidMount();
 
-  return <div className="container"></div>;
+  return <div className="container">{JSON.stringify(data)}</div>;
 };
 
 export default App;

@@ -1,31 +1,33 @@
 use tauri::Window;
 use tokio::sync::mpsc::*;
 
-use core_dtos::prelude::*;
 use core_state::prelude::*;
 
-use crate::subscription::*;
+use crate::export::prelude::*;
 
-pub fn run(window: Window, js_receiver: Receiver<String>) {
+pub fn run(window: Window, js_receiver: Receiver<WebViewEvents>) {
     tauri::async_runtime::spawn(async move {
-        let mut wait_for_init = js_receiver;
-        wait_for_init.recv().await;
-
-        let size = window.inner_size().unwrap_or_default();
+        let mut webview_event_receiver = js_receiver;
 
         let mut state = AppState::default();
         state.subscribe();
 
-        state
-            .send(SendEvents::General(
-                GeneralEvents::OnApplicationWillInitialise(size.width as u16, size.height as u16),
-            ))
-            .await;
+        loop {
+            let webview_event = webview_event_receiver.recv().await;
+            let init_done = webview_init_handler(webview_event, &mut state, &window).await;
+            if init_done {
+                break;
+            }
+        }
 
         loop {
+            let webview_event = webview_event_receiver.try_recv();
+            webview_event_handler(webview_event, &mut state).await;
+
             let subscription_event = state.ecs_subscription_receiver.recv().await;
-            let will_exit = subscription_handler(subscription_event, &mut state, &window).await;
-            if !will_exit {
+            let should_continue =
+                subscription_handler(subscription_event, &mut state, &window).await;
+            if !should_continue {
                 break;
             }
         }

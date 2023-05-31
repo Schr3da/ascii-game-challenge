@@ -1,7 +1,7 @@
 use crate::export::prelude::*;
 
 #[tauri::command]
-pub async fn did_webview_mount(
+pub async fn webview_did_mount(
     is_mounted: bool,
     state: tauri::State<'_, JsSignal>,
 ) -> Result<(), ()> {
@@ -10,6 +10,6 @@ pub async fn did_webview_mount(
     }
 
     let sender = state.inner.lock().await;
-    _ = sender.send("".to_string()).await;
+    _ = sender.send(WebViewEvents::OnDidMount).await;
     Ok(())
 }

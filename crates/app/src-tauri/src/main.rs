@@ -5,6 +5,7 @@ mod init;
 mod js_api;
 mod signal;
 mod subscription;
+mod webview;
 
 use crate::export::prelude::*;
 use tauri::Manager;
@@ -19,7 +20,10 @@ fn main() {
             init::run(main_window, signal_receiver);
             Ok(())
         })
-        .invoke_handler(tauri::generate_handler![did_webview_mount])
+        .invoke_handler(tauri::generate_handler![
+            webview_did_mount,
+            webview_did_subscribe
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

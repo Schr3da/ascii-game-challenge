@@ -1,9 +1,9 @@
-use tauri::{Manager, Window};
+use tauri::Window;
 
 use core_dtos::prelude::*;
 use core_state::prelude::*;
 
-async fn handle_general(event: GeneralSubscription, state: &mut AppState) -> bool {
+async fn handle_general(event: &GeneralSubscription, state: &mut AppState) -> bool {
     match event {
         GeneralSubscription::OnApplicationDidClose => false,
         GeneralSubscription::OnApplicationDidInitialise => {
@@ -14,12 +14,12 @@ async fn handle_general(event: GeneralSubscription, state: &mut AppState) -> boo
     }
 }
 
-async fn handle_ui(_event: UiSubscription) -> bool {
+async fn handle_ui(_event: &UiSubscription) -> bool {
     true
 }
 
 async fn handle_renderer(
-    event: RenderSubscription,
+    event: &RenderSubscription,
     app_state: &mut AppState,
     window: &Window,
 ) -> bool {
@@ -32,7 +32,7 @@ async fn handle_renderer(
 
             app_state.ecs_current_view_state = Some(view.state.clone());
 
-            window.emit_all("OnWorldDidUpdate", view).unwrap();
+            window.emit("ecs-subscription", event).unwrap();
         }
     };
 
@@ -44,11 +44,11 @@ pub async fn subscription_handler(
     state: &mut AppState,
     window: &Window,
 ) -> bool {
-    let unwrapped_event = match event {
+    let unwrapped_event = match &event {
         Some(e) => e,
         None => return true,
     };
-
+    window.emit("ecs-subscription", event.clone()).unwrap();
     match unwrapped_event {
         SubscriptionEvents::General(e) => handle_general(e, state).await,
         SubscriptionEvents::Ui(e) => handle_ui(e).await,

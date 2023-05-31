@@ -1,3 +1,4 @@
+use serde::{Serialize, Deserialize};
 use tsify::Tsify;
 
 use crate::prelude::*;
@@ -8,7 +9,7 @@ pub enum UiEvents {
     OnClick(ViewComponentIds),
 }
 
-#[derive(Clone, Eq, PartialEq, Tsify)]
+#[derive(Clone, Eq, PartialEq, Tsify, Serialize, Deserialize)]
 pub enum UiSubscription {
     UnknownUiSubscription
 }
