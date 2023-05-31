@@ -106,3 +106,4 @@ export type SubscriptionEvents = { General: GeneralSubscription } | { Ui: UiSubs
 
 export type SendEvents = { General: GeneralEvents } | { Ui: UiEvents } | { Renderer: RenderEvents };
 
+export type WebViewEvents = "OnDidMount" | "OnDidSubscribe" | { OnSendEvent: SendEvents };

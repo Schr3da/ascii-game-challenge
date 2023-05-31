@@ -1,7 +1,7 @@
 use serde::{Serialize, Deserialize};
 use tsify::Tsify;
 
-#[derive(Clone, Tsify)]
+#[derive(Clone, Tsify, Serialize, Deserialize)]
 pub enum GeneralEvents {
     OnApplicationResize(u16, u16),
     OnApplicationWillInitialise(u16, u16),

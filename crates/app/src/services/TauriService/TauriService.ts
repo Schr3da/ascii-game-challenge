@@ -1,6 +1,6 @@
 import { invoke } from "@tauri-apps/api";
 import { UnlistenFn, listen, Event } from "@tauri-apps/api/event";
-import { SubscriptionEvents } from "../../shared";
+import { SendEvents, SubscriptionEvents } from "../../shared";
 import { SubscriptionCallback } from "../SubsriberService";
 
 export class TauriService {
@@ -35,6 +35,10 @@ export class TauriService {
       const payload = event.payload;
       payload && cb(payload);
     }));
+  }
+
+  public static async sendEcsEvent(event: SendEvents) {
+    await invoke("webview_ecs_event", { event });
   }
 
   public static disposeEcsSubscriptionListener() {

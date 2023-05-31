@@ -42,7 +42,7 @@ pub async fn webview_event_handler(
     };
 
     match unwrapped_event {
-        WebViewEvents::OnSendEvent(e) => state.send(e).await,
+        WebViewEvents::OnEcsEvent(e) => state.send(e).await,
         _ => return,
     };
 }

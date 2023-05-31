@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::prelude::*;
 
-#[derive(Clone, Tsify)]
+#[derive(Clone, Tsify, Serialize, Deserialize)]
 pub enum RenderEvents {
     OnWorldWillUpdate,
 }

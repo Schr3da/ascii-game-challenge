@@ -3,7 +3,7 @@ use tsify::Tsify;
 
 use crate::prelude::*;
 
-#[derive(Clone, Tsify)]
+#[derive(Clone, Tsify, Serialize, Deserialize)]
 pub enum UiEvents {
     OnSelect(SelectionDirections),
     OnClick(ViewComponentIds),
