@@ -1,2 +1,2 @@
 export * from "./SubsriberService";
-export * from "./TauriService";
+export * from "./ApiService";

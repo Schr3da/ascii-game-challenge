@@ -105,5 +105,3 @@ export type EcsEvents = { Send: SendEvents } | { Subscriber: SubscriptionEvents 
 export type SubscriptionEvents = { General: GeneralSubscription } | { Ui: UiSubscription } | { Renderer: RenderSubscription };
 
 export type SendEvents = { General: GeneralEvents } | { Ui: UiEvents } | { Renderer: RenderEvents };
-
-export type WebViewEvents = "OnDidMount" | "OnDidSubscribe" | { OnSendEvent: SendEvents };

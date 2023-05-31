@@ -1,9 +1,9 @@
 import { invoke } from "@tauri-apps/api";
 import { UnlistenFn, listen, Event } from "@tauri-apps/api/event";
-import { SendEvents, SubscriptionEvents } from "../../shared";
-import { SubscriptionCallback } from "../SubsriberService";
+import { SendEvents, SubscriptionEvents } from "../../../shared";
+import { SubscriptionCallback } from "../../SubsriberService";
 
-export class TauriService {
+export class TauriApi {
 
   private static didSubscribe = false;
 
@@ -12,26 +12,26 @@ export class TauriService {
   private static ecsListener: UnlistenFn = () => { };
 
   public static async webviewDidMount() {
-    if (TauriService.didMount) {
+    if (TauriApi.didMount) {
       throw new Error("webviewDidMount should only be called once");
     }
 
     await invoke("webview_did_mount", { isMounted: true });
-    TauriService.didMount = true;
+    TauriApi.didMount = true;
   }
 
   public static async webviewDidSubscribe() {
-    if (TauriService.didSubscribe) {
+    if (TauriApi.didSubscribe) {
       throw new Error("webviewDidSubscribe should only be called once");
     }
 
     await invoke("webview_did_subscribe", { hasSubscribed: true });
-    TauriService.didSubscribe = true;
+    TauriApi.didSubscribe = true;
   }
 
   public static async ecsSubscriptionListener(cb: SubscriptionCallback) {
-    TauriService.disposeEcsSubscriptionListener();
-    TauriService.ecsListener = await listen("ecs-subscription", ((event: Event<SubscriptionEvents | null>) => {
+    TauriApi.disposeEcsSubscriptionListener();
+    TauriApi.ecsListener = await listen("ecs-subscription", ((event: Event<SubscriptionEvents | null>) => {
       const payload = event.payload;
       payload && cb(payload);
     }));
@@ -42,7 +42,7 @@ export class TauriService {
   }
 
   public static disposeEcsSubscriptionListener() {
-    TauriService.ecsListener();
-    TauriService.ecsListener = () => { };
+    TauriApi.ecsListener();
+    TauriApi.ecsListener = () => { };
   }
 }

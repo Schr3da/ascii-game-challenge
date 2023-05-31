@@ -1,6 +1,6 @@
 import { SubscriptionEvents } from "../../shared";
 import { Subscriptions, SubscriptionCallback } from "./SubscribeService.types";
-import { TauriService } from "../TauriService";
+import { ApiService} from "../ApiService";
 
 class SubscribeService {
 
@@ -9,8 +9,8 @@ class SubscribeService {
   private subscriptions: Subscriptions = {};
 
   public init = async () => {
-    await TauriService.ecsSubscriptionListener(this.handleEvent);
-    await TauriService.webviewDidSubscribe();
+    await ApiService.ecsSubscriptionListener(this.handleEvent);
+    await ApiService.webviewDidSubscribe();
     this.isInitialised = true;
   }
 
@@ -31,7 +31,7 @@ class SubscribeService {
   }
 
   public dispose() {
-    TauriService.disposeEcsSubscriptionListener();
+    ApiService.disposeEcsSubscriptionListener();
 
     for (let id in this.subscriptions) {
       this.unsubscribe(id);

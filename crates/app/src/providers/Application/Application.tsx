@@ -6,7 +6,7 @@ import {
   useState,
 } from "react";
 
-import { TauriService } from "../../services";
+import { ApiService} from "../../services";
 
 export const ApplicationContext = createContext(null);
 
@@ -18,7 +18,7 @@ export const ApplicationProvider = ({ children }: PropsWithChildren) => {
       return;
     }
 
-    await TauriService.webviewDidMount();
+    await ApiService.webviewDidMount();
     setIsInitialised(true);
   }, []);
 
