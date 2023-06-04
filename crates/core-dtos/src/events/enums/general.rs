@@ -8,7 +8,7 @@ pub enum GeneralEvents {
     OnApplicationWillClose,
 }
 
-#[derive(Clone, Eq, PartialEq, Tsify, Serialize, Deserialize)]
+#[derive(Debug, Clone, Eq, PartialEq, Tsify, Serialize, Deserialize)]
 pub enum GeneralSubscription {
     OnApplicationDidStart,
     OnApplicationDidInitialise,

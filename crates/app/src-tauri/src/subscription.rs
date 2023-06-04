@@ -11,7 +11,7 @@ async fn handle_general(event: &GeneralSubscription, state: &mut AppState) -> bo
             let next = SendEvents::Renderer(RenderEvents::OnWorldWillUpdate);
             state.send(next).await;
             true
-        },
+        }
     }
 }
 
@@ -32,8 +32,7 @@ async fn handle_renderer(
             };
 
             app_state.ecs_current_view_state = Some(view.state.clone());
-
-            window.emit("ecs-subscription", event).unwrap();
+            _ = window.emit("ecs-subscription", event);
         }
     };
 
@@ -49,7 +48,7 @@ pub async fn subscription_handler(
         Some(e) => e,
         None => return true,
     };
-    
+
     match unwrapped_event {
         SubscriptionEvents::General(e) => handle_general(e, state).await,
         SubscriptionEvents::Ui(e) => handle_ui(e).await,

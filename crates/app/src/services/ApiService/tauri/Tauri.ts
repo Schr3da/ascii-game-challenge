@@ -1,7 +1,7 @@
 import { invoke } from "@tauri-apps/api";
 import { UnlistenFn, listen, Event } from "@tauri-apps/api/event";
-import { SendEvents, SubscriptionEvents } from "../../../shared";
-import { SubscriptionCallback } from "../../SubsriberService";
+import { SendEvents } from "../../../shared";
+import { SubscriptionCallback, SubscriptionEventTypes } from "../../SubsriberService";
 
 export class TauriApi {
 
@@ -31,7 +31,7 @@ export class TauriApi {
 
   public static async ecsSubscriptionListener(cb: SubscriptionCallback) {
     TauriApi.disposeEcsSubscriptionListener();
-    TauriApi.ecsListener = await listen("ecs-subscription", ((event: Event<SubscriptionEvents | null>) => {
+    TauriApi.ecsListener = await listen("ecs-subscription", ((event: Event<SubscriptionEventTypes | null>) => {
       const payload = event.payload;
       payload && cb(payload);
     }));

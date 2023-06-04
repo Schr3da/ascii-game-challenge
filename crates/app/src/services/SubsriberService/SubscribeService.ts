@@ -1,6 +1,5 @@
-import { SubscriptionEvents } from "../../shared";
-import { Subscriptions, SubscriptionCallback } from "./SubscribeService.types";
-import { ApiService} from "../ApiService";
+import { Subscriptions, SubscriptionCallback, SubscriptionEventTypes } from "./SubscribeService.types";
+import { ApiService } from "../ApiService";
 
 class SubscribeService {
 
@@ -14,7 +13,7 @@ class SubscribeService {
     this.isInitialised = true;
   }
 
-  private handleEvent = (event: SubscriptionEvents) => {
+  private handleEvent = (event: SubscriptionEventTypes) => {
     Object.values(this.subscriptions).forEach((cb) => {
       cb && cb(event);
     });

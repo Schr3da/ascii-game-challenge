@@ -1,6 +1,7 @@
 import { useCallback, useRef } from "react";
+
 import { ApiService } from "../../services";
-import { config } from "../../config";
+import { calculateGridSize } from "../../utils";
 
 export const useResize = () => {
 
@@ -10,10 +11,7 @@ export const useResize = () => {
     clearTimeout(debounceTimer.current);
 
     debounceTimer.current = setTimeout(() => {
-      const size = config.tileSize;
-      const columns = Math.floor(window.innerWidth / size);
-      const rows = Math.floor(window.innerHeight / size);
-
+      const { columns, rows } = calculateGridSize();
       ApiService.sendEcsEvent({
         General: { OnApplicationResize: [columns, rows] },
       });

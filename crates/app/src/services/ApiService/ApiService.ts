@@ -35,8 +35,8 @@ export class ApiService {
     if (!this.isTauriSuppored) {
       return Promise.resolve();
     }
-    console.log(event);
 
+    console.log("sending event to rust: ", event);
     await TauriApi.sendEcsEvent(event);
   }
 

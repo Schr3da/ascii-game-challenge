@@ -10,7 +10,7 @@ pub enum SendEvents {
     Renderer(RenderEvents),
 }
 
-#[derive(Clone, Eq, PartialEq, Tsify, Serialize, Deserialize)]
+#[derive(Debug, Clone, Eq, PartialEq, Tsify, Serialize, Deserialize)]
 pub enum SubscriptionEvents {
     General(GeneralSubscription),
     Ui(UiSubscription),

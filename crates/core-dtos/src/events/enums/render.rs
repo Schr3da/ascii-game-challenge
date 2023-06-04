@@ -8,7 +8,7 @@ pub enum RenderEvents {
     OnWorldWillUpdate,
 }
 
-#[derive(Clone, Eq, PartialEq, Serialize, Deserialize, Tsify)]
+#[derive(Debug, Clone, Eq, PartialEq, Serialize, Deserialize, Tsify)]
 pub enum RenderSubscription {
     OnWorldDidUpdate(Option<UiView>),
 }

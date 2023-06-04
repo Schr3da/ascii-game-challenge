@@ -31,18 +31,16 @@ pub async fn webview_init_handler(
     }
 }
 
-pub async fn webview_event_handler(
-    event: Option<WebViewEvents>,
-    state: &mut AppState,
-) {
-
+pub async fn webview_event_handler(event: Option<WebViewEvents>, state: &mut AppState) -> bool {
     let unwrapped_event = match event {
         Some(e) => e,
-        None => return,
+        None => return false,
     };
 
     match unwrapped_event {
         WebViewEvents::OnEcsEvent(e) => state.send(e).await,
-        _ => return,
+        _ => return false,
     };
+
+    return true;
 }

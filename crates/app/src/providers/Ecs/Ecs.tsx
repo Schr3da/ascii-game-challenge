@@ -1,29 +1,97 @@
 import { PropsWithChildren, createContext, useCallback, useState } from "react";
-import { SubscriptionEvents } from "../../shared";
+
 import { useSubscribe } from "../../hooks";
 import { EcsContextValue } from "./Ecs.types";
-
-const defaultEvent = (): SubscriptionEvents => ({
-  General: "OnApplicationDidStart",
-});
+import { SubscriptionEventTypes } from "../../services";
+import {
+  GeneralSubscription,
+  RenderSubscription,
+  UiSubscription,
+  UiView,
+} from "../../shared";
 
 export const EcsContext = createContext<EcsContextValue | null>(null);
 
+const isGeneralSubscription = (event: any): event is GeneralSubscription =>
+  event.OnApplicationDidStart ||
+  event.OnApplicationDidInitialise ||
+  event.OnApplicationDidClose;
+
+const isUiSubscription = (event: any): event is UiSubscription =>
+  event.UnknownUiSubscription;
+
+const isRendererSubscription = (event: any): event is RenderSubscription =>
+  event.OnWorldDidUpdate;
+
 export const EcsProvider = ({ children }: PropsWithChildren) => {
-  const [nextEvent, setNextEvent] = useState<SubscriptionEvents>(
-    defaultEvent()
+  const [view, setView] = useState<UiView | null>(null);
+
+  const [previousGeneralEvent, setPreviousGeneralEvent] =
+    useState<GeneralSubscription>("OnApplicationDidStart");
+
+  const [nextGeneralEvent, setNextGeneralEvent] = useState<GeneralSubscription>(
+    "OnApplicationDidStart"
   );
 
-  const [previousEvent, setPreviousEvent] = useState<SubscriptionEvents>(
-    defaultEvent()
+  const [previousUiEvent, setPreviousUiEvent] = useState<UiSubscription>(
+    "UnknownUiSubscription"
+  );
+
+  const [nextUiEvent, setUiEvent] = useState<UiSubscription>(
+    "UnknownUiSubscription"
+  );
+
+  const [previousRendererEvent, setPreviousRendererEvent] =
+    useState<RenderSubscription>({ OnWorldDidUpdate: null });
+
+  const [nextRendererEvent, setRendererEvent] = useState<RenderSubscription>({
+    OnWorldDidUpdate: null,
+  });
+
+  const handleGeneralSubscription = useCallback(
+    (event: GeneralSubscription) => {
+      setPreviousGeneralEvent(nextGeneralEvent);
+      return setNextGeneralEvent(event);
+    },
+    [nextGeneralEvent]
+  );
+
+  const handleUiSubscription = useCallback(
+    (event: UiSubscription) => {
+      setPreviousUiEvent(nextUiEvent);
+      setUiEvent(event);
+    },
+    [nextUiEvent]
+  );
+
+  const handleRendererSubscription = useCallback(
+    (event: RenderSubscription) => {
+      setView(event.OnWorldDidUpdate);
+      setPreviousRendererEvent(nextRendererEvent);
+      setRendererEvent(event);
+    },
+    [nextRendererEvent]
   );
 
   const processEvent = useCallback(
-    (event: SubscriptionEvents) => {
-      setPreviousEvent(nextEvent);
-      setNextEvent(event);
+    (event: SubscriptionEventTypes) => {
+      if (isGeneralSubscription(event)) {
+        return handleGeneralSubscription(event);
+      }
+
+      if (isUiSubscription(event)) {
+        return handleUiSubscription(event);
+      }
+
+      if (isRendererSubscription(event)) {
+        return handleRendererSubscription(event);
+      }
     },
-    [nextEvent]
+    [
+      handleGeneralSubscription,
+      handleUiSubscription,
+      handleRendererSubscription,
+    ]
   );
 
   useSubscribe(processEvent);
@@ -31,8 +99,13 @@ export const EcsProvider = ({ children }: PropsWithChildren) => {
   return (
     <EcsContext.Provider
       value={{
-        previousEvent,
-        nextEvent,
+        view,
+        previousGeneralEvent,
+        nextGeneralEvent,
+        previousUiEvent,
+        nextUiEvent,
+        previousRendererEvent,
+        nextRendererEvent,
       }}
     >
       {children}

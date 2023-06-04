@@ -9,7 +9,7 @@ pub enum UiEvents {
     OnClick(ViewComponentIds),
 }
 
-#[derive(Clone, Eq, PartialEq, Tsify, Serialize, Deserialize)]
+#[derive(Debug, Clone, Eq, PartialEq, Tsify, Serialize, Deserialize)]
 pub enum UiSubscription {
     UnknownUiSubscription
 }
