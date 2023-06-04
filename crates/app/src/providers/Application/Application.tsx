@@ -12,10 +12,9 @@ import { useResize } from "../../hooks";
 export const ApplicationContext = createContext(null);
 
 export const ApplicationProvider = ({ children }: PropsWithChildren) => {
-  
   const [isInitialised, setIsInitialised] = useState(false);
 
-  const {registerWindowResize, unregisterWindowResize} = useResize();
+  const { registerWindowResize, unregisterWindowResize } = useResize();
 
   const applicationDidMount = useCallback(async () => {
     if (isInitialised) {
@@ -23,14 +22,18 @@ export const ApplicationProvider = ({ children }: PropsWithChildren) => {
     }
 
     await ApiService.webviewDidMount();
+    registerWindowResize();
+
     setIsInitialised(true);
   }, []);
 
+  const applicationWillUnmount = useCallback(() => {
+    unregisterWindowResize();
+  }, []);
 
   useEffect(() => {
     applicationDidMount();
-    registerWindowResize();
-    return unregisterWindowResize 
+    return applicationWillUnmount;
   }, []);
 
   return (
