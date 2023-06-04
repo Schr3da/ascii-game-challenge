@@ -2,7 +2,6 @@ use tauri::Window;
 
 use core_dtos::prelude::*;
 use core_state::prelude::*;
-use tokio::sync::mpsc::error::TryRecvError;
 
 use crate::export::prelude::*;
 
@@ -33,12 +32,13 @@ pub async fn webview_init_handler(
 }
 
 pub async fn webview_event_handler(
-    event: Result<WebViewEvents, TryRecvError>,
+    event: Option<WebViewEvents>,
     state: &mut AppState,
 ) {
+
     let unwrapped_event = match event {
-        Ok(e) => e,
-        Err(_) => return,
+        Some(e) => e,
+        None => return,
     };
 
     match unwrapped_event {

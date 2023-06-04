@@ -6,12 +6,16 @@ import {
   useState,
 } from "react";
 
-import { ApiService} from "../../services";
+import { ApiService } from "../../services";
+import { useResize } from "../../hooks";
 
 export const ApplicationContext = createContext(null);
 
 export const ApplicationProvider = ({ children }: PropsWithChildren) => {
+  
   const [isInitialised, setIsInitialised] = useState(false);
+
+  const {registerWindowResize, unregisterWindowResize} = useResize();
 
   const applicationDidMount = useCallback(async () => {
     if (isInitialised) {
@@ -22,8 +26,11 @@ export const ApplicationProvider = ({ children }: PropsWithChildren) => {
     setIsInitialised(true);
   }, []);
 
+
   useEffect(() => {
     applicationDidMount();
+    registerWindowResize();
+    return unregisterWindowResize 
   }, []);
 
   return (

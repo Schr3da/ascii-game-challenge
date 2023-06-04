@@ -2,9 +2,13 @@
 /* eslint-disable */
 export type OptionMenuIds = "Title" | "OptionList" | "Back";
 
-export type RenderSubscription = { OnWorldDidUpdate: UiView | null };
+export interface Asset {
+    id: AssetTypes;
+    cells: Cell[];
+    description: string | null;
+}
 
-export type RenderEvents = "OnWorldWillUpdate";
+export type AssetTypes = "wall" | "unknownAssetType";
 
 export type Ascii = "space" | "plus" | "minus" | "a";
 
@@ -17,6 +21,12 @@ export interface UiViewState {
     selectable_ids: ViewComponentIds[];
 }
 
+export type SelectionDirections = "Next" | "Previous";
+
+export type GeneralSubscription = "OnApplicationDidStart" | "OnApplicationDidInitialise" | "OnApplicationDidClose";
+
+export type GeneralEvents = { OnApplicationResize: [number, number] } | { OnApplicationWillInitialise: [number, number] } | "OnApplicationWillClose";
+
 export interface UiLayout {
     margin: number;
     alignment: LayoutAlignments;
@@ -27,8 +37,6 @@ export interface Sprite {
     asset: Asset;
     frame: Rect;
 }
-
-export type SelectionDirections = "Next" | "Previous";
 
 export interface UiList {
     id: ViewComponentIds;
@@ -47,32 +55,24 @@ export type UiViewIds = "Main" | "Game" | "Options";
 
 export type CellColors = "black" | "white";
 
-export interface Asset {
-    id: AssetTypes;
-    cells: Cell[];
-    description: string | null;
-}
+export type RenderSubscription = { OnWorldDidUpdate: UiView | null };
 
-export type AssetTypes = "wall" | "unknownAssetType";
-
-export type GeneralSubscription = "OnApplicationDidInitialise" | "OnApplicationDidClose";
-
-export type GeneralEvents = { OnApplicationResize: [number, number] } | { OnApplicationWillInitialise: [number, number] } | "OnApplicationWillClose";
+export type RenderEvents = "OnWorldWillUpdate";
 
 export type ViewComponentIds = { Main: MainMenuIds } | { Options: OptionMenuIds } | { Game: GameIds };
 
-export interface Interaction {
-    is_enabled: boolean;
-    is_selected: boolean;
-}
+export type UiSubscription = "UnknownUiSubscription";
+
+export type UiEvents = { OnSelect: SelectionDirections } | { OnClick: ViewComponentIds };
 
 export type LayoutConstraints = { Percentage: number } | { Value: number } | { MinValue: number } | { MaxValue: number };
 
 export type LayoutAlignments = "Horizontal" | "Vertical";
 
-export type UiSubscription = "UnknownUiSubscription";
-
-export type UiEvents = { OnSelect: SelectionDirections } | { OnClick: ViewComponentIds };
+export interface Interaction {
+    is_enabled: boolean;
+    is_selected: boolean;
+}
 
 export type GameIds = "Time" | "Turns" | "Canvas" | "Menu" | "Stones" | "Wood" | "Food" | "None";
 
@@ -91,6 +91,12 @@ export interface UiLabel {
     alignment: TextAlignment;
 }
 
+export type EcsEvents = { Send: SendEvents } | { Subscriber: SubscriptionEvents };
+
+export type SubscriptionEvents = { General: GeneralSubscription } | { Ui: UiSubscription } | { Renderer: RenderSubscription };
+
+export type SendEvents = { General: GeneralEvents } | { Ui: UiEvents } | { Renderer: RenderEvents };
+
 export type TextAlignment = "Center" | "Left" | "Right";
 
 export interface Cell {
@@ -100,8 +106,3 @@ export interface Cell {
     isBold: boolean;
 }
 
-export type EcsEvents = { Send: SendEvents } | { Subscriber: SubscriptionEvents };
-
-export type SubscriptionEvents = { General: GeneralSubscription } | { Ui: UiSubscription } | { Renderer: RenderSubscription };
-
-export type SendEvents = { General: GeneralEvents } | { Ui: UiEvents } | { Renderer: RenderEvents };

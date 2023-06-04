@@ -5,12 +5,13 @@ use core_state::prelude::*;
 
 async fn handle_general(event: &GeneralSubscription, state: &mut AppState) -> bool {
     match event {
+        GeneralSubscription::OnApplicationDidStart => true,
         GeneralSubscription::OnApplicationDidClose => false,
         GeneralSubscription::OnApplicationDidInitialise => {
             let next = SendEvents::Renderer(RenderEvents::OnWorldWillUpdate);
             state.send(next).await;
             true
-        }
+        },
     }
 }
 
@@ -48,7 +49,7 @@ pub async fn subscription_handler(
         Some(e) => e,
         None => return true,
     };
-    window.emit("ecs-subscription", event.clone()).unwrap();
+    
     match unwrapped_event {
         SubscriptionEvents::General(e) => handle_general(e, state).await,
         SubscriptionEvents::Ui(e) => handle_ui(e).await,

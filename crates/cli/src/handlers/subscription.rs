@@ -10,6 +10,7 @@ use crate::export::prelude::*;
 
 async fn handle_general(event: GeneralSubscription, state: &mut AppState) -> bool {
     match event {
+        GeneralSubscription::OnApplicationDidStart=> true,
         GeneralSubscription::OnApplicationDidClose => false,
         GeneralSubscription::OnApplicationDidInitialise => {
             let next = SendEvents::Renderer(RenderEvents::OnWorldWillUpdate);

@@ -1,21 +1,14 @@
-import { useCallback, useState } from "react";
-
-import { useSubscribe } from "./hooks";
-import { SubscriptionEvents } from "./shared";
+import { PixiCanvas } from "./features";
+import { EcsProvider } from "./providers";
 
 const App = () => {
-  let [data, setData] = useState<any[]>([]);
-
-  const processEvent = useCallback(
-    (event: SubscriptionEvents) => {
-      setData([...data, event]);
-    },
-    [data]
+  return (
+    <div className="screen-w screen-h overflow-hidden">
+      <EcsProvider>
+        <PixiCanvas/>
+      </EcsProvider>
+    </div>
   );
-
-  useSubscribe(processEvent);
-
-  return <div className="container">{JSON.stringify(data)}</div>;
 };
 
 export default App;

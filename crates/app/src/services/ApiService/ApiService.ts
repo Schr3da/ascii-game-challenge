@@ -35,6 +35,7 @@ export class ApiService {
     if (!this.isTauriSuppored) {
       return Promise.resolve();
     }
+    console.log(event);
 
     await TauriApi.sendEcsEvent(event);
   }

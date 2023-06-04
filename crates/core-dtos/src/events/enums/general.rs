@@ -10,6 +10,7 @@ pub enum GeneralEvents {
 
 #[derive(Clone, Eq, PartialEq, Tsify, Serialize, Deserialize)]
 pub enum GeneralSubscription {
+    OnApplicationDidStart,
     OnApplicationDidInitialise,
     OnApplicationDidClose,
 }

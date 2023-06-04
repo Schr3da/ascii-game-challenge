@@ -21,9 +21,9 @@ pub fn run(window: Window, js_receiver: Receiver<WebViewEvents>) {
         }
 
         loop {
-            let webview_event = webview_event_receiver.try_recv();
+            let webview_event = webview_event_receiver.recv().await;
             webview_event_handler(webview_event, &mut state).await;
-
+            
             let subscription_event = state.ecs_subscription_receiver.recv().await;
             let should_continue =
                 subscription_handler(subscription_event, &mut state, &window).await;
