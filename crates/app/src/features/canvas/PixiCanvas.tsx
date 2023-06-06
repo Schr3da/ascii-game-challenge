@@ -1,13 +1,14 @@
 import { Stage, Text } from "@pixi/react";
-import { MouseEvent, useCallback, KeyboardEvent, useEffect } from "react";
+import { MouseEvent, useCallback } from "react";
 
 import { useEcsContext } from "../../providers";
-import { ApiService } from "../../services";
 import { TextStyle } from "pixi.js";
-import { calculateGridSize } from "../../utils";
+import { useKeyboardControls } from "../../hooks/useKeyboardControls/useKeyboardControls";
 
 export const PixiCanvas = () => {
   const { view } = useEcsContext();
+
+  const { handleKeyUp } = useKeyboardControls(view);
 
   const handleClick = useCallback((event: MouseEvent<HTMLCanvasElement>) => {
     const target = event.target as HTMLCanvasElement;
@@ -15,37 +16,6 @@ export const PixiCanvas = () => {
       return;
     }
     // handle mouse click event;
-  }, []);
-
-  const handleKeyUp = useCallback(
-    (event: KeyboardEvent<HTMLCanvasElement>) => {
-      if (view == null) {
-        return;
-      }
-
-      switch (event.key) {
-        case "q":
-          return ApiService.sendEcsEvent({ General: "OnApplicationWillClose" });
-        case "ArrowUp":
-          return ApiService.sendEcsEvent({ Ui: { OnSelect: "Previous" } });
-        case "ArrowDown":
-          return ApiService.sendEcsEvent({ Ui: { OnSelect: "Next" } });
-        case "Enter":
-          return ApiService.sendEcsEvent({
-            Ui: { OnClick: view.state.selected_id },
-          });
-        default:
-          return;
-      }
-    },
-    [view]
-  );
-
-  useEffect(() => {
-    const { columns, rows } = calculateGridSize();
-    ApiService.sendEcsEvent({
-      General: { OnApplicationWillInitialise: [columns, rows] },
-    });
   }, []);
 
   return (
@@ -58,7 +28,7 @@ export const PixiCanvas = () => {
       onKeyUp={handleKeyUp}
     >
       <Text
-        text="asds"
+        text="Canvas"
         x={window.innerWidth * 0.5}
         y={window.innerHeight * 0.5}
         style={

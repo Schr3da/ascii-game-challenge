@@ -1,6 +1,6 @@
 import clsx from "clsx";
 
-import { PixiCanvas } from "./features";
+import { ViewRouter } from "./features";
 import { EcsProvider, useApplicationContext } from "./providers";
 
 import { WindowHeader } from "./features";
@@ -11,7 +11,7 @@ const App = () => {
   const { platform } = useApplicationContext();
 
   const wrapperClassName = useMemo(() => {
-    const next = "h-screen w-screen overflow-hidden bg-black";
+    const next = "h-screen w-screen overflow-hidden bg-black text-white";
 
     switch (platform) {
       case Platforms.Macos:
@@ -25,7 +25,7 @@ const App = () => {
     <div className={wrapperClassName}>
       <EcsProvider>
         <WindowHeader platform={platform} />
-        <PixiCanvas />
+        <ViewRouter />
       </EcsProvider>
     </div>
   );
