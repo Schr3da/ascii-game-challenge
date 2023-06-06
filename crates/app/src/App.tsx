@@ -1,3 +1,5 @@
+import clsx from "clsx";
+
 import { PixiCanvas } from "./features";
 import { EcsProvider, useApplicationContext } from "./providers";
 
@@ -13,9 +15,9 @@ const App = () => {
 
     switch (platform) {
       case Platforms.Macos:
-        return next + " rounded-xl";
+        return clsx(next, "rounded-xl");
       default:
-        return next + " rounded-md";
+        return clsx(next, "rounded-md");
     }
   }, [platform]);
 

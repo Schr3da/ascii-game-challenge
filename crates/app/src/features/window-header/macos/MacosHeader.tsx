@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { useCallback, useMemo } from "react";
 import { ApiService } from "../../../services";
 
@@ -11,7 +12,7 @@ export const MacosHeader = () => {
   );
 
   const applyButtonClassName = useCallback((color: String) => {
-    return `border-1 border-white rounded-full ${color}`;
+    return clsx("border-1 border-white rounded-full", color);
   }, []);
 
   return (
