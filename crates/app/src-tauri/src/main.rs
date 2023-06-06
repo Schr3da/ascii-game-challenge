@@ -17,6 +17,7 @@ fn main() {
         .manage(signal)
         .setup(move |app| {
             let main_window = app.get_window("main").unwrap();
+            main_window.open_devtools();
             init::run(main_window, signal_receiver);
             Ok(())
         })

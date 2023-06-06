@@ -24,12 +24,16 @@ export const PixiCanvas = () => {
       }
 
       switch (event.key) {
+        case "q":
+          return ApiService.sendEcsEvent({ General: "OnApplicationWillClose" });
         case "ArrowUp":
-          ApiService.sendEcsEvent({ Ui: { OnSelect: "Previous" } });
+          return ApiService.sendEcsEvent({ Ui: { OnSelect: "Previous" } });
         case "ArrowDown":
-          ApiService.sendEcsEvent({ Ui: { OnSelect: "Next" } });
+          return ApiService.sendEcsEvent({ Ui: { OnSelect: "Next" } });
         case "Enter":
-          ApiService.sendEcsEvent({ Ui: { OnClick: view.state.selected_id } });
+          return ApiService.sendEcsEvent({
+            Ui: { OnClick: view.state.selected_id },
+          });
         default:
           return;
       }

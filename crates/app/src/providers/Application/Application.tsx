@@ -6,13 +6,18 @@ import {
   useState,
 } from "react";
 
-import { ApiService } from "../../services";
+import { ApiService, Platforms } from "../../services";
 import { useResize } from "../../hooks";
+import { ApplicationContextValue } from "./Application.types";
 
-export const ApplicationContext = createContext(null);
+export const ApplicationContext = createContext<ApplicationContextValue | null>(
+  null
+);
 
 export const ApplicationProvider = ({ children }: PropsWithChildren) => {
   const [isInitialised, setIsInitialised] = useState(false);
+
+  const [platform, setPlatform] = useState(Platforms.Web);
 
   const { registerWindowResize, unregisterWindowResize } = useResize();
 
@@ -21,9 +26,12 @@ export const ApplicationProvider = ({ children }: PropsWithChildren) => {
       return;
     }
 
+    const platform = await ApiService.getPlatform();
     await ApiService.webviewDidMount();
+
     registerWindowResize();
 
+    setPlatform(platform);
     setIsInitialised(true);
   }, []);
 
@@ -37,7 +45,11 @@ export const ApplicationProvider = ({ children }: PropsWithChildren) => {
   }, []);
 
   return (
-    <ApplicationContext.Provider value={null}>
+    <ApplicationContext.Provider
+      value={{
+        platform,
+      }}
+    >
       {isInitialised && children}
     </ApplicationContext.Provider>
   );
