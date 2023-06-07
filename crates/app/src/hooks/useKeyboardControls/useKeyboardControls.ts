@@ -4,11 +4,10 @@ import { UiView } from "../../shared";
 
 export const useKeyboardControls = (view: UiView | null) => {
   const handleKeyUp = useCallback(
-    (event: KeyboardEvent<HTMLCanvasElement>) => {
+    (event: KeyboardEvent<unknown>) => {
       if (view == null) {
         return;
       }
-
       switch (event.key) {
         case "q":
           return ApiService.sendEcsEvent({ General: "OnApplicationWillClose" });

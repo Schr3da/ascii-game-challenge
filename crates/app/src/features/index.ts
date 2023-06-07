@@ -1,2 +1,2 @@
-export * from "./window-header";
-export * from "./view-router";
+export * from "./WindowHeader";
+export * from "./ViewRouter";

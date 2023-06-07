@@ -44,7 +44,6 @@ export const NavigationProvider = ({ children }: PropsWithChildren) => {
     }
 
     if (nextView.id === previousView.id) {
-      console.log("callllll", previousView, nextView);
       return;
     }
 

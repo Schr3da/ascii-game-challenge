@@ -1,8 +1,5 @@
 import { Route, Routes } from "react-router-dom";
 import { MainMenu, Options, PixiCanvas } from "./views";
-import { useEffect } from "react";
-import { calculateGridSize } from "../../utils";
-import { ApiService } from "../../services";
 import { NavigationRoutes } from "../../providers/Navigation/Navigation.types";
 
 export const ViewRouter = () => {

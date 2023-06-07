@@ -1,6 +1,6 @@
 import { Platforms } from "../../services";
-import { MacosHeader } from "./macos";
-import { WindowsHeader } from "./windows";
+import { MacosHeader } from "./Macos";
+import { WindowsHeader } from "./Windows";
 import { WindowHeaderProps } from "./WindowHeader.types";
 
 export const WindowHeader = ({ platform }: WindowHeaderProps) => {

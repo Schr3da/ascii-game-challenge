@@ -6,6 +6,7 @@ use crate::prelude::*;
 #[derive(Clone, Tsify, Serialize, Deserialize)]
 pub enum UiEvents {
     OnSelect(SelectionDirections),
+    OnSelectById(ViewComponentIds),
     OnClick(ViewComponentIds),
 }
 
