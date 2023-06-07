@@ -19,7 +19,7 @@ export const WindowsHeader = () => {
   return (
     <div
       data-tauri-drag-region
-      className="flex flex-column h-7 space-x-2 justify-end items-center p-2 z-10"
+      className="absolute left-2 right-2 top-0 flex flex-column h-7 space-x-2 justify-end items-center z-10"
     >
       <div
         className={applyButtonClassName("bg-gray-500")}
