@@ -1,13 +1,10 @@
 import clsx from "clsx";
 
 import { ButtonProps } from "./Button.types";
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback } from "react";
 import { ApiService } from "../../../../services";
 
-export const Button = ({
-  id,
-  children,
-}: ButtonProps) => {
+export const Button = ({ id, children }: ButtonProps) => {
   const handleClick = useCallback(() => {
     ApiService.sendEcsEvent({ Ui: { OnClick: id } });
   }, [id]);

@@ -1,7 +1,7 @@
 import { Button } from "../../components";
 import { ViewComponentIds } from "../../../../shared";
-import { useKeyboardControls } from "../../../../hooks/useKeyboardControls/useKeyboardControls";
 import { useEcsContext } from "../../../../providers";
+import { useKeyboardControls } from "../../../../hooks";
 
 const NewGameId: ViewComponentIds = { Main: "NewGame" };
 
@@ -14,7 +14,6 @@ export const MainMenu = () => {
 
   const { handleKeyUp } = useKeyboardControls(nextView);
 
-  console.log("callll");
   return (
     <div
       className="w-full h-full flex flex-col justify-center items-center space-y-4"
