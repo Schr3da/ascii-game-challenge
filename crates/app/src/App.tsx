@@ -1,7 +1,7 @@
 import clsx from "clsx";
 
 import { ViewRouter } from "./features";
-import { EcsProvider, useApplicationContext } from "./providers";
+import { useApplicationContext } from "./providers";
 
 import { WindowHeader } from "./features";
 import { useMemo } from "react";
@@ -11,7 +11,7 @@ const App = () => {
   const { platform } = useApplicationContext();
 
   const wrapperClassName = useMemo(() => {
-    const next = "h-screen w-screen overflow-hidden bg-black text-white";
+    const next = "h-screen w-screen overflow-hidden bg-black text-white px-2 py-2";
 
     switch (platform) {
       case Platforms.Macos:
@@ -23,10 +23,8 @@ const App = () => {
 
   return (
     <div className={wrapperClassName}>
-      <EcsProvider>
-        <WindowHeader platform={platform} />
-        <ViewRouter />
-      </EcsProvider>
+      <WindowHeader platform={platform} />
+      <ViewRouter />
     </div>
   );
 };

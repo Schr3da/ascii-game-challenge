@@ -24,7 +24,8 @@ const isRendererSubscription = (event: any): event is RenderSubscription =>
   event.OnWorldDidUpdate;
 
 export const EcsProvider = ({ children }: PropsWithChildren) => {
-  const [view, setView] = useState<UiView | null>(null);
+  const [nextView, setNextView] = useState<UiView | null>(null);
+  const [previousView, setPreviousView] = useState<UiView | null>(null);
 
   const [previousGeneralEvent, setPreviousGeneralEvent] =
     useState<GeneralSubscription>("OnApplicationDidStart");
@@ -66,11 +67,12 @@ export const EcsProvider = ({ children }: PropsWithChildren) => {
 
   const handleRendererSubscription = useCallback(
     (event: RenderSubscription) => {
-      setView(event.OnWorldDidUpdate);
+      setPreviousView(nextView);
+      setNextView(event.OnWorldDidUpdate);
       setPreviousRendererEvent(nextRendererEvent);
       setRendererEvent(event);
     },
-    [nextRendererEvent]
+    [nextRendererEvent, nextView]
   );
 
   const processEvent = useCallback(
@@ -99,7 +101,8 @@ export const EcsProvider = ({ children }: PropsWithChildren) => {
   return (
     <EcsContext.Provider
       value={{
-        view,
+        previousView,
+        nextView,
         previousGeneralEvent,
         nextGeneralEvent,
         previousUiEvent,

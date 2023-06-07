@@ -18,7 +18,7 @@ export const MacosHeader = () => {
   return (
     <div
       data-tauri-drag-region
-      className="flex flex-column h-7 space-x-2 items-center p-2 z-10"
+      className="flex flex-column h-6 space-x-2 items-center z-10"
     >
       <div
         className={applyButtonClassName("bg-red-400")}

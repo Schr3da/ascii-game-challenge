@@ -1,7 +1,8 @@
 import { GeneralSubscription, RenderSubscription, UiSubscription, UiView } from "../../shared";
 
 export type EcsContextValue = {
-  view: UiView | null;
+  previousView: UiView | null;
+  nextView: UiView | null;
   previousGeneralEvent: GeneralSubscription;
   nextGeneralEvent: GeneralSubscription;
   previousUiEvent: UiSubscription;

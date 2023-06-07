@@ -1,13 +1,23 @@
 import ReactDOM from "react-dom/client";
-import App from "./App";
-import "./styles.css";
-import { ApplicationProvider } from "./providers";
 import { BrowserRouter } from "react-router-dom";
+
+import App from "./App";
+import {
+  ApplicationProvider,
+  EcsProvider,
+  NavigationProvider,
+} from "./providers";
+
+import "./styles.css";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <BrowserRouter>
     <ApplicationProvider>
-      <App />
+      <EcsProvider>
+        <NavigationProvider>
+          <App />
+        </NavigationProvider>
+      </EcsProvider>
     </ApplicationProvider>
   </BrowserRouter>
 );

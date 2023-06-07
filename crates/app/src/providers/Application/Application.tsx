@@ -9,6 +9,7 @@ import {
 import { ApiService, Platforms } from "../../services";
 import { useResize } from "../../hooks";
 import { ApplicationContextValue } from "./Application.types";
+import { calculateGridSize } from "../../utils";
 
 export const ApplicationContext = createContext<ApplicationContextValue | null>(
   null
@@ -26,13 +27,18 @@ export const ApplicationProvider = ({ children }: PropsWithChildren) => {
       return;
     }
 
+    const { columns, rows } = calculateGridSize();
     const platform = await ApiService.getPlatform();
+    
     await ApiService.webviewDidMount();
-
     registerWindowResize();
 
     setPlatform(platform);
     setIsInitialised(true);
+
+    ApiService.sendEcsEvent({
+      General: { OnApplicationWillInitialise: [columns, rows] },
+    });
   }, []);
 
   const applicationWillUnmount = useCallback(() => {

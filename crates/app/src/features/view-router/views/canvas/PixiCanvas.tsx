@@ -1,12 +1,12 @@
 import { Stage, Text } from "@pixi/react";
 import { MouseEvent, useCallback } from "react";
 
-import { useEcsContext } from "../../providers";
+import { useEcsContext } from "../../../../providers";
 import { TextStyle } from "pixi.js";
-import { useKeyboardControls } from "../../hooks/useKeyboardControls/useKeyboardControls";
+import { useKeyboardControls } from "../../../../hooks/useKeyboardControls/useKeyboardControls";
 
 export const PixiCanvas = () => {
-  const { view } = useEcsContext();
+  const { nextView: view } = useEcsContext();
 
   const { handleKeyUp } = useKeyboardControls(view);
 

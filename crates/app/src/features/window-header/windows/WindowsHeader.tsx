@@ -1,3 +1,5 @@
+import clsx from "clsx";
+
 import { useCallback, useMemo } from "react";
 import { ApiService } from "../../../services";
 
@@ -11,7 +13,7 @@ export const WindowsHeader = () => {
   );
 
   const applyButtonClassName = useCallback((color: String) => {
-    return `rounded-sm ${color}`;
+    return clsx("rounded-sm", color);
   }, []);
 
   return (
@@ -22,12 +24,12 @@ export const WindowsHeader = () => {
       <div
         className={applyButtonClassName("bg-gray-500")}
         style={buttonStyles}
-        onClick={ApiService.maximiseApplication}
+        onClick={ApiService.minimiseApplication}
       />
       <div
         className={applyButtonClassName("bg-gray-500")}
         style={buttonStyles}
-        onClick={ApiService.minimiseApplication}
+        onClick={ApiService.maximiseApplication}
       />
 
       <div

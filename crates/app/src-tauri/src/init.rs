@@ -27,6 +27,7 @@ pub fn run(window: Window, js_receiver: Receiver<WebViewEvents>) {
             let should_continue =
                 subscription_handler(subscription_event.ok(), &mut state, &window).await;
             if !should_continue {
+                _ = window.close();
                 break;
             }
 

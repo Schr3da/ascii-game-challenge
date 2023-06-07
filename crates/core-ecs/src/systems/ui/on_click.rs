@@ -24,6 +24,11 @@ pub fn on_click_system(mut store: ResMut<UiStore>, subscriber: Res<Subscriber>) 
                     GeneralEvents::OnApplicationWillClose,
                 )));
         }
-        _ => return,
+        ViewComponentIds::Options(OptionMenuIds::Back) => {
+            store.current_view = UiViewIds::Main;
+        }
+        _ => {
+            println!("Click on item not supported {:?}", next);
+        }
     };
 }
