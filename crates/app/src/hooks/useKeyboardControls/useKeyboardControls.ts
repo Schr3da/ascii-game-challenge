@@ -16,6 +16,8 @@ export const useKeyboardControls = () => {
       switch (event.key) {
         case "q":
           return ApiService.sendEcsEvent({ General: "OnApplicationWillClose" });
+        case "Escape":
+          return ApiService.sendEcsEvent({ Ui: "OnCloseView" });
         case "ArrowUp":
           return ApiService.sendEcsEvent({ Ui: { OnSelect: "Previous" } });
         case "Tab":

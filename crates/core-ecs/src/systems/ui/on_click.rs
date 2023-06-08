@@ -10,11 +10,15 @@ pub fn on_click_system(mut store: ResMut<UiStore>, subscriber: Res<Subscriber>) 
         _ => return,
     };
 
+    let current_view = store.current_view.clone();
+
     match next {
         ViewComponentIds::Main(MainMenuIds::NewGame) => {
+            store.previous_view.push(current_view);
             store.current_view = UiViewIds::Game;
         }
         ViewComponentIds::Main(MainMenuIds::Options) => {
+            store.previous_view.push(current_view);
             store.current_view = UiViewIds::Options;
         }
         ViewComponentIds::Main(MainMenuIds::Quit) => {
@@ -25,6 +29,7 @@ pub fn on_click_system(mut store: ResMut<UiStore>, subscriber: Res<Subscriber>) 
                 )));
         }
         ViewComponentIds::Options(OptionMenuIds::Back) => {
+            store.previous_view.push(current_view);
             store.current_view = UiViewIds::Main;
         }
         _ => {

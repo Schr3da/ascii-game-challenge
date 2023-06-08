@@ -91,7 +91,10 @@ impl EventHandler for Core {
 impl Core {
     fn handle_ui_event(&mut self, event: UiEvents) {
         match event {
-            UiEvents::OnSelect(_) | UiEvents::OnSelectById(_) | UiEvents::OnClick(_) => {
+            UiEvents::OnSelect(_)
+            | UiEvents::OnSelectById(_)
+            | UiEvents::OnClick(_)
+            | UiEvents::OnCloseView => {
                 self.ui_scheduler.run(&mut self.world);
             }
         }

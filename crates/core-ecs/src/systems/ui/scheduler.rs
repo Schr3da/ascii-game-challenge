@@ -20,6 +20,7 @@ impl Scheduler for UiScheduler {
             on_select_system,
             on_select_by_id_system,
             on_click_system,
+            on_close_view_system,
             on_ui_did_update_system.after(on_click_system),
         ));
     }

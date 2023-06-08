@@ -8,6 +8,7 @@ pub enum UiEvents {
     OnSelect(SelectionDirections),
     OnSelectById(ViewComponentIds),
     OnClick(ViewComponentIds),
+    OnCloseView,
 }
 
 #[derive(Debug, Clone, Eq, PartialEq, Tsify, Serialize, Deserialize)]

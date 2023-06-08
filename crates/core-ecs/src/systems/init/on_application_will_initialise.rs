@@ -15,6 +15,8 @@ pub fn on_application_will_initialise_system(
 
     store.width = width;
     store.height = height;
+
+    store.previous_view = vec![];
     store.current_view = UiViewIds::Main;
 
     for mut v in query.iter_mut() {
