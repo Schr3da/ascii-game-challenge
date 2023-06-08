@@ -5,5 +5,5 @@ export const calculateGridSize = () => {
   const columns = Math.floor(window.innerWidth / size);
   const rows = Math.floor(window.innerHeight / size);
 
-  return {columns, rows};
-}
+  return { columns, rows };
+};

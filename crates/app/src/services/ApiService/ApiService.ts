@@ -5,8 +5,8 @@ import { SubscriptionCallback } from "../SubscribeService";
 import { Platforms } from "./ApiService.types";
 
 export class ApiService {
-
-  private static isTauriSuppored = window.__TAURI_IPC__ || window.__TAURI_METADATA__;
+  private static isTauriSuppored =
+    window.__TAURI_IPC__ || window.__TAURI_METADATA__;
 
   public static getPlatform = async (): Promise<Platforms> => {
     if (!this.isTauriSuppored) {
@@ -15,31 +15,31 @@ export class ApiService {
 
     const next = await TauriApi.getPlatform();
     return next;
-  }
+  };
 
   public static closeApplication = () => {
     if (!this.isTauriSuppored) {
       return;
     }
 
-    TauriApi.closeApplication()
-  }
+    TauriApi.closeApplication();
+  };
 
   public static minimiseApplication = () => {
     if (!this.isTauriSuppored) {
-      return
+      return;
     }
 
-    TauriApi.minimiseApplication()
-  }
+    TauriApi.minimiseApplication();
+  };
 
   public static maximiseApplication = () => {
     if (!this.isTauriSuppored) {
-      return
+      return;
     }
 
-    TauriApi.maximiseApplication()
-  }
+    TauriApi.maximiseApplication();
+  };
 
   public static webviewDidMount = async () => {
     if (!this.isTauriSuppored) {
@@ -47,7 +47,7 @@ export class ApiService {
     }
 
     await TauriApi.webviewDidMount();
-  }
+  };
 
   public static webviewDidSubscribe = async () => {
     if (!this.isTauriSuppored) {
@@ -55,7 +55,7 @@ export class ApiService {
     }
 
     await TauriApi.webviewDidSubscribe();
-  }
+  };
 
   public static ecsSubscriptionListener = async (cb: SubscriptionCallback) => {
     if (!this.isTauriSuppored) {
@@ -63,7 +63,7 @@ export class ApiService {
     }
 
     await TauriApi.ecsSubscriptionListener(cb);
-  }
+  };
 
   public static sendEcsEvent = async (event: SendEvents) => {
     if (!this.isTauriSuppored) {
@@ -72,7 +72,7 @@ export class ApiService {
 
     console.log("sending event to rust: ", event);
     await TauriApi.sendEcsEvent(event);
-  }
+  };
 
   public static disposeEcsSubscriptionListener = () => {
     if (!this.isTauriSuppored) {
@@ -80,5 +80,5 @@ export class ApiService {
     }
 
     TauriApi.disposeEcsSubscriptionListener();
-  }
+  };
 }

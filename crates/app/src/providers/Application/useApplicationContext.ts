@@ -1,4 +1,4 @@
-import { useContext } from "react"
+import { useContext } from "react";
 import { ApplicationContext } from "./Application";
 import { ApplicationContextValue } from "./Application.types";
 
@@ -10,4 +10,4 @@ export const useApplicationContext = (): ApplicationContextValue => {
   }
 
   return ctx;
-}
+};

@@ -1,5 +1,5 @@
-import { useContext } from "react"
-import { NavigationContext } from "./Navigation"
+import { useContext } from "react";
+import { NavigationContext } from "./Navigation";
 
 export const useNavigationContext = () => {
   const ctx = useContext(NavigationContext);
@@ -9,4 +9,4 @@ export const useNavigationContext = () => {
   }
 
   return ctx;
-}
+};

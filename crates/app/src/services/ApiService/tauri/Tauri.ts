@@ -1,39 +1,39 @@
 import { invoke, os } from "@tauri-apps/api";
-import { appWindow } from '@tauri-apps/api/window'
+import { appWindow } from "@tauri-apps/api/window";
 import { UnlistenFn, listen, Event } from "@tauri-apps/api/event";
 import { SendEvents } from "../../../shared";
-import { SubscriptionCallback, SubscriptionEventTypes } from "../../SubscribeService";
+import {
+  SubscriptionCallback,
+  SubscriptionEventTypes,
+} from "../../SubscribeService";
 import { Platforms } from "../ApiService.types";
 
-
 export class TauriApi {
-
   private static didSubscribe = false;
 
   private static didMount = false;
 
-  private static ecsListener: UnlistenFn = () => { };
+  private static ecsListener: UnlistenFn = () => {};
 
   public static getPlatform = async (): Promise<Platforms> => {
     const next = await os.platform();
     switch (next) {
-      case 'linux':
-      case 'dragonfly':
-      case 'freebsd':
-      case 'netbsd':
-      case 'solaris':
-      case 'openbsd':
+      case "linux":
+      case "dragonfly":
+      case "freebsd":
+      case "netbsd":
+      case "solaris":
+      case "openbsd":
         return Platforms.Linux;
-      case 'win32':
+      case "win32":
         return Platforms.Windows;
-      case 'android':
+      case "android":
         return Platforms.Android;
-      case 'ios':
+      case "ios":
         return Platforms.iOS;
-      case 'darwin':
+      case "darwin":
         return Platforms.Macos;
     }
-
   };
 
   public static closeApplication() {
@@ -68,10 +68,13 @@ export class TauriApi {
 
   public static async ecsSubscriptionListener(cb: SubscriptionCallback) {
     TauriApi.disposeEcsSubscriptionListener();
-    TauriApi.ecsListener = await listen("ecs-subscription", ((event: Event<SubscriptionEventTypes | null>) => {
-      const payload = event.payload;
-      payload && cb(payload);
-    }));
+    TauriApi.ecsListener = await listen(
+      "ecs-subscription",
+      (event: Event<SubscriptionEventTypes | null>) => {
+        const payload = event.payload;
+        payload && cb(payload);
+      }
+    );
   }
 
   public static async sendEcsEvent(event: SendEvents) {
@@ -80,6 +83,6 @@ export class TauriApi {
 
   public static disposeEcsSubscriptionListener() {
     TauriApi.ecsListener();
-    TauriApi.ecsListener = () => { };
+    TauriApi.ecsListener = () => {};
   }
 }

@@ -1,7 +1,9 @@
-import { Ref, useEffect, useState } from "react";
-import { useApplicationContext } from "../../providers"
+import { useEffect, useState } from "react";
+import { useApplicationContext } from "../../providers";
 
-export const useWrapperSize = <T extends HTMLElement | null>(ref: React.MutableRefObject<T>) => {
+export const useWrapperSize = <T extends HTMLElement | null>(
+  ref: React.MutableRefObject<T>
+) => {
   const { windowWidth, windowHeight } = useApplicationContext();
   const [width, setWidth] = useState(windowWidth);
 
@@ -16,6 +18,4 @@ export const useWrapperSize = <T extends HTMLElement | null>(ref: React.MutableR
   }, [windowWidth, windowHeight]);
 
   return { width, height };
-
-
-}
+};

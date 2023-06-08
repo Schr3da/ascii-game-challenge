@@ -12,6 +12,6 @@ export const useSubscribe = (cb: SubscriptionCallback) => {
       sharedInstance().then((instance) => {
         instance.unsubscribe(id);
       });
-    }
+    };
   }, [cb]);
-}
+};

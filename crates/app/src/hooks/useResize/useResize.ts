@@ -23,7 +23,6 @@ export const useResize = () => {
         General: { OnApplicationResize: [columns, rows] },
       });
     }, 30);
-
   }, []);
 
   const registerWindowResize = useCallback(() => {
@@ -40,5 +39,5 @@ export const useResize = () => {
     windowHeight,
     registerWindowResize,
     unregisterWindowResize,
-  }
+  };
 };

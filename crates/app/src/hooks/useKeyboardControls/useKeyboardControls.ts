@@ -3,7 +3,6 @@ import { ApiService } from "../../services";
 import { useEcsContext } from "../../providers";
 
 export const useKeyboardControls = () => {
-
   const { nextView } = useEcsContext();
 
   const handleKeyUp = useCallback(
@@ -37,5 +36,5 @@ export const useKeyboardControls = () => {
     window.addEventListener("keyup", handleKeyUp);
     return () => window.removeEventListener("keyup", handleKeyUp);
   }, [handleKeyUp]);
-  nextView
-}
+  nextView;
+};

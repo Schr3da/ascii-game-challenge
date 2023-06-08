@@ -5,7 +5,6 @@ import { useKeyboardControls } from "../../hooks";
 import { ViewRouterProps } from "./ViewRouter.types";
 
 export const ViewRouter = ({ className }: ViewRouterProps) => {
-  
   useKeyboardControls();
 
   return (

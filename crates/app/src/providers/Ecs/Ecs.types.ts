@@ -1,4 +1,10 @@
-import { GeneralSubscription, RenderSubscription, UiSubscription, UiView, ViewComponentIds } from "../../shared";
+import {
+  GeneralSubscription,
+  RenderSubscription,
+  UiSubscription,
+  UiView,
+  ViewComponentIds,
+} from "../../shared";
 
 export type EcsContextValue = {
   previousView: UiView | null;
@@ -10,4 +16,4 @@ export type EcsContextValue = {
   previousRendererEvent: RenderSubscription;
   nextRendererEvent: RenderSubscription;
   isViewComponentSelected: (id: ViewComponentIds) => boolean;
-}
+};

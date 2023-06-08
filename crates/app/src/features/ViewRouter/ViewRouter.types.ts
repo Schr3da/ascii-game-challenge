@@ -1,3 +1,3 @@
-export type ViewRouterProps ={
+export type ViewRouterProps = {
   className: string;
-}
+};

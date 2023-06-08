@@ -1,5 +1,5 @@
-import { useContext } from "react"
-import { EcsContext } from "./Ecs"
+import { useContext } from "react";
+import { EcsContext } from "./Ecs";
 import { EcsContextValue } from "./Ecs.types";
 
 export const useEcsContext = (): EcsContextValue => {
@@ -10,4 +10,4 @@ export const useEcsContext = (): EcsContextValue => {
   }
 
   return ctx;
-}
+};

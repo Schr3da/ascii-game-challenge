@@ -1,6 +1,13 @@
-import { GeneralSubscription, RenderSubscription, UiSubscription } from "../../shared";
+import {
+  GeneralSubscription,
+  RenderSubscription,
+  UiSubscription,
+} from "../../shared";
 
-export type SubscriptionEventTypes = RenderSubscription | UiSubscription | GeneralSubscription;
+export type SubscriptionEventTypes =
+  | RenderSubscription
+  | UiSubscription
+  | GeneralSubscription;
 
 export type SubscriptionCallback = (event: SubscriptionEventTypes) => void;
 

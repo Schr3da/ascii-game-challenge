@@ -11,7 +11,7 @@ export const Button = ({ id, children, isSelected }: ButtonProps) => {
 
   return (
     <div
-      className={clsx(  
+      className={clsx(
         "outline outline-offset-2 outline-2 rounded-lg px-2 py-1 cursor-pointer",
         "transition-color duration-300",
         "hover:bg-gray-800 hover:outline-gray-800",
