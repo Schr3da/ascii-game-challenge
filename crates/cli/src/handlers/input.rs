@@ -10,6 +10,10 @@ async fn handle_keyboard_event(event: KeyEvent, app_state: &mut AppState) -> boo
     let next = event.code;
 
     match next {
+        KeyCode::Esc => {
+            let event = SendEvents::Ui(UiEvents::OnCloseView);
+            app_state.send(event).await;
+        }
         KeyCode::Down | KeyCode::Tab => {
             let event = SendEvents::Ui(UiEvents::OnSelect(SelectionDirections::Next));
             app_state.send(event).await;
