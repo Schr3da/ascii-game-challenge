@@ -24,6 +24,6 @@ impl ToSelectable for OptionMenuIds {
     type Item = ViewComponentIds;
 
     fn get_selectable_items() -> Vec<ViewComponentIds> {
-        vec![]
+        vec![ViewComponentIds::Options(OptionMenuIds::Back)]
     }
 }

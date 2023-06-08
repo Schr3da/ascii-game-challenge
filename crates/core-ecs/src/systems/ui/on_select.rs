@@ -5,9 +5,9 @@ use core_dtos::prelude::*;
 use crate::prelude::*;
 
 fn select_previous(mut view: Mut<UiView>) {
-    let ids = view.state.selectable_ids.clone();
-    let id = view.state.selected_id.clone();
-    let current = ids.iter().position(|i| i == &id).unwrap_or(0);
+    let ids = &view.state.selectable_ids;
+    let id = &view.state.selected_id;
+    let current = ids.iter().position(|i| i == id).unwrap_or(0);
 
     if current == 0 {
         return view.state.selected_id = ids.last().cloned().unwrap_or_default();
@@ -20,9 +20,9 @@ fn select_previous(mut view: Mut<UiView>) {
 }
 
 fn select_next(mut view: Mut<UiView>) {
-    let ids = view.state.selectable_ids.clone();
-    let id = view.state.selected_id.clone();
-    let current = ids.iter().position(|i| i == &id).unwrap_or(0);
+    let ids = &view.state.selectable_ids;
+    let id = &view.state.selected_id;
+    let current = ids.iter().position(|i| i == id).unwrap_or(0);
 
     match ids.get(current + 1) {
         Some(n) => view.state.selected_id = n.clone(),

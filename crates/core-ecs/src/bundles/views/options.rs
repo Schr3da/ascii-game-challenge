@@ -14,7 +14,7 @@ pub fn options_view() -> UiView {
         },
         state: UiViewState {
             selected_id: ViewComponentIds::Options(OptionMenuIds::Back),
-            selectable_ids: vec![ViewComponentIds::Options(OptionMenuIds::OptionList)],
+            selectable_ids: vec![ViewComponentIds::Options(OptionMenuIds::Back)],
         },
         children: vec![
             UiViewChild::Label(UiLabel {
