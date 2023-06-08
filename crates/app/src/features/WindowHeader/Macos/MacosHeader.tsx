@@ -1,8 +1,9 @@
 import clsx from "clsx";
 import { useCallback, useMemo } from "react";
 import { ApiService } from "../../../services";
+import { MacosHeaderProps } from "./MacosHeader.types";
 
-export const MacosHeader = () => {
+export const MacosHeader = ({ className }: MacosHeaderProps) => {
   const buttonStyles = useMemo(
     () => ({
       width: 13,
@@ -18,7 +19,10 @@ export const MacosHeader = () => {
   return (
     <div
       data-tauri-drag-region
-      className="absolute left-2 right-2 top-0 flex flex-column h-7 space-x-2 items-center z-10"
+      className={clsx(
+        "flex flex-column space-x-2 items-center z-10",
+        className
+      )}
     >
       <div
         className={applyButtonClassName("bg-red-400")}

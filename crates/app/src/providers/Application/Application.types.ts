@@ -1,5 +1,7 @@
 import { Platforms } from "../../services"
 
 export type ApplicationContextValue = {
-  platform: Platforms
+  platform: Platforms;
+  windowWidth: number;
+  windowHeight: number;
 } 

@@ -11,7 +11,8 @@ const App = () => {
   const { platform } = useApplicationContext();
 
   const wrapperClassName = useMemo(() => {
-    const next = "h-screen w-screen overflow-hidden bg-black text-white px-2 py-2";
+    const next =
+      "h-screen w-screen overflow-hidden bg-black text-white px-2 pb-2 flex flex-col";
 
     switch (platform) {
       case Platforms.Macos:
@@ -23,8 +24,8 @@ const App = () => {
 
   return (
     <div className={wrapperClassName}>
-      <WindowHeader platform={platform} />
-      <ViewRouter />
+      <WindowHeader className="basis-7 shrink-0 grow-0" platform={platform} />
+      <ViewRouter className="flex-1 overflow-hidden" />
     </div>
   );
 };

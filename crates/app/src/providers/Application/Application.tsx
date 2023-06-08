@@ -20,7 +20,12 @@ export const ApplicationProvider = ({ children }: PropsWithChildren) => {
 
   const [platform, setPlatform] = useState(Platforms.Web);
 
-  const { registerWindowResize, unregisterWindowResize } = useResize();
+  const {
+    windowWidth,
+    windowHeight,
+    registerWindowResize,
+    unregisterWindowResize,
+  } = useResize();
 
   const applicationDidMount = useCallback(async () => {
     if (isInitialised) {
@@ -29,7 +34,7 @@ export const ApplicationProvider = ({ children }: PropsWithChildren) => {
 
     const { columns, rows } = calculateGridSize();
     const platform = await ApiService.getPlatform();
-    
+
     await ApiService.webviewDidMount();
     registerWindowResize();
 
@@ -54,6 +59,8 @@ export const ApplicationProvider = ({ children }: PropsWithChildren) => {
     <ApplicationContext.Provider
       value={{
         platform,
+        windowWidth,
+        windowHeight,
       }}
     >
       {isInitialised && children}

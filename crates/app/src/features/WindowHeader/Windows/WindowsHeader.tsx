@@ -2,8 +2,9 @@ import clsx from "clsx";
 
 import { useCallback, useMemo } from "react";
 import { ApiService } from "../../../services";
+import { WindowsHeaderProps } from "./WindowsHeader.types";
 
-export const WindowsHeader = () => {
+export const WindowsHeader = ({ className }: WindowsHeaderProps) => {
   const buttonStyles = useMemo(
     () => ({
       width: 13,
@@ -19,7 +20,10 @@ export const WindowsHeader = () => {
   return (
     <div
       data-tauri-drag-region
-      className="absolute left-2 right-2 top-0 flex flex-column h-7 space-x-2 justify-end items-center z-10"
+      className={clsx(
+        "flex flex-column space-x-2 items-center justify-end z-10",
+        className
+      )}
     >
       <div
         className={applyButtonClassName("bg-gray-500")}
@@ -31,7 +35,6 @@ export const WindowsHeader = () => {
         style={buttonStyles}
         onClick={ApiService.maximiseApplication}
       />
-
       <div
         className={applyButtonClassName("bg-red-400")}
         style={buttonStyles}

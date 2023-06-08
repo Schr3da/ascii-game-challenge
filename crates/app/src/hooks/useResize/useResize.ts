@@ -1,17 +1,24 @@
-import { useCallback, useRef } from "react";
+import { useCallback, useRef, useState } from "react";
 
 import { ApiService } from "../../services";
 import { calculateGridSize } from "../../utils";
 
 export const useResize = () => {
+  const debounceTimer = useRef<NodeJS.Timeout>();
 
-  const debounceTimer = useRef<any>(null);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
 
   const applicationDidResize = useCallback(() => {
     clearTimeout(debounceTimer.current);
 
     debounceTimer.current = setTimeout(() => {
+      setWindowWidth(window.innerWidth);
+      setWindowHeight(window.innerHeight);
+
       const { columns, rows } = calculateGridSize();
+
       ApiService.sendEcsEvent({
         General: { OnApplicationResize: [columns, rows] },
       });
@@ -29,6 +36,8 @@ export const useResize = () => {
   }, []);
 
   return {
+    windowWidth,
+    windowHeight,
     registerWindowResize,
     unregisterWindowResize,
   }
