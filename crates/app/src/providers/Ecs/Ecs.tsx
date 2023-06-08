@@ -8,6 +8,7 @@ import {
   RenderSubscription,
   UiSubscription,
   UiView,
+  ViewComponentIds,
 } from "../../shared";
 
 export const EcsContext = createContext<EcsContextValue | null>(null);
@@ -26,6 +27,8 @@ const isRendererSubscription = (event: any): event is RenderSubscription =>
 export const EcsProvider = ({ children }: PropsWithChildren) => {
   const [nextView, setNextView] = useState<UiView | null>(null);
   const [previousView, setPreviousView] = useState<UiView | null>(null);
+
+  const [selectedViewComponentId, setSelectedViewComponentId] = useState("");
 
   const [previousGeneralEvent, setPreviousGeneralEvent] =
     useState<GeneralSubscription>("OnApplicationDidStart");
@@ -49,6 +52,13 @@ export const EcsProvider = ({ children }: PropsWithChildren) => {
     OnWorldDidUpdate: null,
   });
 
+  const isViewComponentSelected = useCallback(
+    (next: ViewComponentIds) => {
+      return JSON.stringify(next) === selectedViewComponentId;
+    },
+    [selectedViewComponentId]
+  );
+
   const handleGeneralSubscription = useCallback(
     (event: GeneralSubscription) => {
       setPreviousGeneralEvent(nextGeneralEvent);
@@ -67,8 +77,14 @@ export const EcsProvider = ({ children }: PropsWithChildren) => {
 
   const handleRendererSubscription = useCallback(
     (event: RenderSubscription) => {
+      const next = event.OnWorldDidUpdate;
+      const stringifiedId = JSON.stringify(next?.state.selected_id);
+
+      setSelectedViewComponentId(stringifiedId);
+
       setPreviousView(nextView);
-      setNextView(event.OnWorldDidUpdate);
+      setNextView(next);
+
       setPreviousRendererEvent(nextRendererEvent);
       setRendererEvent(event);
     },
@@ -109,6 +125,7 @@ export const EcsProvider = ({ children }: PropsWithChildren) => {
         nextUiEvent,
         previousRendererEvent,
         nextRendererEvent,
+        isViewComponentSelected,
       }}
     >
       {children}

@@ -1,31 +1,12 @@
-import { Stage, Text } from "@pixi/react";
-import { MouseEvent, useCallback } from "react";
-
-import { useEcsContext } from "../../../../providers";
 import { TextStyle } from "pixi.js";
-import { useKeyboardControls } from "../../../../hooks/useKeyboardControls/useKeyboardControls";
+import { Stage, Text } from "@pixi/react";
 
 export const PixiCanvas = () => {
-  const { nextView: view } = useEcsContext();
-
-  const { handleKeyUp } = useKeyboardControls(view);
-
-  const handleClick = useCallback((event: MouseEvent<HTMLCanvasElement>) => {
-    const target = event.target as HTMLCanvasElement;
-    if (target.className.indexOf("pixi-canvas") === -1) {
-      return;
-    }
-    // handle mouse click event;
-  }, []);
-
   return (
     <Stage
-      tabIndex={1}
       className="pixi-canvas"
       width={window.innerWidth}
       height={window.innerHeight}
-      onClick={handleClick}
-      onKeyUp={handleKeyUp}
     >
       <Text
         text="Canvas"

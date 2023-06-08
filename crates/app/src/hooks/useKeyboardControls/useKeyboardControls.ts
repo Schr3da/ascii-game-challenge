@@ -1,32 +1,41 @@
-import { useCallback, KeyboardEvent } from "react";
+import { useCallback, useEffect } from "react";
 import { ApiService } from "../../services";
-import { UiView } from "../../shared";
+import { useEcsContext } from "../../providers";
 
-export const useKeyboardControls = (view: UiView | null) => {
+export const useKeyboardControls = () => {
+
+  const { nextView } = useEcsContext();
+
   const handleKeyUp = useCallback(
-    (event: KeyboardEvent<unknown>) => {
-      if (view == null) {
+    (event: KeyboardEvent) => {
+      event.preventDefault();
+
+      if (nextView == null) {
         return;
       }
+
       switch (event.key) {
         case "q":
           return ApiService.sendEcsEvent({ General: "OnApplicationWillClose" });
         case "ArrowUp":
           return ApiService.sendEcsEvent({ Ui: { OnSelect: "Previous" } });
+        case "Tab":
         case "ArrowDown":
           return ApiService.sendEcsEvent({ Ui: { OnSelect: "Next" } });
         case "Enter":
           return ApiService.sendEcsEvent({
-            Ui: { OnClick: view.state.selected_id },
+            Ui: { OnClick: nextView.state.selected_id },
           });
         default:
           return;
       }
     },
-    [view]
+    [nextView]
   );
 
-  return {
-    handleKeyUp
-  }
+  useEffect(() => {
+    window.addEventListener("keyup", handleKeyUp);
+    return () => window.removeEventListener("keyup", handleKeyUp);
+  }, [handleKeyUp]);
+  nextView
 }
