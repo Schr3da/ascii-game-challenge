@@ -1,5 +1,6 @@
 use bevy_ecs::prelude::*;
 use core_shared::prelude::*;
+use core_terrain::Terrain;
 use std::sync::Arc;
 use tokio::sync::mpsc::*;
 use tokio::sync::*;
@@ -19,6 +20,9 @@ pub struct Core {
 impl Default for Core {
     fn default() -> Self {
         let mut world = World::default();
+
+        let mut terrain = Terrain::default();
+        terrain.generate();
 
         let mut init_scheduler = InitScheduler::default();
         init_scheduler.setup();

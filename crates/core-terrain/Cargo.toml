@@ -1,0 +1,8 @@
+[package]
+name = "core-terrain"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+noise = {workspace = true}
+core-dtos = {path = "../core-dtos"}
