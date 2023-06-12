@@ -1,6 +1,6 @@
 use bevy_ecs::prelude::*;
 use core_shared::prelude::*;
-use core_terrain::Terrain;
+use core_terrain::prelude::*;
 use std::sync::Arc;
 use tokio::sync::mpsc::*;
 use tokio::sync::*;
