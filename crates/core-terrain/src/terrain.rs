@@ -1,32 +1,51 @@
 use image::imageops::blur;
-use image::Rgba;
-use imageproc::drawing::draw_filled_ellipse;
-use imageproc::filter::gaussian_blur_f32;
 use noise::utils::{NoiseMapBuilder, PlaneMapBuilder};
-use noise::{Fbm, Perlin};
+use noise::{Curve, Fbm, MultiFractal, Perlin};
 
 #[derive(Default)]
 pub struct Terrain {}
 
+const SEA_LEVEL: f64 = 0.0;
+
 impl Terrain {
     pub fn generate(&mut self) {
-        let fbm = Fbm::<Perlin>::new(0);
+        let base = Fbm::<Perlin>::new(8)
+            .set_frequency(0.2)
+            .set_persistence(0.5)
+            .set_lacunarity(2.2)
+            .set_octaves(12);
 
-        PlaneMapBuilder::<_, 2>::new(&fbm)
+        let land = Curve::new(base.clone())
+            .add_control_point(-2.0000 + SEA_LEVEL, -1.625 + SEA_LEVEL)
+            .add_control_point(-1.0000 + SEA_LEVEL, -1.375 + SEA_LEVEL)
+            .add_control_point(0.0000 + SEA_LEVEL, -0.375 + SEA_LEVEL)
+            .add_control_point(0.0625 + SEA_LEVEL, 0.125 + SEA_LEVEL)
+            .add_control_point(0.1250 + SEA_LEVEL, 0.250 + SEA_LEVEL)
+            .add_control_point(0.2500 + SEA_LEVEL, 1.000 + SEA_LEVEL)
+            .add_control_point(0.5000 + SEA_LEVEL, 0.250 + SEA_LEVEL)
+            .add_control_point(0.7500 + SEA_LEVEL, 0.250 + SEA_LEVEL)
+            .add_control_point(1.0000 + SEA_LEVEL, 0.500 + SEA_LEVEL)
+            .add_control_point(2.0000 + SEA_LEVEL, 0.500 + SEA_LEVEL);
+
+        PlaneMapBuilder::<_, 2>::new(&land)
             .set_size(512, 512)
             .set_x_bounds(-5.0, 5.0)
             .set_y_bounds(-5.0, 5.0)
             .build()
-            .write_to_file("fbm-1.png");
+            .write_to_file("land-1.png");
 
-        let img = image::open("./example_images/fbm-1.png").unwrap();
-        let circle = draw_filled_ellipse(&img, (256, 256), 200, 200, Rgba([0, 0, 0, 255]));
-        circle.save("./example_images/fbm-2.png").unwrap();
-        
+        let mountain = Curve::new(base)
+            .add_control_point(1.2 + SEA_LEVEL, 0.1 + SEA_LEVEL)
+            .add_control_point(1.3 + SEA_LEVEL, 1.100 + SEA_LEVEL)
+            .add_control_point(1.4 + SEA_LEVEL, 1.500 + SEA_LEVEL)
+            .add_control_point(1.5 + SEA_LEVEL, 1.500 + SEA_LEVEL)
+            .add_control_point(2.0 + SEA_LEVEL, 1.500 + SEA_LEVEL);
 
-        blur(&img, 35.0).save("./example_images/fbm-3.png").unwrap();
-        gaussian_blur_f32(&img.to_rgb8(), 35.0)
-            .save("./example_images/fbm-4.png")
-            .unwrap();
+        PlaneMapBuilder::<_, 2>::new(&mountain)
+            .set_size(512, 512)
+            .set_x_bounds(-5.0, 5.0)
+            .set_y_bounds(-5.0, 5.0)
+            .build()
+            .write_to_file("mountain-1.png");
     }
 }
