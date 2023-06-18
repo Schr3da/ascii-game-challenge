@@ -55,11 +55,9 @@ impl Terrain {
         let mountain_value = self.mountains.get_value(x as usize, y as usize) as i32;
 
         if mountain_value > 0 {
-            println!("Mountain Value: {}", mountain_value);
             return mountain_value;
         }
 
-        println!("Land Value: {}", land_value);
         return land_value;
     }
 }
