@@ -8,7 +8,8 @@ members = [
   "crates/core-shared",
   "crates/core-state",
   "crates/core-terrain",
-  "crates/app/src-tauri"
+  "crates/app/src-tauri",
+  "examples/*"
 ]
 
 [workspace.dependencies]
