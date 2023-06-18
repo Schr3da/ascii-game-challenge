@@ -5,6 +5,7 @@ use crate::prelude::*;
 
 pub fn on_application_will_initialise_system(
     subscriber: Res<Subscriber>,
+    mut assets: ResMut<AssetResources>,
     mut store: ResMut<UiStore>,
     mut query: Query<&mut UiView>,
 ) {
@@ -18,6 +19,8 @@ pub fn on_application_will_initialise_system(
 
     store.previous_view = vec![];
     store.current_view = UiViewIds::Main;
+
+    assets.terrain.generate();
 
     for mut v in query.iter_mut() {
         v.state = match v.id {

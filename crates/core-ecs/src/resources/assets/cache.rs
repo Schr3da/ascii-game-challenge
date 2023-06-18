@@ -1,6 +1,7 @@
 use bevy_ecs::prelude::*;
 use core_dtos::prelude::*;
 use core_serde::prelude::*;
+use core_terrain::prelude::Terrain;
 use std::collections::HashMap;
 
 use super::prelude::*;
@@ -10,6 +11,7 @@ pub struct AssetResources {
     pub config: AssetConfig,
     pub cell_cache: HashMap<Ascii, Cell>,
     pub asset_cache: HashMap<AssetTypes, Asset>,
+    pub terrain: Terrain,
 }
 
 impl Default for AssetResources {
@@ -17,11 +19,13 @@ impl Default for AssetResources {
         let config = load_json_from_file::<AssetConfig>("./configs/root_config.json");
         let cell_cache = HashMap::new();
         let asset_cache = HashMap::new();
+        let terrain = Terrain::default();
 
         AssetResources {
             config,
             asset_cache,
             cell_cache,
+            terrain,
         }
     }
 }
