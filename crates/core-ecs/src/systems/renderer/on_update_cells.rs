@@ -4,7 +4,45 @@ use core_dtos::prelude::*;
 
 use crate::prelude::*;
 
-pub fn on_update_cells_system(store: Res<UiStore>, mut views_query: Query<&mut UiView>) {
+fn get_canvas_frame(store: Res<UiStore>, top: u16, bottom: u16) -> Rect {
+    Rect {
+        x: 0,
+        y: top as i32,
+        width: store.width as i32,
+        height: (store.height - bottom) as i32,
+    }
+}
+
+fn value_to_ascii(value: i32) -> Ascii {
+    match value {
+        0..=2 => Ascii::Plus,
+        _ => Ascii::Space,
+    }
+}
+
+fn get_canvas_cells(frame: &Rect, assets: &Res<AssetResources>) -> Vec<(Cell, Position)> {
+    let mut next = Vec::new();
+
+    for y in frame.y..frame.height {
+        for x in 0..frame.width {
+            let value = assets.terrain.get_value(x, y);
+            let ascii = value_to_ascii(value);
+            let position = Position { x, y };
+
+            if let Some(c) = assets.cell_cache.get(&ascii) {
+                next.push((c.clone(), position));
+            }
+        }
+    }
+
+    next
+}
+
+pub fn on_update_cells_system(
+    store: Res<UiStore>,
+    assets: Res<AssetResources>,
+    mut views_query: Query<&mut UiView>,
+) {
     if store.current_view != UiViewIds::Game {
         return;
     }
@@ -16,7 +54,7 @@ pub fn on_update_cells_system(store: Res<UiStore>, mut views_query: Query<&mut U
         None => return,
     };
 
-    let top= match *view
+    let top = match *view
         .layout
         .constraints
         .first()
@@ -39,12 +77,9 @@ pub fn on_update_cells_system(store: Res<UiStore>, mut views_query: Query<&mut U
     for child in &mut view.children {
         match child {
             UiViewChild::GameCanvas(_) => {
-                *child = UiViewChild::GameCanvas(Rect {
-                    x: 0,
-                    y: top as i32,
-                    width: store.width as i32,
-                    height: (store.height - bottom) as i32,
-                });
+                let frame = get_canvas_frame(store, top, bottom);
+                let cells = get_canvas_cells(&frame, &assets);
+                *child = UiViewChild::GameCanvas(cells);
                 break;
             }
             _ => {}

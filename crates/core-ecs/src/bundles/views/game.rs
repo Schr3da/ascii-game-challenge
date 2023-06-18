@@ -88,12 +88,7 @@ pub fn game_view() -> UiView {
         },
         children: vec![
             get_top_bar(),
-            UiViewChild::GameCanvas(Rect {
-                x: 0,
-                y: 1,
-                width: 0,
-                height: 0,
-            }),
+            UiViewChild::GameCanvas(Vec::new()),
             get_bottom_bar(),
         ],
     }

@@ -1,5 +1,5 @@
 use noise::utils::{NoiseMap, NoiseMapBuilder, PlaneMapBuilder};
-use noise::{Curve, Fbm, MultiFractal, Perlin };
+use noise::{Curve, Fbm, MultiFractal, Perlin};
 
 #[derive(Default)]
 pub struct Terrain {
@@ -50,9 +50,9 @@ impl Terrain {
         self.mountains.write_to_file("mountain.png");
     }
 
-    pub fn get_value(&self, x: usize, y: usize) -> i32 {
-        let land_value = self.land.get_value(x, y) as i32;
-        let mountain_value = self.mountains.get_value(x, y) as i32;
+    pub fn get_value(&self, x: i32, y: i32) -> i32 {
+        let land_value = self.land.get_value(x as usize, y as usize) as i32;
+        let mountain_value = self.mountains.get_value(x as usize, y as usize) as i32;
 
         if mountain_value > 0 {
             println!("Mountain Value: {}", mountain_value);

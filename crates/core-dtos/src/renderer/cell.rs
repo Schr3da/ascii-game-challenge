@@ -3,7 +3,7 @@ use tsify::Tsify;
 
 use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize, Tsify)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Tsify)]
 pub struct Cell {
     pub symbol: Ascii,
     pub background: CellColors,
