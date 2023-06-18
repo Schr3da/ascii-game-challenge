@@ -18,8 +18,7 @@ fn contains_value(current: f64, start: f64, end: f64) -> bool {
 }
 
 fn value_to_ascii(value: f64) -> Ascii {
-        println!("{value}");
-    if contains_value(value, -1.0, -0.5) {
+    if contains_value(value, -5.0, -0.5) {
         return Ascii::DoubleTilde;
     }
 

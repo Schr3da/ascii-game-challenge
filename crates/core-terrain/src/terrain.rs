@@ -14,10 +14,10 @@ const MAP_SIZE: usize = 512;
 impl Terrain {
     pub fn generate(&mut self) {
         let data = Fbm::<Perlin>::new(8)
-            .set_frequency(0.2)
-            .set_persistence(0.5)
+            .set_frequency(0.34)
+            .set_persistence(0.6)
             .set_lacunarity(2.2)
-            .set_octaves(12);
+            .set_octaves(5);
 
         let base_limits = Curve::new(data.clone())
             .add_control_point(-2.0000 + SEA_LEVEL, -1.625 + SEA_LEVEL)
