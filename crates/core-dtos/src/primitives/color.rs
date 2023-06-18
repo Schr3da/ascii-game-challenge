@@ -7,6 +7,8 @@ use tsify::Tsify;
 pub enum CellColors {
     Black,
     White,
+    Blue,
+    LightBlue,
 }
 
 impl Default for CellColors {

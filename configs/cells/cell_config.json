@@ -16,5 +16,17 @@
     "background": "white",
     "foreground": "black",
     "isBold": true
+  },
+  {
+    "symbol": "≈",
+    "background": "blue",
+    "foreground": "lightBlue",
+    "isBold": false
+  },
+  {
+    "symbol": "~",
+    "background": "lightBlue",
+    "foreground": "blue",
+    "isBold": false
   }
 ]

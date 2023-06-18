@@ -5,5 +5,7 @@ pub fn _to_terminal_color(next: &CellColors) -> Color {
     match next {
         CellColors::Black => Color::Black,
         CellColors::White => Color::White,
+        CellColors::LightBlue => Color::LightBlue,
+        CellColors::Blue => Color::Blue,
     }
 }

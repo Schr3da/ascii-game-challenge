@@ -9,6 +9,8 @@ pub struct Terrain {
 
 const SEA_LEVEL: f64 = 0.0;
 
+const MAP_SIZE: usize = 512;
+
 impl Terrain {
     pub fn generate(&mut self) {
         let data = Fbm::<Perlin>::new(8)
@@ -26,7 +28,7 @@ impl Terrain {
             .add_control_point(0.2500 + SEA_LEVEL, 1.5 + SEA_LEVEL);
 
         self.land = PlaneMapBuilder::<_, 2>::new(&base_limits)
-            .set_size(512, 512)
+            .set_size(MAP_SIZE, MAP_SIZE)
             .set_x_bounds(-5.0, 5.0)
             .set_y_bounds(-5.0, 5.0)
             .build();
@@ -39,7 +41,7 @@ impl Terrain {
             .add_control_point(2.0 + SEA_LEVEL, 1.500 + SEA_LEVEL);
 
         self.mountains = PlaneMapBuilder::<_, 2>::new(&mountain_limits)
-            .set_size(512, 512)
+            .set_size(MAP_SIZE, MAP_SIZE)
             .set_x_bounds(-5.0, 5.0)
             .set_y_bounds(-5.0, 5.0)
             .build();
@@ -50,11 +52,11 @@ impl Terrain {
         self.mountains.write_to_file("mountain.png");
     }
 
-    pub fn get_value(&self, x: i32, y: i32) -> i32 {
-        let land_value = self.land.get_value(x as usize, y as usize) as i32;
-        let mountain_value = self.mountains.get_value(x as usize, y as usize) as i32;
+    pub fn get_value(&self, x: i32, y: i32) -> f64{
+        let land_value = self.land.get_value(x as usize, y as usize);
+        let mountain_value = self.mountains.get_value(x as usize, y as usize);
 
-        if mountain_value > 0 {
+        if mountain_value > 0.0{
             return mountain_value;
         }
 

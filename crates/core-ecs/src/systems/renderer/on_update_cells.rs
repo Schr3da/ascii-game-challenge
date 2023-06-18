@@ -13,11 +13,25 @@ fn get_canvas_frame(store: Res<UiStore>, top: u16, bottom: u16) -> Rect {
     }
 }
 
-fn value_to_ascii(value: i32) -> Ascii {
-    match value {
-        0..=2 => Ascii::Plus,
-        _ => Ascii::Space,
+fn contains_value(current: f64, start: f64, end: f64) -> bool {
+    current >= start && current < end
+}
+
+fn value_to_ascii(value: f64) -> Ascii {
+        println!("{value}");
+    if contains_value(value, -1.0, -0.5) {
+        return Ascii::DoubleTilde;
     }
+
+    if contains_value(value, -0.5, 0.0) {
+        return Ascii::Tilde;
+    }
+
+    if contains_value(value, 0.0, 2.5) {
+        return Ascii::Plus;
+    }
+
+    return Ascii::Space;
 }
 
 fn get_canvas_cells(frame: &Rect, assets: &Res<AssetResources>) -> Vec<(Cell, Position)> {

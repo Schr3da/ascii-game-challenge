@@ -4,5 +4,6 @@ fn main() {
     let mut terrain = Terrain::default();
     terrain.generate();
 
-    _ = terrain.get_value(400, 400);
+    let value = terrain.get_value(167, 130);
+    println!("Position Value {value}");
 }

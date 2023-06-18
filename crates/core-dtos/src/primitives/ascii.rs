@@ -11,6 +11,8 @@ pub enum Ascii {
     Plus,
     Minus,
     A,
+    Tilde,
+    DoubleTilde,
 }
 
 impl Default for Ascii {
@@ -26,6 +28,8 @@ impl ToString for Ascii {
             Ascii::Plus => "+".to_string(),
             Ascii::Minus => "-".to_string(),
             Ascii::A => "a".to_string(),
+            Ascii::Tilde => "~".to_string(),
+            Ascii::DoubleTilde => "≈".to_string(),
         }
     }
 }
@@ -37,6 +41,8 @@ impl From<&str> for Ascii {
             "+" => Ascii::Plus,
             "-" => Ascii::Minus,
             "a" => Ascii::A,
+            "~" => Ascii::Tilde,
+            "≈" => Ascii::DoubleTilde,
             _ => Ascii::Space,
         }
     }
