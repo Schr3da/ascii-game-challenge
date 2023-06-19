@@ -9,8 +9,6 @@ use serde::{de::Visitor, *};
 pub enum Ascii {
     Space,
     Plus,
-    Minus,
-    A,
     Tilde,
     DoubleTilde,
 }
@@ -26,8 +24,6 @@ impl ToString for Ascii {
         match self {
             Ascii::Space => " ".to_string(),
             Ascii::Plus => "+".to_string(),
-            Ascii::Minus => "-".to_string(),
-            Ascii::A => "a".to_string(),
             Ascii::Tilde => "~".to_string(),
             Ascii::DoubleTilde => "≈".to_string(),
         }
@@ -39,8 +35,6 @@ impl From<&str> for Ascii {
         match value {
             " " => Ascii::Space,
             "+" => Ascii::Plus,
-            "-" => Ascii::Minus,
-            "a" => Ascii::A,
             "~" => Ascii::Tilde,
             "≈" => Ascii::DoubleTilde,
             _ => Ascii::Space,

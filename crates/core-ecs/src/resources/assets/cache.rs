@@ -9,7 +9,7 @@ use super::prelude::*;
 #[derive(Resource)]
 pub struct AssetResources {
     pub config: AssetConfig,
-    pub cell_cache: HashMap<Ascii, Cell>,
+    pub cell_cache: HashMap<AsciiIds, Cell>,
     pub asset_cache: HashMap<AssetTypes, Asset>,
     pub terrain: Terrain,
 }
@@ -35,7 +35,7 @@ impl AssetResources {
         let data = load_json_from_file::<Vec<Cell>>(&self.config.cells);
 
         for d in data {
-            self.cell_cache.insert(d.symbol.clone(), d);
+            self.cell_cache.insert(d.id.clone(), d);
         }
     }
 

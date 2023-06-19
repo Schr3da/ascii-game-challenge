@@ -1,32 +1,59 @@
 [
   {
-    "symbol": "-",
-    "background": "white",
-    "foreground": "black",
-    "isBold": false
-  },
-  {
+    "id": "sand",
     "symbol": "+",
-    "background": "black",
-    "foreground": "white",
-    "isBold": true
+    "isBold": false,
+    "background": {
+      "rgb": [
+        0,
+        0,
+        255
+      ]
+    },
+    "foreground": {
+      "rgb": [
+        255,
+        255,
+        255
+      ]
+    }
   },
   {
-    "symbol": "a",
-    "background": "white",
-    "foreground": "black",
-    "isBold": true
-  },
-  {
+    "id": "deepWater",
     "symbol": "≈",
-    "background": "blue",
-    "foreground": "lightBlue",
-    "isBold": false
+    "isBold": false,
+    "background": {
+      "rgb": [
+        255,
+        255,
+        255
+      ]
+    },
+    "foreground": {
+      "rgb": [
+        0,
+        0,
+        0
+      ]
+    }
   },
   {
+    "id": "shallowWater",
     "symbol": "~",
-    "background": "lightBlue",
-    "foreground": "blue",
-    "isBold": false
+    "isBold": false,
+    "background": {
+      "rgb": [
+        255,
+        255,
+        255
+      ]
+    },
+    "foreground": {
+      "rgb": [
+        0,
+        0,
+        0
+      ]
+    }
   }
 ]

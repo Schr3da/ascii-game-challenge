@@ -17,20 +17,20 @@ fn contains_value(current: f64, start: f64, end: f64) -> bool {
     current >= start && current < end
 }
 
-fn value_to_ascii(value: f64) -> Ascii {
+fn value_to_ascii(value: f64) -> AsciiIds {
     if contains_value(value, -5.0, -0.5) {
-        return Ascii::DoubleTilde;
+        return AsciiIds::DeepWater;
     }
 
     if contains_value(value, -0.5, 0.0) {
-        return Ascii::Tilde;
+        return AsciiIds::ShallowWater;
     }
 
     if contains_value(value, 0.0, 2.5) {
-        return Ascii::Plus;
+        return AsciiIds::Sand;
     }
 
-    return Ascii::Space;
+    return AsciiIds::UnknownAsciiId;
 }
 
 fn get_canvas_cells(frame: &Rect, assets: &Res<AssetResources>) -> Vec<(Cell, Position)> {

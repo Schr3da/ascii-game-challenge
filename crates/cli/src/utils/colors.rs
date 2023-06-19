@@ -1,11 +1,8 @@
 use core_dtos::prelude::*;
 use tui::style::Color;
 
-pub fn _to_terminal_color(next: &CellColors) -> Color {
+pub fn to_terminal_color(next: &CellColors) -> Color {
     match next {
-        CellColors::Black => Color::Black,
-        CellColors::White => Color::White,
-        CellColors::LightBlue => Color::LightBlue,
-        CellColors::Blue => Color::Blue,
+        CellColors::Rgb(r, g, b) => Color::Rgb(*r, *g, *b),
     }
 }

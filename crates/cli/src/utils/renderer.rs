@@ -59,9 +59,12 @@ fn render_placeholder<B: Backend>(context: &mut Frame<B>, size: layout::Rect) {
 
 fn render_canvas<B: Backend>(context: &mut Frame<B>, cells: &Vec<(Cell, Position)>) {
     for (cell, position) in cells {
+        let background = to_terminal_color(&cell.background);
+        let foreground = to_terminal_color(&cell.foreground);
+
         let block = Block::default()
             .title(cell.symbol.to_string())
-            .style(Style::default().bg(Color::Gray).fg(Color::Black));
+            .style(Style::default().bg(background).fg(foreground));
 
         context.render_widget(
             block,

@@ -5,14 +5,11 @@ use tsify::Tsify;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Tsify)]
 #[serde(rename_all = "camelCase")]
 pub enum CellColors {
-    Black,
-    White,
-    Blue,
-    LightBlue,
+    Rgb(u8, u8, u8),
 }
 
 impl Default for CellColors {
     fn default() -> Self {
-        CellColors::Black
+        CellColors::Rgb(0, 0, 0)
     }
 }
