@@ -98,6 +98,7 @@ impl Core {
     fn handle_input_event(&mut self, event: InputEvents) {
         match event {
             InputEvents::New
+            | InputEvents::Cancel
             | InputEvents::Push(_)
             | InputEvents::Pop
             | InputEvents::Execute(_) => self.input_scheduler.run(&mut self.world),

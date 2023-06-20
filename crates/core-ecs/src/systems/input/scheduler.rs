@@ -18,6 +18,7 @@ impl Scheduler for InputScheduler {
     fn setup(&mut self) {
         self.schedule.add_systems((
             on_new_input_system,
+            on_cancel_input_system,
             on_push_input_system.after(on_new_input_system),
             on_pop_input_system.after(on_push_input_system),
             on_execute_input_system.after(on_pop_input_system),

@@ -7,4 +7,5 @@ pub enum InputEvents {
   Pop,
   Push(String),
   Execute(Vec<String>),
+  Cancel,
 }
