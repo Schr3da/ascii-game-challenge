@@ -7,6 +7,7 @@ use crate::prelude::*;
 pub enum SendEvents {
     General(GeneralEvents),
     Ui(UiEvents),
+    Input(InputEvents),
     Renderer(RenderEvents),
 }
 

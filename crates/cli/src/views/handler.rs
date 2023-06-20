@@ -5,7 +5,7 @@ use tui::{backend::CrosstermBackend, Terminal};
 
 use crate::export::prelude::*;
 
-pub fn draw_to_terminal_handler(
+pub fn draw_view_to_terminal_handler(
     terminal: &mut Terminal<CrosstermBackend<Stdout>>,
     view: &Option<UiView>,
 ) {

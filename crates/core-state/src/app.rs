@@ -17,6 +17,7 @@ pub struct AppState {
     pub ecs_subscription_sender: Sender<SubscriptionEvents>,
     pub ecs_subscription_receiver: Receiver<SubscriptionEvents>,
     pub ecs_current_view_state: Option<UiViewState>,
+    pub ecs_current_popup_state: Option<UiViewState>,
 }
 
 impl Default for AppState {
@@ -32,6 +33,7 @@ impl Default for AppState {
             ecs_subscription_sender: subscription_sender,
             ecs_subscription_receiver: subscription_receiver,
             ecs_current_view_state: None,
+            ecs_current_popup_state: None,
         }
     }
 }

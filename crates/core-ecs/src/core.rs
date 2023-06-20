@@ -11,9 +11,10 @@ use crate::prelude::*;
 pub struct Core {
     pub world: World,
     pub init_scheduler: InitScheduler,
+    pub general_scheduler: GeneralScheduler,
+    pub input_scheduler: InputScheduler,
     pub render_scheduler: RenderScheduler,
     pub ui_scheduler: UiScheduler,
-    pub general_scheduler: GeneralScheduler,
 }
 
 impl Default for Core {
@@ -23,14 +24,17 @@ impl Default for Core {
         let mut init_scheduler = InitScheduler::default();
         init_scheduler.setup();
 
+        let mut general_scheduler = GeneralScheduler::default();
+        general_scheduler.setup();
+
         let mut render_scheduler = RenderScheduler::default();
         render_scheduler.setup();
 
         let mut ui_scheduler = UiScheduler::default();
         ui_scheduler.setup();
 
-        let mut general_scheduler = GeneralScheduler::default();
-        general_scheduler.setup();
+        let mut input_scheduler = InputScheduler::default();
+        input_scheduler.setup();
 
         let mut assets = AssetResources::default();
         assets.load();
@@ -49,6 +53,7 @@ impl Default for Core {
             render_scheduler,
             ui_scheduler,
             general_scheduler,
+            input_scheduler,
         }
     }
 }
@@ -82,6 +87,7 @@ impl EventHandler for Core {
 
         match event {
             SendEvents::Ui(e) => self.handle_ui_event(e),
+            SendEvents::Input(e) => self.handle_input_event(e),
             SendEvents::Renderer(e) => self.handle_renderer_event(e),
             SendEvents::General(e) => self.handle_general_event(e),
         }
@@ -89,6 +95,15 @@ impl EventHandler for Core {
 }
 
 impl Core {
+    fn handle_input_event(&mut self, event: InputEvents) {
+        match event {
+            InputEvents::New
+            | InputEvents::Push(_)
+            | InputEvents::Pop
+            | InputEvents::Execute(_) => self.input_scheduler.run(&mut self.world),
+        }
+    }
+
     fn handle_ui_event(&mut self, event: UiEvents) {
         match event {
             UiEvents::OnSelect(_)

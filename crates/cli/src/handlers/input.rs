@@ -33,17 +33,9 @@ async fn handle_keyboard_event(event: KeyEvent, app_state: &mut AppState) -> boo
                 SendEvents::Ui(UiEvents::OnClick(ViewComponentIds::Main(MainMenuIds::Quit)));
             app_state.send(event).await;
         }
-        KeyCode::Char('w') => {
-
-        }
-        KeyCode::Char('d') => {
-
-        }
-        KeyCode::Char('s') => {
-
-        }
-        KeyCode::Char('a') => {
-
+        KeyCode::Char(':') => {
+            let event = SendEvents::Input(InputEvents::New);
+            app_state.send(event).await;
         }
         _ => return false,
     };

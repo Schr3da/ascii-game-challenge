@@ -10,7 +10,7 @@ use crate::export::prelude::*;
 
 async fn handle_general(event: GeneralSubscription, state: &mut AppState) -> bool {
     match event {
-        GeneralSubscription::OnApplicationDidStart=> true,
+        GeneralSubscription::OnApplicationDidStart => true,
         GeneralSubscription::OnApplicationDidClose => false,
         GeneralSubscription::OnApplicationDidInitialise => {
             let next = SendEvents::Renderer(RenderEvents::OnWorldWillUpdate);
@@ -30,13 +30,19 @@ async fn handle_renderer(
     terminal: &mut Terminal<CrosstermBackend<Stdout>>,
 ) -> bool {
     match event {
-        RenderSubscription::OnWorldDidUpdate(v) => {
+        RenderSubscription::OnWorldDidUpdate(v, p) => {
             app_state.ecs_current_view_state = match &v {
                 Some(UiView { state, .. }) => Some(state.clone()),
                 _ => None,
             };
 
-            draw_to_terminal_handler(terminal, &v)
+            app_state.ecs_current_popup_state = match &p {
+                Some(UiPopupView { state, .. }) => Some(state.clone()),
+                _ => None,
+            };
+
+            draw_view_to_terminal_handler(terminal, &v);
+            draw_popup_to_terminal_handler(terminal, &p);
         }
     };
 

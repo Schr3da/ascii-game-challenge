@@ -6,6 +6,7 @@ mod shutdown;
 mod traits;
 mod utils;
 mod views;
+mod popup;
 
 #[tokio::main]
 async fn main() -> Result<(), std::io::Error> {

@@ -25,13 +25,21 @@ async fn handle_renderer(
     window: &Window,
 ) -> bool {
     match event {
-        RenderSubscription::OnWorldDidUpdate(v) => {
-            let view = match &v {
-                Some(v) => v,
-                _ => return true,
+        RenderSubscription::OnWorldDidUpdate(v, p) => {
+            app_state.ecs_current_view_state = match &v {
+                Some(UiView { state, .. }) => Some(state.clone()),
+                _ => None,
             };
 
-            app_state.ecs_current_view_state = Some(view.state.clone());
+            app_state.ecs_current_popup_state = match &p {
+                Some(UiPopupView { state, .. }) => Some(state.clone()),
+                _ => None,
+            };
+
+            if v.is_none() && p.is_none() {
+                return true;
+            }
+            
             _ = window.emit("ecs-subscription", event);
         }
     };
