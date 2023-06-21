@@ -6,7 +6,7 @@ use tui::Frame;
 
 use core_dtos::prelude::*;
 
-use crate::export::prelude::render_view;
+use crate::export::prelude::*;
 
 pub fn render_options<B: Backend>(context: &mut Frame<B>, view: &UiView) {
     let size = context.size();

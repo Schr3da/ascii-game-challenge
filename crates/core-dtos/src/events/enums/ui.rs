@@ -1,4 +1,4 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 use tsify::Tsify;
 
 use crate::prelude::*;
@@ -13,5 +13,5 @@ pub enum UiEvents {
 
 #[derive(Debug, Clone, Eq, PartialEq, Tsify, Serialize, Deserialize)]
 pub enum UiSubscription {
-    UnknownUiSubscription
+    UnknownUiSubscription,
 }

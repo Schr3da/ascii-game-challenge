@@ -1,4 +1,4 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 use tsify::Tsify;
 
 #[derive(Clone, Tsify, Serialize, Deserialize)]

@@ -39,9 +39,17 @@ async fn handle_renderer(
             if v.is_none() && p.is_none() {
                 return true;
             }
-            
+
             _ = window.emit("ecs-subscription", event);
         }
+    };
+
+    true
+}
+
+pub async fn handle_command(event: &CommandSubscription, app_state: &mut AppState) -> bool {
+    match event {
+        CommandSubscription::OnCommandDidUpdate(c) => app_state.ecs_current_command = c.clone(),
     };
 
     true
@@ -61,5 +69,6 @@ pub async fn subscription_handler(
         SubscriptionEvents::General(e) => handle_general(e, state).await,
         SubscriptionEvents::Ui(e) => handle_ui(e).await,
         SubscriptionEvents::Renderer(e) => handle_renderer(e, state, window).await,
+        SubscriptionEvents::Command(e) => handle_command(e, state).await,
     }
 }

@@ -7,7 +7,8 @@ pub fn on_application_will_initialise_system(
     subscriber: Res<Subscriber>,
     mut assets: ResMut<AssetResources>,
     mut store: ResMut<UiStore>,
-    mut query: Query<&mut UiView>,
+    mut view_query: Query<&mut UiView>,
+    mut popup_query: Query<&mut UiPopupView>,
 ) {
     let (width, height) = match subscriber.next_event {
         Some(SendEvents::General(GeneralEvents::OnApplicationWillInitialise(w, h))) => (w, h),
@@ -22,7 +23,7 @@ pub fn on_application_will_initialise_system(
 
     assets.terrain.generate();
 
-    for mut v in query.iter_mut() {
+    for mut v in view_query.iter_mut() {
         v.state = match v.id {
             UiViewIds::Main => UiViewState {
                 selected_id: ViewComponentIds::Main(MainMenuIds::NewGame),
@@ -37,5 +38,14 @@ pub fn on_application_will_initialise_system(
                 selectable_ids: GameIds::get_selectable_items(),
             },
         };
+    }
+
+    for mut p in popup_query.iter_mut() {
+        p.state = match p.id {
+            UiPopupViewIds::Command => UiPopupState {
+                selected_id: ViewComponentIds::Popup(CommandPopupIds::UnknownCommandPopupId),
+                selectable_ids: vec![],
+            },
+        }
     }
 }

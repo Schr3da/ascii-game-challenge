@@ -22,9 +22,9 @@ pub struct UiView {
 }
 
 #[derive(Debug, PartialEq, Eq, Clone, Component, Serialize, Deserialize, Tsify)]
-pub struct UiPopupView{
+pub struct UiPopupView {
     pub id: UiPopupViewIds,
     pub layout: UiLayout,
-    pub state: UiViewState,
+    pub state: UiPopupState,
     pub children: Vec<UiViewChild>,
 }

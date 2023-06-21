@@ -79,7 +79,7 @@ fn render_canvas<B: Backend>(context: &mut Frame<B>, cells: &Vec<(Cell, Position
 }
 
 pub fn render_view<B: Backend>(context: &mut Frame<B>, root_layout: layout::Rect, view: &UiView) {
-    let view_layout = generate_layout(&view, root_layout);
+    let view_layout = generate_layout(&view.layout, root_layout);
 
     let selected_id = view.state.selected_id.clone();
 
@@ -90,6 +90,25 @@ pub fn render_view<B: Backend>(context: &mut Frame<B>, root_layout: layout::Rect
             UiViewChild::List(l) => render_list(context, l, &selected_id, view_layout[i]),
             UiViewChild::Placeholder => render_placeholder(context, view_layout[i]),
             UiViewChild::GameCanvas(data) => render_canvas(context, data),
+        };
+    });
+}
+
+pub fn render_popup_view<B: Backend>(
+    context: &mut Frame<B>,
+    root_layout: layout::Rect,
+    view: &UiPopupView,
+) {
+    let view_layout = generate_layout(&view.layout, root_layout);
+
+    let selected_id = view.state.selected_id.clone();
+
+    view.children.iter().enumerate().for_each(|(i, c)| {
+        match &c {
+            UiViewChild::Section(v) => render_view(context, view_layout[i], v),
+            UiViewChild::Label(l) => render_label(context, l, view_layout[i]),
+            UiViewChild::List(l) => render_list(context, l, &selected_id, view_layout[i]),
+            _ => return,
         };
     });
 }

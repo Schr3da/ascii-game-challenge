@@ -17,12 +17,12 @@ impl Default for InputScheduler {
 impl Scheduler for InputScheduler {
     fn setup(&mut self) {
         self.schedule.add_systems((
-            on_new_input_system,
-            on_cancel_input_system,
-            on_push_input_system.after(on_new_input_system),
-            on_pop_input_system.after(on_push_input_system),
-            on_execute_input_system.after(on_pop_input_system),
-            on_input_did_update_system.after(on_execute_input_system),
+            on_new_command_system,
+            on_cancel_command_system,
+            on_push_command_system.after(on_new_command_system),
+            on_pop_command_system.after(on_push_command_system),
+            on_execute_command_system.after(on_pop_command_system),
+            on_command_did_update_system.after(on_execute_command_system),
         ));
     }
 

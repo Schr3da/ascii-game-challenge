@@ -2,9 +2,7 @@ use tui::layout::{Constraint, Direction, Layout};
 
 use core_dtos::prelude::*;
 
-pub fn generate_layout(view: &UiView, size: tui::layout::Rect) -> Vec<tui::layout::Rect> {
-    let layout = &view.layout;
-
+pub fn generate_layout(layout: &UiLayout, size: tui::layout::Rect) -> Vec<tui::layout::Rect> {
     let margin = layout.margin;
 
     let direction = match layout.alignment {

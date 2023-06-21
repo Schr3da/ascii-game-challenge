@@ -1,4 +1,4 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 use tsify::Tsify;
 
 use crate::prelude::*;
@@ -7,7 +7,7 @@ use crate::prelude::*;
 pub enum SendEvents {
     General(GeneralEvents),
     Ui(UiEvents),
-    Input(InputEvents),
+    Commands(CommandInputEvents),
     Renderer(RenderEvents),
 }
 
@@ -16,6 +16,7 @@ pub enum SubscriptionEvents {
     General(GeneralSubscription),
     Ui(UiSubscription),
     Renderer(RenderSubscription),
+    Command(CommandSubscription),
 }
 
 #[derive(Clone, Tsify)]

@@ -7,14 +7,16 @@ use crate::prelude::*;
 pub fn on_renderer_did_update_system(
     subscription: Res<Subscriber>,
     store: Res<UiStore>,
-    popup_query: Query<&UiPopupView>,
     views_query: Query<&UiView>,
+    popup_query: Query<&UiPopupView>,
 ) {
     let current_view = store.current_view.clone();
     let view = views_query.iter().find(|v| v.id == current_view).cloned();
 
-    let current_popup = store.current_popup.clone();
-    let popup= popup_query.iter().find(|p| p.id == current_popup).cloned();
+    let popup = match store.current_popup.clone() {
+        Some(p) => popup_query.iter().find(|v| v.id == p).cloned(),
+        None => None,
+    };
 
     _ = subscription
         .sender

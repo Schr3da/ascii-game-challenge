@@ -43,9 +43,13 @@ impl Default for Core {
         let ui_store_resource = UiStore::default();
         world.insert_resource(ui_store_resource);
 
+        let command_state = CommandState::default();
+        world.insert_resource(command_state);
+
         world.spawn(main_view());
         world.spawn(options_view());
         world.spawn(game_view());
+        world.spawn(command_popup_view());
 
         Core {
             world,
@@ -87,7 +91,7 @@ impl EventHandler for Core {
 
         match event {
             SendEvents::Ui(e) => self.handle_ui_event(e),
-            SendEvents::Input(e) => self.handle_input_event(e),
+            SendEvents::Commands(e) => self.handle_input_event(e),
             SendEvents::Renderer(e) => self.handle_renderer_event(e),
             SendEvents::General(e) => self.handle_general_event(e),
         }
@@ -95,13 +99,13 @@ impl EventHandler for Core {
 }
 
 impl Core {
-    fn handle_input_event(&mut self, event: InputEvents) {
+    fn handle_input_event(&mut self, event: CommandInputEvents) {
         match event {
-            InputEvents::New
-            | InputEvents::Cancel
-            | InputEvents::Push(_)
-            | InputEvents::Pop
-            | InputEvents::Execute(_) => self.input_scheduler.run(&mut self.world),
+            CommandInputEvents::New
+            | CommandInputEvents::Cancel
+            | CommandInputEvents::Push(_)
+            | CommandInputEvents::Pop
+            | CommandInputEvents::Execute(_) => self.input_scheduler.run(&mut self.world),
         }
     }
 

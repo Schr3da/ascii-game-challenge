@@ -52,11 +52,11 @@ impl Terrain {
         self.mountains.write_to_file("mountain.png");
     }
 
-    pub fn get_value(&self, x: i32, y: i32) -> f64{
+    pub fn get_value(&self, x: i32, y: i32) -> f64 {
         let land_value = self.land.get_value(x as usize, y as usize);
         let mountain_value = self.mountains.get_value(x as usize, y as usize);
 
-        if mountain_value > 0.0{
+        if mountain_value > 0.0 {
             return mountain_value;
         }
 

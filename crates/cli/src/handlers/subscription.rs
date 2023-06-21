@@ -41,9 +41,19 @@ async fn handle_renderer(
                 _ => None,
             };
 
-            draw_view_to_terminal_handler(terminal, &v);
-            draw_popup_to_terminal_handler(terminal, &p);
+            _ = terminal.draw(|f| {
+                draw_view_to_terminal_handler(f, &v);
+                draw_popup_to_terminal_handler(f, &p);
+            });
         }
+    };
+
+    true
+}
+
+async fn handle_command(event: CommandSubscription, app_state: &mut AppState) -> bool {
+    match event {
+        CommandSubscription::OnCommandDidUpdate(c) => app_state.ecs_current_command = c,
     };
 
     true
@@ -63,5 +73,6 @@ pub async fn subscription_handler(
         SubscriptionEvents::General(e) => handle_general(e, state).await,
         SubscriptionEvents::Ui(e) => handle_ui(e).await,
         SubscriptionEvents::Renderer(e) => handle_renderer(e, state, terminal).await,
+        SubscriptionEvents::Command(e) => handle_command(e, state).await,
     }
 }

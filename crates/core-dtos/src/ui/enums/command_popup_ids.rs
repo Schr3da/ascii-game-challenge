@@ -2,12 +2,12 @@ use serde::{Deserialize, Serialize};
 use tsify::Tsify;
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Tsify)]
-pub enum UiPopupViewIds {
-    Command,
+pub enum CommandPopupIds {
+    UnknownCommandPopupId,
 }
 
-impl Default for UiPopupViewIds {
+impl Default for CommandPopupIds {
     fn default() -> Self {
-        UiPopupViewIds::Command
+        CommandPopupIds::UnknownCommandPopupId
     }
 }

@@ -7,9 +7,9 @@ mod rect;
 
 pub mod prelude {
     pub use super::ascii::*;
+    pub use super::ascii_id::*;
     pub use super::color::*;
     pub use super::interaction::*;
     pub use super::position::*;
     pub use super::rect::*;
-    pub use super::ascii_id::*;
 }

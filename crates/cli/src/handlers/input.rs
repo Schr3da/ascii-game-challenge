@@ -6,10 +6,9 @@ use tokio::sync::mpsc::error::TryRecvError;
 
 use crate::export::prelude::*;
 
-async fn handle_keyboard_event(event: KeyEvent, app_state: &mut AppState) -> bool {
-    let next = event.code;
+async fn handle_view_event(event: KeyEvent, app_state: &mut AppState) -> bool {
 
-    match next {
+    match event.code {
         KeyCode::Esc => {
             let event = SendEvents::Ui(UiEvents::OnCloseView);
             app_state.send(event).await;
@@ -33,14 +32,43 @@ async fn handle_keyboard_event(event: KeyEvent, app_state: &mut AppState) -> boo
                 SendEvents::Ui(UiEvents::OnClick(ViewComponentIds::Main(MainMenuIds::Quit)));
             app_state.send(event).await;
         }
-        KeyCode::Char(':') => {
-            let event = SendEvents::Input(InputEvents::New);
+        KeyCode::Char(' ') => {
+            let event = SendEvents::Commands(CommandInputEvents::New);
             app_state.send(event).await;
         }
         _ => return false,
     };
 
     true
+}
+
+async fn handle_popup_event(event: KeyEvent, app_state: &mut AppState) -> bool {
+    match event.code {
+        KeyCode::Backspace => {
+            let event = SendEvents::Commands(CommandInputEvents::Pop);
+            app_state.send(event).await;
+        }
+        KeyCode::Esc => {
+            let event = SendEvents::Commands(CommandInputEvents::Cancel);
+            app_state.send(event).await;
+        }
+        KeyCode::Enter => {
+            let event = SendEvents::Commands(CommandInputEvents::Execute(
+                app_state.ecs_current_command.clone(),
+            ));
+            app_state.send(event).await;
+        }
+        _ => return false,
+    };
+
+    true
+}
+
+async fn handle_keyboard_event(event: KeyEvent, app_state: &mut AppState) -> bool {
+    match &app_state.ecs_current_popup_state {
+        Some(_) => handle_popup_event(event, app_state).await,
+        None => handle_view_event(event, app_state).await,
+    }
 }
 
 async fn handle_mouse_event(event: MouseEvent, _app_state: &mut AppState) -> bool {
