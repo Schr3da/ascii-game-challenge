@@ -10,23 +10,12 @@ pub fn draw_view_to_terminal_handler<B: Backend>(context: &mut Frame<B>, view: &
         None => return,
     };
 
-    match next.id {
+    match &next.id {
         UiViewIds::Main => _ = render_menu(context, next),
         UiViewIds::Options => _ = render_options(context, next),
         UiViewIds::Game => _ = render_game(context, next),
+        UiViewIds::Popup(p) => match p {
+            UiPopupViewIds::Command => _ = render_command_popup(context, next),
+        },
     };
-}
-
-pub fn draw_popup_to_terminal_handler<B: Backend>(
-    context: &mut Frame<B>,
-    popup: &Option<UiPopupView>,
-) {
-    let next = match popup {
-        Some(p) => p,
-        None => return,
-    };
-
-    match next.id {
-        UiPopupViewIds::Command => _ = render_command_inputs_view(context, next),
-    }
 }

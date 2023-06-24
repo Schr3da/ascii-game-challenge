@@ -17,8 +17,9 @@ pub struct AppState {
     pub ecs_subscription_sender: Sender<SubscriptionEvents>,
     pub ecs_subscription_receiver: Receiver<SubscriptionEvents>,
     pub ecs_current_view_state: Option<UiViewState>,
-    pub ecs_current_popup_state: Option<UiPopupState>,
+    pub ecs_current_popup_state: Option<UiViewState>,
     pub ecs_current_command: Vec<String>,
+    pub is_game_running: bool,
 }
 
 impl Default for AppState {
@@ -36,6 +37,7 @@ impl Default for AppState {
             ecs_current_view_state: None,
             ecs_current_popup_state: None,
             ecs_current_command: Vec::new(),
+            is_game_running: false,
         }
     }
 }

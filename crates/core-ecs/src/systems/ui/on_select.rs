@@ -40,7 +40,14 @@ pub fn on_select_system(
         _ => return,
     };
 
-    let view = match views_query.iter_mut().find(|v| v.id == store.current_view) {
+    let next = match &store.current_popup {
+        Some(id) => views_query
+            .iter_mut()
+            .find(|v| v.id == UiViewIds::Popup(id.clone())),
+        None => views_query.iter_mut().find(|v| v.id == store.current_view),
+    };
+
+    let view = match next {
         Some(v) => v,
         None => return,
     };

@@ -13,19 +13,39 @@ pub fn options_view() -> UiView {
             ],
         },
         state: UiViewState {
-            selected_id: ViewComponentIds::Options(OptionMenuIds::Back),
-            selectable_ids: vec![ViewComponentIds::Options(OptionMenuIds::Back)],
+            selected_id: ViewComponentIds::Options(OptionMenuIds::LevelOfDifficulty),
+            selectable_ids: vec![
+                ViewComponentIds::Options(OptionMenuIds::LevelOfDifficulty),
+                ViewComponentIds::Options(OptionMenuIds::Sound),
+                ViewComponentIds::Options(OptionMenuIds::Back),
+            ],
         },
         children: vec![
             UiViewChild::Label(UiLabel {
                 id: ViewComponentIds::Options(OptionMenuIds::Title),
-                text: "Options".to_string(),
+                text: "".to_string(),
                 alignment: TextAlignment::Center,
             }),
             UiViewChild::List(UiList {
                 id: ViewComponentIds::Options(OptionMenuIds::OptionList),
-                label: "".to_string(),
-                children: vec![],
+                label: "Options".to_string(),
+                children: vec![
+                    UiLabel {
+                        id: ViewComponentIds::Options(OptionMenuIds::LevelOfDifficulty),
+                        text: "Level".to_string(),
+                        alignment: TextAlignment::Left,
+                    },
+                    UiLabel {
+                        id: ViewComponentIds::Options(OptionMenuIds::Sound),
+                        text: "Sound".to_string(),
+                        alignment: TextAlignment::Left,
+                    },
+                    UiLabel {
+                        id: ViewComponentIds::Options(OptionMenuIds::Back),
+                        text: "Back".to_string(),
+                        alignment: TextAlignment::Left,
+                    },
+                ],
             }),
         ],
     }

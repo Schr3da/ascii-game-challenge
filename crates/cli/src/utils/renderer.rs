@@ -30,8 +30,8 @@ fn render_list<B: Backend>(
         .children
         .iter()
         .enumerate()
-        .map(|(index, label)| {
-            let text = format!(" {}. {}", index + 1, label.text);
+        .map(|(_, label)| {
+            let text = format!(" {}", label.text);
 
             match selected_id == &label.id {
                 true => ListItem::new(text).style(Style::default().bg(Color::Red).fg(Color::White)),
@@ -97,7 +97,7 @@ pub fn render_view<B: Backend>(context: &mut Frame<B>, root_layout: layout::Rect
 pub fn render_popup_view<B: Backend>(
     context: &mut Frame<B>,
     root_layout: layout::Rect,
-    view: &UiPopupView,
+    view: &UiView,
 ) {
     let view_layout = generate_layout(&view.layout, root_layout);
 

@@ -7,7 +7,6 @@ use tokio::sync::mpsc::error::TryRecvError;
 use crate::export::prelude::*;
 
 async fn handle_view_event(event: KeyEvent, app_state: &mut AppState) -> bool {
-
     match event.code {
         KeyCode::Esc => {
             let event = SendEvents::Ui(UiEvents::OnCloseView);
@@ -56,6 +55,18 @@ async fn handle_popup_event(event: KeyEvent, app_state: &mut AppState) -> bool {
             let event = SendEvents::Commands(CommandInputEvents::Execute(
                 app_state.ecs_current_command.clone(),
             ));
+            app_state.send(event).await;
+        }
+        KeyCode::Char(' ') => {
+            let event = SendEvents::Commands(CommandInputEvents::Cancel);
+            app_state.send(event).await;
+        }
+        KeyCode::Down | KeyCode::Tab => {
+            let event = SendEvents::Ui(UiEvents::OnSelect(SelectionDirections::Next));
+            app_state.send(event).await;
+        }
+        KeyCode::Up | KeyCode::BackTab => {
+            let event = SendEvents::Ui(UiEvents::OnSelect(SelectionDirections::Previous));
             app_state.send(event).await;
         }
         _ => return false,

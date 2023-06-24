@@ -1,14 +1,14 @@
 use tui::backend::Backend;
 use tui::layout::{Constraint, Direction, Layout};
 use tui::style::{Color, Style};
-use tui::widgets::{Block, Borders, Clear};
+use tui::widgets::{Block, Clear};
 use tui::Frame;
 
 use core_dtos::prelude::*;
 
 use crate::export::prelude::*;
 
-pub fn render_command_inputs_view<B: Backend>(context: &mut Frame<B>, view: &UiPopupView) {
+pub fn render_command_popup<B: Backend>(context: &mut Frame<B>, view: &UiView) {
     let screen_size = context.size();
 
     let size = tui::layout::Rect::new(
@@ -21,7 +21,6 @@ pub fn render_command_inputs_view<B: Backend>(context: &mut Frame<B>, view: &UiP
     context.render_widget(Clear, size);
 
     let block = Block::default()
-        .borders(Borders::ALL)
         .style(Style::default().bg(Color::White).fg(Color::Black));
     context.render_widget(block, size);
 

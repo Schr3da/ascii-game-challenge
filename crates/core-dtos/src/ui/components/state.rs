@@ -9,9 +9,3 @@ pub struct UiViewState {
     pub selected_id: ViewComponentIds,
     pub selectable_ids: Vec<ViewComponentIds>,
 }
-
-#[derive(Debug, Eq, PartialEq, Clone, Default, Component, Serialize, Deserialize, Tsify)]
-pub struct UiPopupState {
-    pub selected_id: ViewComponentIds,
-    pub selectable_ids: Vec<ViewComponentIds>,
-}

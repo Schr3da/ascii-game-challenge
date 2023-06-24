@@ -37,13 +37,13 @@ async fn handle_renderer(
             };
 
             app_state.ecs_current_popup_state = match &p {
-                Some(UiPopupView { state, .. }) => Some(state.clone()),
+                Some(UiView{ state, .. }) => Some(state.clone()),
                 _ => None,
             };
 
             _ = terminal.draw(|f| {
                 draw_view_to_terminal_handler(f, &v);
-                draw_popup_to_terminal_handler(f, &p);
+                draw_view_to_terminal_handler(f, &p);
             });
         }
     };
