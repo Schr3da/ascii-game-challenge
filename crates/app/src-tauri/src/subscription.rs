@@ -25,7 +25,7 @@ async fn handle_renderer(
     window: &Window,
 ) -> bool {
     match event {
-        RenderSubscription::OnWorldDidUpdate(v, p) => {
+        RenderSubscription::OnWorldDidUpdate(v, p)=> {
             app_state.ecs_current_view_state = match &v {
                 Some(UiView { state, .. }) => Some(state.clone()),
                 _ => None,

@@ -9,6 +9,8 @@ pub fn on_close_view_system(mut store: ResMut<UiStore>, subscriber: Res<Subscrib
         _ => return,
     };
 
+    store.selected_game_tile = None;
+
     match store.previous_view.pop() {
         Some(v) => store.current_view = v,
         None => store.current_view = UiViewIds::Main,

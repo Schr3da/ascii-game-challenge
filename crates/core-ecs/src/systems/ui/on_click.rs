@@ -16,6 +16,7 @@ pub fn on_click_system(mut store: ResMut<UiStore>, subscriber: Res<Subscriber>) 
         ViewComponentIds::Main(MainMenuIds::NewGame) => {
             store.previous_view.push(current_view);
             store.current_view = UiViewIds::Game;
+            store.selected_game_tile = Some(SelectedCell::default());
         }
         ViewComponentIds::Main(MainMenuIds::Options) => {
             store.previous_view.push(current_view);

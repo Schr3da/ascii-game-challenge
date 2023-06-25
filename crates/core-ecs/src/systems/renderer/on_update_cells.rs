@@ -4,7 +4,7 @@ use core_dtos::prelude::*;
 
 use crate::prelude::*;
 
-fn get_canvas_frame(store: Res<UiStore>, top: u16, bottom: u16) -> Rect {
+fn get_canvas_frame(store: &ResMut<UiStore>, top: u16, bottom: u16) -> Rect {
     Rect {
         x: 0,
         y: top as i32,
@@ -33,7 +33,7 @@ fn value_to_ascii(value: f64) -> AsciiIds {
     return AsciiIds::UnknownAsciiId;
 }
 
-fn get_canvas_cells(frame: &Rect, assets: &Res<AssetResources>) -> Vec<(Cell, Position)> {
+fn get_visible_canvas_cells(frame: &Rect, assets: &Res<AssetResources>) -> Vec<(Cell, Position)> {
     let mut next = Vec::new();
 
     for y in frame.y..frame.height {
@@ -52,7 +52,7 @@ fn get_canvas_cells(frame: &Rect, assets: &Res<AssetResources>) -> Vec<(Cell, Po
 }
 
 pub fn on_update_cells_system(
-    store: Res<UiStore>,
+    mut store: ResMut<UiStore>,
     assets: Res<AssetResources>,
     mut views_query: Query<&mut UiView>,
 ) {
@@ -87,12 +87,23 @@ pub fn on_update_cells_system(
         _ => 0,
     };
 
+    match &mut store.selected_game_tile {
+        Some(s) => {
+            s.top = top;
+            s.bottom = bottom;
+        }
+        None => {}
+    };
+
     for child in &mut view.children {
         match child {
-            UiViewChild::GameCanvas(_) => {
-                let frame = get_canvas_frame(store, top, bottom);
-                let cells = get_canvas_cells(&frame, &assets);
-                *child = UiViewChild::GameCanvas(cells);
+            UiViewChild::GameCanvas(_, _) => {
+                let frame = get_canvas_frame(&store, top, bottom);
+                let visible_cells = get_visible_canvas_cells(&frame, &assets);
+                let selected_cell = store.selected_game_tile.clone();
+
+                *child = UiViewChild::GameCanvas(visible_cells, selected_cell);
+
                 break;
             }
             _ => {}

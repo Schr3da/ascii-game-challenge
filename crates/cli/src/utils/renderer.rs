@@ -89,7 +89,10 @@ pub fn render_view<B: Backend>(context: &mut Frame<B>, root_layout: layout::Rect
             UiViewChild::Label(l) => render_label(context, l, view_layout[i]),
             UiViewChild::List(l) => render_list(context, l, &selected_id, view_layout[i]),
             UiViewChild::Placeholder => render_placeholder(context, view_layout[i]),
-            UiViewChild::GameCanvas(data) => render_canvas(context, data),
+            UiViewChild::GameCanvas(data, selected) => {
+                render_canvas(context, data);
+                render_selected_cell(context, selected);
+            }
         };
     });
 }

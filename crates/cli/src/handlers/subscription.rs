@@ -37,7 +37,7 @@ async fn handle_renderer(
             };
 
             app_state.ecs_current_popup_state = match &p {
-                Some(UiView{ state, .. }) => Some(state.clone()),
+                Some(UiView { state, .. }) => Some(state.clone()),
                 _ => None,
             };
 

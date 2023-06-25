@@ -10,7 +10,7 @@ pub enum UiViewChild {
     Label(UiLabel),
     Section(UiView),
     Placeholder,
-    GameCanvas(Vec<(Cell, Position)>),
+    GameCanvas(Vec<(Cell, Position)>, Option<SelectedCell>),
 }
 
 #[derive(Debug, PartialEq, Eq, Clone, Component, Serialize, Deserialize, Tsify)]
