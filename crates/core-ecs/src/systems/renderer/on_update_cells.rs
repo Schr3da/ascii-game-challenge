@@ -4,12 +4,12 @@ use core_dtos::prelude::*;
 
 use crate::prelude::*;
 
-fn get_canvas_frame(store: &ResMut<UiStore>, top: u16, bottom: u16) -> Rect {
+fn get_canvas_frame(camera: &Res<Camera2d>, top: u16, bottom: u16) -> Rect {
     Rect {
         x: 0,
         y: top as i32,
-        width: store.width as i32,
-        height: (store.height - bottom) as i32,
+        width: camera.viewport.width as i32,
+        height: camera.viewport.height - bottom as i32,
     }
 }
 
@@ -52,8 +52,9 @@ fn get_visible_canvas_cells(frame: &Rect, assets: &Res<AssetResources>) -> Vec<(
 }
 
 pub fn on_update_cells_system(
-    mut store: ResMut<UiStore>,
     assets: Res<AssetResources>,
+    camera: Res<Camera2d>,
+    mut store: ResMut<UiStore>,
     mut views_query: Query<&mut UiView>,
 ) {
     if store.current_view != UiViewIds::Game {
@@ -98,7 +99,7 @@ pub fn on_update_cells_system(
     for child in &mut view.children {
         match child {
             UiViewChild::GameCanvas(_, _) => {
-                let frame = get_canvas_frame(&store, top, bottom);
+                let frame = get_canvas_frame(&camera, top, bottom);
                 let visible_cells = get_visible_canvas_cells(&frame, &assets);
                 let selected_cell = store.selected_game_tile.clone();
 

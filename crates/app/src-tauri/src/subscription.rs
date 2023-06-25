@@ -25,7 +25,7 @@ async fn handle_renderer(
     window: &Window,
 ) -> bool {
     match event {
-        RenderSubscription::OnWorldDidUpdate(v, p)=> {
+        RenderSubscription::OnWorldDidUpdate(v, p, s) => {
             app_state.ecs_current_view_state = match &v {
                 Some(UiView { state, .. }) => Some(state.clone()),
                 _ => None,
@@ -35,6 +35,8 @@ async fn handle_renderer(
                 Some(UiView { state, .. }) => Some(state.clone()),
                 _ => None,
             };
+
+            app_state.ecs_current_game_status = s.clone();
 
             if v.is_none() && p.is_none() {
                 return true;

@@ -6,6 +6,8 @@ mod render;
 mod select;
 mod ui;
 mod window;
+mod game_states;
+mod selected_cell_navigation;
 
 pub mod prelude {
     pub use super::events::*;
@@ -16,4 +18,6 @@ pub mod prelude {
     pub use super::select::*;
     pub use super::ui::*;
     pub use super::window::*;
+    pub use super::game_states::*;
+    pub use super::selected_cell_navigation::*;
 }

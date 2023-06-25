@@ -46,6 +46,9 @@ impl Default for Core {
         let command_state = CommandState::default();
         world.insert_resource(command_state);
 
+        let camera = Camera2d::default();
+        world.insert_resource(camera);
+
         world.spawn(main_view());
         world.spawn(options_view());
         world.spawn(game_view());
@@ -122,7 +125,9 @@ impl Core {
 
     fn handle_renderer_event(&mut self, event: RenderEvents) {
         match event {
-            RenderEvents::OnWorldWillUpdate => self.render_scheduler.run(&mut self.world),
+            RenderEvents::OnUpdateSelectedCell(_) | RenderEvents::OnWorldWillUpdate => {
+                self.render_scheduler.run(&mut self.world)
+            }
         }
     }
 

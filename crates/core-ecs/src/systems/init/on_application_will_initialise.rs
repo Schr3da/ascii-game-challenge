@@ -7,6 +7,7 @@ pub fn on_application_will_initialise_system(
     subscriber: Res<Subscriber>,
     mut assets: ResMut<AssetResources>,
     mut store: ResMut<UiStore>,
+    mut camera: ResMut<Camera2d>,
     mut view_query: Query<&mut UiView>,
 ) {
     let (width, height) = match subscriber.next_event {
@@ -14,8 +15,8 @@ pub fn on_application_will_initialise_system(
         _ => (0, 0),
     };
 
-    store.width = width;
-    store.height = height;
+    camera.viewport.set_width(width);
+    camera.viewport.set_height(height);
 
     store.previous_view = vec![];
     store.current_view = UiViewIds::Main;
