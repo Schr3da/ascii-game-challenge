@@ -11,12 +11,7 @@ use crate::export::prelude::*;
 pub fn render_quick_action_popup<B: Backend>(context: &mut Frame<B>, view: &UiView) {
     let screen_size = context.size();
 
-    let size = tui::layout::Rect::new(
-        screen_size.width - screen_size.width as u16,
-        screen_size.height - 1,
-        screen_size.width as u16,
-        1,
-    );
+    let size = tui::layout::Rect::new(0, screen_size.height - 1, screen_size.width as u16 - 1, 1);
 
     context.render_widget(Clear, size);
 

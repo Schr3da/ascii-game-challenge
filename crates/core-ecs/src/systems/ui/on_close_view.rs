@@ -10,6 +10,7 @@ pub fn on_close_view_system(mut store: ResMut<UiStore>, subscriber: Res<Subscrib
     };
 
     store.selected_game_tile = None;
+    store.current_game_status = GameStatus::GameDidPaused;
 
     match store.previous_view.pop() {
         Some(v) => store.current_view = v,

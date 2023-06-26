@@ -1,11 +1,11 @@
 mod input;
-mod popup_handler;
+mod popup_event_handler;
 mod subscription;
-mod view_input_handler;
+mod view_event_handler;
 
 pub mod prelude {
     pub use super::input::*;
-    pub use super::popup_handler::*;
+    pub use super::popup_event_handler::*;
     pub use super::subscription::*;
-    pub use super::view_input_handler::*;
+    pub use super::view_event_handler::*;
 }

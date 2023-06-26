@@ -5,7 +5,7 @@ pub fn quick_action_popup_view() -> UiView {
         id: UiViewIds::Popup(UiPopupViewIds::QuickAction),
         layout: UiLayout {
             margin: 0,
-            alignment: LayoutAlignments::Vertical,
+            alignment: LayoutAlignments::Horizontal,
             constraints: vec![LayoutConstraints::Percentage(100)],
         },
         state: UiViewState {

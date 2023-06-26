@@ -15,7 +15,7 @@ pub fn command_popup_view() -> UiView {
         },
         children: vec![UiViewChild::List(UiList {
             id: ViewComponentIds::Main(MainMenuIds::MenuList),
-            label: "Command".to_string(),
+            label: "Available Actions".to_string(),
             children: vec![
                 UiLabel {
                     id: ViewComponentIds::CommandPopup(CommandIds::Move),
