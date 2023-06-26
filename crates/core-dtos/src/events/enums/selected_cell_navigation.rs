@@ -3,8 +3,8 @@ use tsify::Tsify;
 
 #[derive(Clone, Tsify, Serialize, Deserialize, PartialEq, Eq)]
 pub enum SelectedCellNavigation {
-  Up,
-  Down,
-  Left, 
-  Right,
+    Up,
+    Down,
+    Left,
+    Right,
 }

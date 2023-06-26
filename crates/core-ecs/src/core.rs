@@ -12,7 +12,8 @@ pub struct Core {
     pub world: World,
     pub init_scheduler: InitScheduler,
     pub general_scheduler: GeneralScheduler,
-    pub input_scheduler: InputScheduler,
+    pub command_scheduler: CommandScheduler,
+    pub quick_action_scheduler: QuickActionScheduler,
     pub render_scheduler: RenderScheduler,
     pub ui_scheduler: UiScheduler,
 }
@@ -33,8 +34,11 @@ impl Default for Core {
         let mut ui_scheduler = UiScheduler::default();
         ui_scheduler.setup();
 
-        let mut input_scheduler = InputScheduler::default();
-        input_scheduler.setup();
+        let mut command_scheduler = CommandScheduler::default();
+        command_scheduler.setup();
+
+        let mut quick_action_scheduler = QuickActionScheduler::default();
+        quick_action_scheduler.setup();
 
         let mut assets = AssetResources::default();
         assets.load();
@@ -53,6 +57,7 @@ impl Default for Core {
         world.spawn(options_view());
         world.spawn(game_view());
         world.spawn(command_popup_view());
+        world.spawn(quick_action_popup_view());
 
         Core {
             world,
@@ -60,7 +65,8 @@ impl Default for Core {
             render_scheduler,
             ui_scheduler,
             general_scheduler,
-            input_scheduler,
+            command_scheduler,
+            quick_action_scheduler,
         }
     }
 }
@@ -94,21 +100,22 @@ impl EventHandler for Core {
 
         match event {
             SendEvents::Ui(e) => self.handle_ui_event(e),
-            SendEvents::Commands(e) => self.handle_input_event(e),
+            SendEvents::Commands(e) => self.handle_command_event(e),
             SendEvents::Renderer(e) => self.handle_renderer_event(e),
             SendEvents::General(e) => self.handle_general_event(e),
+            SendEvents::QuickAction(e) => self.handle_quick_action_event(e),
         }
     }
 }
 
 impl Core {
-    fn handle_input_event(&mut self, event: CommandInputEvents) {
+    fn handle_command_event(&mut self, event: CommandInputEvents) {
         match event {
             CommandInputEvents::New
             | CommandInputEvents::Cancel
             | CommandInputEvents::Push(_)
             | CommandInputEvents::Pop
-            | CommandInputEvents::Execute(_) => self.input_scheduler.run(&mut self.world),
+            | CommandInputEvents::Execute(_) => self.command_scheduler.run(&mut self.world),
         }
     }
 
@@ -138,6 +145,14 @@ impl Core {
             }
             GeneralEvents::OnApplicationResize(_, _) => self.general_scheduler.run(&mut self.world),
             GeneralEvents::OnApplicationWillClose => self.general_scheduler.run(&mut self.world),
+        }
+    }
+
+    fn handle_quick_action_event(&mut self, event: QuickActionEvents) {
+        match event {
+            QuickActionEvents::Cancel | QuickActionEvents::Execute | QuickActionEvents::New => {
+                self.quick_action_scheduler.run(&mut self.world)
+            }
         }
     }
 }

@@ -19,6 +19,7 @@ pub fn main_view() -> UiView {
                 ViewComponentIds::Main(MainMenuIds::Options),
                 ViewComponentIds::Main(MainMenuIds::Quit),
             ],
+            ..UiViewState::default()
         },
         children: vec![
             UiViewChild::Label(UiLabel {

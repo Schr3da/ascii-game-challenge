@@ -3,7 +3,7 @@ use crossterm::event::*;
 use core_dtos::prelude::*;
 use core_state::prelude::*;
 
-pub async fn handle_popup_event(event: KeyEvent, app_state: &mut AppState) -> bool {
+async fn handle_command_popup_event(event: KeyEvent, app_state: &mut AppState) -> bool {
     match event.code {
         KeyCode::Backspace => {
             let event = SendEvents::Commands(CommandInputEvents::Pop);
@@ -35,4 +35,32 @@ pub async fn handle_popup_event(event: KeyEvent, app_state: &mut AppState) -> bo
     };
 
     true
+}
+
+async fn handle_quick_action_popup_event(event: KeyEvent, app_state: &mut AppState) -> bool {
+    match event.code {
+        KeyCode::Esc => {
+            let event = SendEvents::QuickAction(QuickActionEvents::Cancel);
+            app_state.send(event).await;
+        }
+        KeyCode::Enter => {
+            let event = SendEvents::QuickAction(QuickActionEvents::Execute);
+            app_state.send(event).await;
+        }
+        _ => return false,
+    };
+
+    true
+}
+
+pub async fn handle_popup_event(
+    event: KeyEvent,
+    app_state: &mut AppState,
+    view_state: &UiViewState,
+) -> bool {
+    if view_state.has_quick_action_data() {
+        return handle_quick_action_popup_event(event, app_state).await;
+    }
+
+    return handle_command_popup_event(event, app_state).await;
 }

@@ -1,5 +1,5 @@
 mod camera;
 
 pub mod prelude {
-  pub use super::camera::*;
+    pub use super::camera::*;
 }

@@ -28,19 +28,28 @@ pub fn on_application_will_initialise_system(
             UiViewIds::Main => UiViewState {
                 selected_id: ViewComponentIds::Main(MainMenuIds::NewGame),
                 selectable_ids: MainMenuIds::get_selectable_items(),
+                ..UiViewState::default()
             },
             UiViewIds::Options => UiViewState {
                 selected_id: ViewComponentIds::Options(OptionMenuIds::LevelOfDifficulty),
                 selectable_ids: OptionMenuIds::get_selectable_items(),
+                ..UiViewState::default()
             },
             UiViewIds::Game => UiViewState {
                 selected_id: ViewComponentIds::Game(GameIds::None),
                 selectable_ids: GameIds::get_selectable_items(),
+                ..UiViewState::default()
             },
             UiViewIds::Popup(id) => match id {
                 UiPopupViewIds::Command => UiViewState {
                     selected_id: ViewComponentIds::CommandPopup(CommandIds::Move),
                     selectable_ids: CommandIds::get_selectable_items(),
+                    ..UiViewState::default()
+                },
+                UiPopupViewIds::QuickAction => UiViewState {
+                    selected_id: ViewComponentIds::QuickAction,
+                    selectable_ids: Vec::new(),
+                    view_data: ViewDataTypes::QuickActionData,
                 },
             },
         };

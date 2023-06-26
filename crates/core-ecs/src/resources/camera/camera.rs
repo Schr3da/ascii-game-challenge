@@ -2,7 +2,7 @@ use bevy_ecs::prelude::*;
 
 use core_dtos::prelude::*;
 
-#[derive(Resource)]
+#[derive(Debug, Resource)]
 pub struct Camera2d {
     pub viewport: Rect,
     pub position: Position,

@@ -11,6 +11,7 @@ pub fn get_top_bar() -> UiViewChild {
         state: UiViewState {
             selected_id: ViewComponentIds::Game(GameIds::None),
             selectable_ids: Vec::new(),
+            ..UiViewState::default()
         },
         children: vec![
             UiViewChild::Label(UiLabel {
@@ -43,6 +44,7 @@ pub fn get_bottom_bar() -> UiViewChild {
         state: UiViewState {
             selected_id: ViewComponentIds::Game(GameIds::None),
             selectable_ids: Vec::new(),
+            ..UiViewState::default()
         },
         children: vec![
             UiViewChild::Label(UiLabel {
@@ -85,6 +87,7 @@ pub fn game_view() -> UiView {
         state: UiViewState {
             selected_id: ViewComponentIds::Game(GameIds::None),
             selectable_ids: Vec::new(),
+            ..UiViewState::default()
         },
         children: vec![
             get_top_bar(),

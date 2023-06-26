@@ -19,6 +19,7 @@ pub fn options_view() -> UiView {
                 ViewComponentIds::Options(OptionMenuIds::Sound),
                 ViewComponentIds::Options(OptionMenuIds::Back),
             ],
+            ..UiViewState::default()
         },
         children: vec![
             UiViewChild::Label(UiLabel {

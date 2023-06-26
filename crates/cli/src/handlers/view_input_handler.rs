@@ -77,6 +77,15 @@ async fn handle_show_command_popup(app_state: &mut AppState) {
     app_state.send(event).await;
 }
 
+async fn handle_show_quick_action_popup(app_state: &mut AppState) {
+    if app_state.ecs_current_game_status != GameStatus::GameDidStart {
+        return;
+    }
+
+    let event = SendEvents::QuickAction(QuickActionEvents::New);
+    app_state.send(event).await;
+}
+
 pub async fn handle_view_event(event: KeyEvent, app_state: &mut AppState) -> bool {
     match event.code {
         KeyCode::Esc => handle_close_view(app_state).await,
@@ -87,6 +96,7 @@ pub async fn handle_view_event(event: KeyEvent, app_state: &mut AppState) -> boo
         KeyCode::Enter => handle_on_click(app_state).await,
         KeyCode::Char('q') => handle_quit_application(app_state).await,
         KeyCode::Char(' ') => handle_show_command_popup(app_state).await,
+        KeyCode::Char(':') => handle_show_quick_action_popup(app_state).await,
         _ => return false,
     };
 

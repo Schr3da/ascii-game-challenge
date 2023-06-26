@@ -8,14 +8,14 @@ use core_dtos::prelude::*;
 
 use crate::export::prelude::*;
 
-pub fn render_command_popup<B: Backend>(context: &mut Frame<B>, view: &UiView) {
+pub fn render_quick_action_popup<B: Backend>(context: &mut Frame<B>, view: &UiView) {
     let screen_size = context.size();
 
     let size = tui::layout::Rect::new(
-        screen_size.width - (screen_size.width / 4) as u16,
-        screen_size.y,
-        (screen_size.width / 4) as u16,
-        (screen_size.height) as u16,
+        screen_size.width - screen_size.width as u16,
+        screen_size.height - 1,
+        screen_size.width as u16,
+        1,
     );
 
     context.render_widget(Clear, size);

@@ -2,19 +2,19 @@ use bevy_ecs::prelude::*;
 
 use crate::prelude::*;
 
-pub struct InputScheduler {
+pub struct CommandScheduler {
     pub schedule: Schedule,
 }
 
-impl Default for InputScheduler {
+impl Default for CommandScheduler {
     fn default() -> Self {
         let schedule = Schedule::default();
 
-        InputScheduler { schedule }
+        CommandScheduler { schedule }
     }
 }
 
-impl Scheduler for InputScheduler {
+impl Scheduler for CommandScheduler {
     fn setup(&mut self) {
         self.schedule.add_systems((
             on_new_command_system,

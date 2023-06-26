@@ -9,6 +9,7 @@ pub enum ViewComponentIds {
     Options(OptionMenuIds),
     Game(GameIds),
     CommandPopup(CommandIds),
+    QuickAction,
 }
 
 impl Default for ViewComponentIds {

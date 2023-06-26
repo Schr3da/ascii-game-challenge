@@ -8,4 +8,14 @@ use crate::prelude::*;
 pub struct UiViewState {
     pub selected_id: ViewComponentIds,
     pub selectable_ids: Vec<ViewComponentIds>,
+    pub view_data: ViewDataTypes,
+}
+
+impl UiViewState {
+    pub fn has_quick_action_data(&self) -> bool {
+        match self.view_data {
+            ViewDataTypes::QuickActionData => true,
+            ViewDataTypes::NoViewData => false,
+        }
+    }
 }
