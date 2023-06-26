@@ -18,8 +18,8 @@ impl Scheduler for QuickActionScheduler {
     fn setup(&mut self) {
         self.schedule.add_systems((
             on_new_quick_action_system,
-            on_cancel_quick_action_system,
-            on_quick_action_did_update_system.after(on_new_quick_action_system),
+            on_cancel_quick_action_system.after(on_new_quick_action_system),
+            on_quick_action_did_update_system.after(on_cancel_quick_action_system),
         ));
     }
 
