@@ -26,7 +26,7 @@ pub fn on_update_view_labels_system(store: Res<UiStore>, mut views_query: Query<
                 d.current_time += 15;
             }
 
-            view.state.view_data = view_data;
+            v.state.view_data = view_data;
         }
         _ => return,
     };
