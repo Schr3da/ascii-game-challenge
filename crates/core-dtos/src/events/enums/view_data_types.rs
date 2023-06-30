@@ -18,12 +18,7 @@ impl From<&ViewDataTypes> for HashMap<ViewComponentIds, i32> {
         match value {
             ViewDataTypes::NoViewData => HashMap::new(),
             ViewDataTypes::QuickActionData => HashMap::new(),
-            ViewDataTypes::GameHeader(s) => {
-                let mut next = HashMap::new();
-                next.insert(ViewComponentIds::Game(GameIds::Time), s.current_time);
-                next.insert(ViewComponentIds::Game(GameIds::Turns), s.tick_count);
-                next
-            }
+            ViewDataTypes::GameHeader(s) => s.into(),
         }
     }
 }

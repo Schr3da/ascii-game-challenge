@@ -26,7 +26,7 @@ fn render_label<B: Backend>(
     let data: HashMap<ViewComponentIds, i32> = view_data.into();
 
     let title = match data.get(&label.id) {
-        Some(v) => format!("{}:{}", label.text.clone(), v),
+        Some(v) => format!("{}: {}", label.text, v),
         None => label.text.clone(),
     };
 
