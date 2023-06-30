@@ -3,7 +3,7 @@ use tsify::Tsify;
 
 use crate::prelude::*;
 
-#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize, Tsify)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize, Hash, Tsify)]
 pub enum GameIds {
     Time,
     Turns,

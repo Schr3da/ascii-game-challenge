@@ -11,6 +11,7 @@ pub fn get_top_bar() -> UiViewChild {
         state: UiViewState {
             selected_id: ViewComponentIds::Game(GameIds::None),
             selectable_ids: Vec::new(),
+            view_data: ViewDataTypes::GameHeader(GameViewHeaderState::default()),
             ..UiViewState::default()
         },
         children: vec![

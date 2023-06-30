@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 use core_dtos::prelude::*;
 use tui::backend::Backend;
 use tui::layout;
@@ -9,15 +11,27 @@ use tui::Frame;
 
 use crate::export::prelude::*;
 
-fn render_label<B: Backend>(context: &mut Frame<B>, label: &UiLabel, size: layout::Rect) {
+fn render_label<B: Backend>(
+    context: &mut Frame<B>,
+    label: &UiLabel,
+    view_data: &ViewDataTypes,
+    size: layout::Rect,
+) {
     let alignment = match label.alignment {
         TextAlignment::Center => Alignment::Center,
         TextAlignment::Left => Alignment::Left,
         TextAlignment::Right => Alignment::Right,
     };
 
-    let title = Paragraph::new(Spans::from(label.text.clone())).alignment(alignment);
-    context.render_widget(title, size);
+    let data: HashMap<ViewComponentIds, i32> = view_data.into();
+
+    let title = match data.get(&label.id) {
+        Some(v) => format!("{}:{}", label.text.clone(), v),
+        None => label.text.clone(),
+    };
+
+    let paragraph = Paragraph::new(Spans::from(title)).alignment(alignment);
+    context.render_widget(paragraph, size);
 }
 
 fn render_list<B: Backend>(
@@ -81,12 +95,14 @@ fn render_canvas<B: Backend>(context: &mut Frame<B>, cells: &Vec<(Cell, Position
 pub fn render_view<B: Backend>(context: &mut Frame<B>, root_layout: layout::Rect, view: &UiView) {
     let view_layout = generate_layout(&view.layout, root_layout);
 
-    let selected_id = view.state.selected_id.clone();
+    let selected_id = &view.state.selected_id;
+
+    let view_data = &view.state.view_data;
 
     view.children.iter().enumerate().for_each(|(i, c)| {
         match &c {
             UiViewChild::Section(v) => render_view(context, view_layout[i], v),
-            UiViewChild::Label(l) => render_label(context, l, view_layout[i]),
+            UiViewChild::Label(l) => render_label(context, l, view_data, view_layout[i]),
             UiViewChild::List(l) => render_list(context, l, &selected_id, view_layout[i]),
             UiViewChild::Placeholder => render_placeholder(context, view_layout[i]),
             UiViewChild::GameCanvas(data, selected) => {
@@ -104,12 +120,14 @@ pub fn render_popup_view<B: Backend>(
 ) {
     let view_layout = generate_layout(&view.layout, root_layout);
 
-    let selected_id = view.state.selected_id.clone();
+    let selected_id = &view.state.selected_id;
+
+    let view_data = &view.state.view_data;
 
     view.children.iter().enumerate().for_each(|(i, c)| {
         match &c {
             UiViewChild::Section(v) => render_view(context, view_layout[i], v),
-            UiViewChild::Label(l) => render_label(context, l, view_layout[i]),
+            UiViewChild::Label(l) => render_label(context, l, view_data, view_layout[i]),
             UiViewChild::List(l) => render_list(context, l, &selected_id, view_layout[i]),
             _ => return,
         };

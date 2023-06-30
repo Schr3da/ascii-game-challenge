@@ -16,6 +16,7 @@ pub struct Core {
     pub quick_action_scheduler: QuickActionScheduler,
     pub render_scheduler: RenderScheduler,
     pub ui_scheduler: UiScheduler,
+    pub tick_scheduler: TickScheduler,
 }
 
 impl Default for Core {
@@ -39,6 +40,9 @@ impl Default for Core {
 
         let mut quick_action_scheduler = QuickActionScheduler::default();
         quick_action_scheduler.setup();
+
+        let mut tick_scheduler = TickScheduler::default();
+        tick_scheduler.setup();
 
         let mut assets = AssetResources::default();
         assets.load();
@@ -67,6 +71,7 @@ impl Default for Core {
             general_scheduler,
             command_scheduler,
             quick_action_scheduler,
+            tick_scheduler,
         }
     }
 }
@@ -104,6 +109,7 @@ impl EventHandler for Core {
             SendEvents::Renderer(e) => self.handle_renderer_event(e),
             SendEvents::General(e) => self.handle_general_event(e),
             SendEvents::QuickAction(e) => self.handle_quick_action_event(e),
+            SendEvents::Tick => self.handle_tick_event(),
         }
     }
 }
@@ -154,5 +160,18 @@ impl Core {
                 self.quick_action_scheduler.run(&mut self.world)
             }
         }
+    }
+
+    fn handle_tick_event(&mut self) {
+        match self.world.get_resource::<UiStore>() {
+            Some(s) => {
+                if s.current_game_status != GameStatus::GameDidStart {
+                    return;
+                }
+            }
+            _ => return,
+        }
+
+        self.tick_scheduler.run(&mut self.world);
     }
 }

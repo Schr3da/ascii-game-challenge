@@ -3,7 +3,7 @@ use tsify::Tsify;
 
 use crate::prelude::{ToSelectable, ViewComponentIds};
 
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Tsify)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Hash, Tsify)]
 pub enum CommandIds {
     Move,
     Build,

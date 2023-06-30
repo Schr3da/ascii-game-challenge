@@ -15,7 +15,11 @@ impl UiViewState {
     pub fn has_quick_action_data(&self) -> bool {
         match self.view_data {
             ViewDataTypes::QuickActionData => true,
-            ViewDataTypes::NoViewData => false,
+            _ => false,
         }
+    }
+
+    pub fn update_view_data(&mut self, next: ViewDataTypes) {
+        self.view_data = next;
     }
 }

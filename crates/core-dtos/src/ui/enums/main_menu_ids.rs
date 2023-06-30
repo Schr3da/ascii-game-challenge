@@ -3,7 +3,7 @@ use tsify::Tsify;
 
 use crate::prelude::{ToSelectable, ViewComponentIds};
 
-#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize, Tsify)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize, Hash, Tsify)]
 pub enum MainMenuIds {
     Title,
     MenuList,

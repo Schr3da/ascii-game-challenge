@@ -10,6 +10,8 @@ pub enum SendEvents {
     Commands(CommandInputEvents),
     QuickAction(QuickActionEvents),
     Renderer(RenderEvents),
+    Tick,
+    
 }
 
 #[derive(Debug, Clone, Eq, PartialEq, Tsify, Serialize, Deserialize)]
