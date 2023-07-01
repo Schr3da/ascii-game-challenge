@@ -60,7 +60,11 @@ async fn handle_close_view(app_state: &mut AppState) {
     app_state.send(event).await;
 }
 
-async fn handle_on_click(app_state: &mut AppState) {
+async fn handle_enter_key(app_state: &mut AppState) {
+    if app_state.ecs_current_game_status == GameStatus::GameDidStart {
+        return handle_show_command_popup(app_state).await;
+    }
+
     if let Some(s) = &app_state.ecs_current_view_state {
         let event = SendEvents::Ui(UiEvents::OnClick(s.selected_id.clone()));
         app_state.send(event).await;
@@ -89,7 +93,7 @@ async fn handle_show_quick_action_popup(app_state: &mut AppState) {
 async fn handle_run_tick(app_state: &mut AppState) {
     if app_state.ecs_current_game_status != GameStatus::GameDidStart {
         return;
-    } 
+    }
 
     let event = SendEvents::Tick;
     app_state.send(event).await;
@@ -102,7 +106,7 @@ pub async fn handle_view_event(event: KeyEvent, app_state: &mut AppState) -> boo
         KeyCode::Up | KeyCode::BackTab => handle_up_arrow_key(app_state).await,
         KeyCode::Left => handle_left_arrow_key(app_state).await,
         KeyCode::Right => handle_right_arrow_key(app_state).await,
-        KeyCode::Enter => handle_on_click(app_state).await,
+        KeyCode::Enter => handle_enter_key(app_state).await,
         KeyCode::Char('q') => handle_quit_application(app_state).await,
         KeyCode::Char('n') => handle_run_tick(app_state).await,
         KeyCode::Char(' ') => handle_show_command_popup(app_state).await,

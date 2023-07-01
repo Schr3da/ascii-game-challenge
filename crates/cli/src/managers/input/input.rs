@@ -4,6 +4,7 @@ use tokio::task;
 
 use core_dtos::prelude::*;
 
+#[derive(Debug, Clone)]
 pub enum InpuEvents {
     Keyboard(KeyEvent),
     Mouse(MouseEvent),
