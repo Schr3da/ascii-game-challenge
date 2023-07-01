@@ -10,6 +10,7 @@ crossterm = {workspace = true}
 tokio = {workspace = true}
 serde = {workspace = true} 
 async-trait = {workspace = true}
+debounce = {workspace = true}
 core-ecs = {path = "../core-ecs"}
 core-serde = {path = "../core-serde"}
 core-state = {path = "../core-state"}

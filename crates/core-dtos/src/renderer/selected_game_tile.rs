@@ -26,3 +26,19 @@ impl Default for SelectedCell {
         }
     }
 }
+
+impl SelectedCell {
+    pub fn handle_window_resize(&mut self, width: i32, height: i32) {
+        if self.frame.x < width {
+            return;
+        } else {
+            self.frame.x = width - self.frame.width;
+        }
+
+        if self.frame.y < height {
+            return;
+        } else {
+            self.frame.y = height - self.bottom as i32 - self.top as i32 - self.frame.height;
+        }
+    }
+}

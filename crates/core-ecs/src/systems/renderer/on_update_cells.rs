@@ -22,11 +22,11 @@ fn value_to_ascii(value: f64) -> AsciiIds {
         return AsciiIds::DeepWater;
     }
 
-    if contains_value(value, -0.5, 0.0) {
+    if contains_value(value, -0.5, 0.1) {
         return AsciiIds::ShallowWater;
     }
 
-    if contains_value(value, 0.0, 2.5) {
+    if contains_value(value, 0.1, 2.5) {
         return AsciiIds::Sand;
     }
 
