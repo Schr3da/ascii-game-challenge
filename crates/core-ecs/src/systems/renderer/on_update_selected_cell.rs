@@ -65,4 +65,27 @@ pub fn on_update_selected_cell_system(
 
         return;
     }
+
+    if let SelectedCellNavigation::Custom(column, row) = next {
+        let next_x = *column;
+
+        if next_x >= camera.viewport.width {
+            cell.frame.x = camera.viewport.width - 1;
+        } else {
+            cell.frame.x = next_x;
+        }
+
+        let next_y = *row - cell.top as i32;
+
+        if next_y < 0 {
+            cell.frame.y = cell.top as i32 - CELL_OFFSET;
+        } else if next_y >= camera.viewport.height - cell.bottom as i32 - CELL_OFFSET {
+            cell.frame.y =
+                camera.viewport.height - cell.bottom as i32 - cell.top as i32 - CELL_OFFSET;
+        } else {
+            cell.frame.y = *row - cell.top as i32;
+        }
+
+        return;
+    }
 }

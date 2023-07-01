@@ -42,6 +42,16 @@ impl Default for AppState {
     }
 }
 
+impl AppState {
+    pub fn has_game_started(&self) -> bool {
+        self.ecs_current_game_status == GameStatus::GameDidStart
+    }
+
+    pub fn is_popup_visible(&self) -> bool {
+        self.ecs_current_popup_state.is_some()
+    }
+}
+
 impl Drop for AppState {
     fn drop(&mut self) {
         self.unsubscribe();

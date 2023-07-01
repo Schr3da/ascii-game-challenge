@@ -13,11 +13,16 @@ async fn handle_keyboard_event(event: KeyEvent, app_state: &mut AppState) -> boo
     }
 }
 
-async fn handle_mouse_event(event: MouseEvent, _app_state: &mut AppState) -> bool {
-    let _x = event.column;
-    let _y = event.row;
+async fn handle_mouse_event(event: MouseEvent, app_state: &mut AppState) -> bool {
+    if app_state.is_popup_visible() {
+        return false;
+    }
 
-    true
+    if !app_state.has_game_started() {
+        return false;
+    }
+
+    handle_mouse_view_event(event, app_state).await
 }
 
 async fn handle_window_event(event: WindowEvents, app_state: &mut AppState) -> bool {

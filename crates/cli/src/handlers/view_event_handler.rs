@@ -3,30 +3,21 @@ use crossterm::event::*;
 use core_dtos::prelude::*;
 use core_state::prelude::*;
 
-async fn handle_right_arrow_key(app_state: &mut AppState) {
-    let event = match app_state.ecs_current_game_status {
-        GameStatus::GameDidStart => SendEvents::Renderer(RenderEvents::OnUpdateSelectedCell(
-            SelectedCellNavigation::Right,
-        )),
-        GameStatus::GameDidNotStart | GameStatus::GameDidPaused | GameStatus::GameWillEnded => {
-            return;
-        }
-    };
+async fn handle_game_canvas_navigation(app_state: &mut AppState, next: SelectedCellNavigation) {
+    if !app_state.has_game_started() {
+        return;
+    }
 
+    let event = SendEvents::Renderer(RenderEvents::OnUpdateSelectedCell(next));
     app_state.send(event).await;
 }
 
-async fn handle_left_arrow_key(app_state: &mut AppState) {
-    let event = match app_state.ecs_current_game_status {
-        GameStatus::GameDidStart => SendEvents::Renderer(RenderEvents::OnUpdateSelectedCell(
-            SelectedCellNavigation::Left,
-        )),
-        GameStatus::GameDidNotStart | GameStatus::GameDidPaused | GameStatus::GameWillEnded => {
-            return;
-        }
-    };
+async fn handle_right_arrow_key(app_state: &mut AppState) {
+    handle_game_canvas_navigation(app_state, SelectedCellNavigation::Right).await;
+}
 
-    app_state.send(event).await;
+async fn handle_left_arrow_key(app_state: &mut AppState) {
+    handle_game_canvas_navigation(app_state, SelectedCellNavigation::Left).await;
 }
 
 async fn handle_up_arrow_key(app_state: &mut AppState) {

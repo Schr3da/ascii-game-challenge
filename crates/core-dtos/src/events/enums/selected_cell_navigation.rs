@@ -7,4 +7,5 @@ pub enum SelectedCellNavigation {
     Down,
     Left,
     Right,
+    Custom(i32, i32),
 }
