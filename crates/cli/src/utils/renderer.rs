@@ -72,6 +72,8 @@ fn render_placeholder<B: Backend>(context: &mut Frame<B>, size: layout::Rect) {
 }
 
 fn render_canvas<B: Backend>(context: &mut Frame<B>, cells: &Vec<(Cell, Position)>) {
+    let size = context.size();
+
     for (cell, position) in cells {
         let background = to_terminal_color(&cell.background);
         let foreground = to_terminal_color(&cell.foreground);
@@ -80,15 +82,18 @@ fn render_canvas<B: Backend>(context: &mut Frame<B>, cells: &Vec<(Cell, Position
             .title(cell.symbol.to_string())
             .style(Style::default().bg(background).fg(foreground));
 
-        context.render_widget(
-            block,
-            layout::Rect {
-                x: position.x as u16,
-                y: position.y as u16,
-                width: 1,
-                height: 1,
-            },
-        );
+        let next = layout::Rect {
+            x: position.x as u16,
+            y: position.y as u16,
+            width: 1,
+            height: 1,
+        };
+
+        if !next.intersects(size) {
+            continue;
+        }
+
+        context.render_widget(block, next);
     }
 }
 
