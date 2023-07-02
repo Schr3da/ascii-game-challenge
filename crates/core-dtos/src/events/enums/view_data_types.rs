@@ -11,14 +11,16 @@ pub enum ViewDataTypes {
     NoViewData,
     QuickActionData,
     GameHeader(GameViewHeaderState),
+    CommandPopup(CommandPopupState),
 }
 
 impl From<&ViewDataTypes> for HashMap<ViewComponentIds, String> {
     fn from(value: &ViewDataTypes) -> Self {
         match value {
-            ViewDataTypes::NoViewData => HashMap::new(),
-            ViewDataTypes::QuickActionData => HashMap::new(),
             ViewDataTypes::GameHeader(s) => s.into(),
+            ViewDataTypes::NoViewData
+            | ViewDataTypes::QuickActionData
+            | ViewDataTypes::CommandPopup(_) => HashMap::new(),
         }
     }
 }

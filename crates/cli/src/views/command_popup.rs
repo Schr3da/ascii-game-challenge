@@ -8,15 +8,28 @@ use core_dtos::prelude::*;
 
 use crate::export::prelude::*;
 
+fn calculate_frame(size: &tui::layout::Rect, data: &ViewDataTypes) -> tui::layout::Rect {
+    let mut width = size.width;
+    if width > 30 {
+        width = 30;
+    }
+
+    let pos_x = match data {
+        ViewDataTypes::CommandPopup(s)
+            if size.width as i32 - s.current_selected_game_tile.frame.x - width as i32 <= 0 =>
+        {
+            0
+        }
+        _ => size.width - width,
+    };
+
+    tui::layout::Rect::new(pos_x, size.y, width, size.height)
+}
+
 pub fn render_command_popup<B: Backend>(context: &mut Frame<B>, view: &UiView) {
     let screen_size = context.size();
 
-    let size = tui::layout::Rect::new(
-        screen_size.width - (screen_size.width / 4) as u16,
-        screen_size.y,
-        (screen_size.width / 4) as u16,
-        (screen_size.height) as u16,
-    );
+    let size = calculate_frame(&screen_size, &view.state.view_data);
 
     context.render_widget(Clear, size);
 

@@ -11,6 +11,7 @@ pub fn command_popup_view() -> UiView {
         state: UiViewState {
             selected_id: ViewComponentIds::CommandPopup(CommandIds::Move),
             selectable_ids: CommandIds::get_selectable_items(),
+            view_data: ViewDataTypes::CommandPopup(CommandPopupState::default()),
             ..Default::default()
         },
         children: vec![UiViewChild::List(UiList {
