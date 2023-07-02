@@ -6,7 +6,11 @@ use serde::{Deserialize, Serialize};
 
 use crate::prelude::*;
 
-#[derive(Debug, Default, Clone, Serialize, Deserialize, Tsify, Eq, PartialEq)]
+pub static DEFAULT_DAYS: i32 = 1;
+
+pub static DEFAULT_HOURS: i32 = 8;
+
+#[derive(Debug, Clone, Serialize, Deserialize, Tsify, Eq, PartialEq)]
 pub struct GameViewHeaderState {
     #[serde(rename(serialize = "currentDays", deserialize = "currentDays"))]
     pub current_days: i32,
@@ -16,6 +20,17 @@ pub struct GameViewHeaderState {
     pub current_minutes: i32,
     #[serde(rename(serialize = "tickCount", deserialize = "tickCount"))]
     pub tick_count: i32,
+}
+
+impl Default for GameViewHeaderState {
+    fn default() -> Self {
+        GameViewHeaderState {
+            current_days: DEFAULT_DAYS,
+            current_hours: DEFAULT_HOURS,
+            current_minutes: 0,
+            tick_count: 0,
+        }
+    }
 }
 
 impl From<&GameViewHeaderState> for HashMap<ViewComponentIds, String> {

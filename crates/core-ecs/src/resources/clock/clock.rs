@@ -1,5 +1,9 @@
 use bevy_ecs::prelude::*;
 
+use core_dtos::prelude::*;
+
+pub static TICK: i32 = 1;
+
 static INTERVAL: f32 = 15.0;
 
 static HOURS_PER_DAY: f32 = 24.0;
@@ -20,8 +24,8 @@ pub struct ClockResource {
 impl Default for ClockResource {
     fn default() -> Self {
         ClockResource {
-            days: 1,
-            hours: 0,
+            days: DEFAULT_DAYS,
+            hours: DEFAULT_HOURS,
             minutes: 0,
             total_minutes: 0,
             ticks: 0,
@@ -46,7 +50,7 @@ impl ClockResource {
             minutes = 0.0;
         }
 
-        self.ticks += 1;
+        self.ticks += TICK;
         self.total_minutes = time as i32;
         self.days = absolute_days as i32 + 1;
         self.hours = hours as i32;
