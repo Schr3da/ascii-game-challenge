@@ -1,6 +1,8 @@
 use noise::utils::{NoiseMap, NoiseMapBuilder, PlaneMapBuilder};
 use noise::{Curve, Fbm, MultiFractal, Perlin};
 
+use core_dtos::prelude::*;
+
 #[derive(Default)]
 pub struct Terrain {
     pub land: NoiseMap,
@@ -61,5 +63,30 @@ impl Terrain {
         }
 
         return land_value;
+    }
+
+    fn contains_value(current: f64, start: f64, end: f64) -> bool {
+        current >= start && current < end
+    }
+
+    pub fn value_to_ascii(&self, value: f64) -> AsciiIds {
+        if Self::contains_value(value, -5.0, -0.5) {
+            return AsciiIds::DeepWater;
+        }
+
+        if Self::contains_value(value, -0.5, 0.1) {
+            return AsciiIds::ShallowWater;
+        }
+
+        if Self::contains_value(value, 0.1, 2.5) {
+            return AsciiIds::Sand;
+        }
+
+        return AsciiIds::UnknownAsciiId;
+    }
+
+    pub fn get_ascii(&self, x: i32, y: i32) -> AsciiIds {
+        let next = self.get_value(x, y);
+        self.value_to_ascii(next)
     }
 }

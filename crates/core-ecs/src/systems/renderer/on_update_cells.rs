@@ -13,33 +13,12 @@ fn get_canvas_frame(camera: &Res<Camera2d>, top: u16, bottom: u16) -> Rect {
     }
 }
 
-fn contains_value(current: f64, start: f64, end: f64) -> bool {
-    current >= start && current < end
-}
-
-fn value_to_ascii(value: f64) -> AsciiIds {
-    if contains_value(value, -5.0, -0.5) {
-        return AsciiIds::DeepWater;
-    }
-
-    if contains_value(value, -0.5, 0.1) {
-        return AsciiIds::ShallowWater;
-    }
-
-    if contains_value(value, 0.1, 2.5) {
-        return AsciiIds::Sand;
-    }
-
-    return AsciiIds::UnknownAsciiId;
-}
-
 fn get_visible_canvas_cells(frame: &Rect, assets: &Res<AssetResources>) -> Vec<(Cell, Position)> {
     let mut next = Vec::new();
 
     for y in frame.y..frame.height {
         for x in 0..frame.width {
-            let value = assets.terrain.get_value(x, y);
-            let ascii = value_to_ascii(value);
+            let ascii = assets.terrain.get_ascii(x, y);
             let position = Position { x, y };
 
             if let Some(c) = assets.cell_cache.get(&ascii) {

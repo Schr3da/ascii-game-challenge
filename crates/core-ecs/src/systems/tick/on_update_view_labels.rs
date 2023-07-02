@@ -1,16 +1,17 @@
 use bevy_ecs::prelude::*;
 
 use core_dtos::prelude::*;
+use core_formatters::prelude::prettify_i32;
 
 use crate::prelude::*;
 
 fn update_game_time(data: &mut GameViewHeaderState, clock: &mut ResMut<ClockResource>) {
     clock.update();
 
-    data.tick_count = clock.ticks;
-    data.current_days = clock.days;
-    data.current_hours = clock.hours;
-    data.current_minutes = clock.minutes;
+    data.tick_count = clock.ticks.to_string();
+    data.current_days = clock.days.to_string();
+    data.current_hours = prettify_i32(clock.hours);
+    data.current_minutes = prettify_i32(clock.minutes);
 }
 
 pub fn on_update_view_labels_system(

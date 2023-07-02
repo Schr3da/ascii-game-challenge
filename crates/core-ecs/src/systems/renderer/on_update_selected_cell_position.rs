@@ -4,7 +4,7 @@ use core_dtos::prelude::*;
 
 use crate::prelude::*;
 
-pub fn on_update_selected_cell_system(
+pub fn on_update_selected_cell_position_system(
     mut store: ResMut<UiStore>,
     camera: Res<Camera2d>,
     subscriber: Res<Subscriber>,

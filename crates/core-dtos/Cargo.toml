@@ -11,5 +11,6 @@ bevy_ecs = {workspace = true}
 serde = {workspace = true} 
 wasm-bindgen = {workspace = true}
 tsify = {workspace = true}
+core-formatters = {path = "../core-formatters"}
 
 [target.'cfg(target_arch = "wasm32")'.dependencies]
