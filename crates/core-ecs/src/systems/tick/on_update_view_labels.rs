@@ -7,6 +7,7 @@ use crate::prelude::*;
 fn update_game_time(data: &mut GameViewHeaderState, clock: &mut ResMut<ClockResource>) {
     clock.update();
 
+    data.tick_count = clock.ticks;
     data.current_days = clock.days;
     data.current_hours = clock.hours;
     data.current_minutes = clock.minutes;
