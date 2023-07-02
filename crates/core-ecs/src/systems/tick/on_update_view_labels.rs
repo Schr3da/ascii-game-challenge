@@ -4,7 +4,19 @@ use core_dtos::prelude::*;
 
 use crate::prelude::*;
 
-pub fn on_update_view_labels_system(store: Res<UiStore>, mut views_query: Query<&mut UiView>) {
+fn update_game_time(data: &mut GameViewHeaderState, clock: &mut ResMut<ClockResource>) {
+    clock.update();
+
+    data.current_days = clock.days;
+    data.current_hours = clock.hours;
+    data.current_minutes = clock.minutes;
+}
+
+pub fn on_update_view_labels_system(
+    store: Res<UiStore>,
+    mut clock: ResMut<ClockResource>,
+    mut views_query: Query<&mut UiView>,
+) {
     let current_view = store.current_view.clone();
 
     let mut view = match views_query.iter_mut().find(|v| v.id == current_view) {
@@ -22,8 +34,7 @@ pub fn on_update_view_labels_system(store: Res<UiStore>, mut views_query: Query<
             let mut view_data = v.state.view_data.clone();
 
             if let ViewDataTypes::GameHeader(d) = &mut view_data {
-                d.tick_count += 1;
-                d.current_time += 15;
+                update_game_time(d, &mut clock);
             }
 
             v.state.view_data = view_data;

@@ -47,6 +47,9 @@ impl Default for Core {
         let mut assets = AssetResources::default();
         assets.load();
         world.insert_resource(assets);
+        
+        let game_clock = ClockResource::default();
+        world.insert_resource(game_clock);
 
         let ui_store_resource = UiStore::default();
         world.insert_resource(ui_store_resource);

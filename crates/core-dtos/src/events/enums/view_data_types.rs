@@ -13,7 +13,7 @@ pub enum ViewDataTypes {
     GameHeader(GameViewHeaderState),
 }
 
-impl From<&ViewDataTypes> for HashMap<ViewComponentIds, i32> {
+impl From<&ViewDataTypes> for HashMap<ViewComponentIds, String> {
     fn from(value: &ViewDataTypes) -> Self {
         match value {
             ViewDataTypes::NoViewData => HashMap::new(),

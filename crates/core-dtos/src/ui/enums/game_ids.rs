@@ -5,6 +5,7 @@ use crate::prelude::*;
 
 #[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize, Hash, Tsify)]
 pub enum GameIds {
+    Day,
     Time,
     Turns,
     Canvas,
@@ -18,6 +19,7 @@ pub enum GameIds {
 impl ToString for GameIds {
     fn to_string(&self) -> String {
         match self {
+            Self::Day => "Day".to_string(),
             Self::Time => "Time".to_string(),
             Self::Turns => "Turns".to_string(),
             Self::Menu => "[ecs] Menu".to_string(),

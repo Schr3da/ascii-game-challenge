@@ -6,7 +6,7 @@ pub fn get_top_bar() -> UiViewChild {
         layout: UiLayout {
             margin: 0,
             alignment: LayoutAlignments::Horizontal,
-            constraints: vec![LayoutConstraints::Value(20), LayoutConstraints::Value(20)],
+            constraints: vec![LayoutConstraints::Percentage(20), LayoutConstraints::Percentage(60), LayoutConstraints::Percentage(20)],
         },
         state: UiViewState {
             selected_id: ViewComponentIds::Game(GameIds::None),
@@ -21,9 +21,14 @@ pub fn get_top_bar() -> UiViewChild {
                 alignment: TextAlignment::Left,
             }),
             UiViewChild::Label(UiLabel {
+                id: ViewComponentIds::Game(GameIds::Day),
+                text: GameIds::Time.to_string(),
+                alignment: TextAlignment::Center,
+            }),
+            UiViewChild::Label(UiLabel {
                 id: ViewComponentIds::Game(GameIds::Turns),
                 text: GameIds::Turns.to_string(),
-                alignment: TextAlignment::Left,
+                alignment: TextAlignment::Right,
             }),
         ],
     })

@@ -8,21 +8,42 @@ use crate::prelude::*;
 
 #[derive(Debug, Default, Clone, Serialize, Deserialize, Tsify, Eq, PartialEq)]
 pub struct GameViewHeaderState {
-  #[serde(rename(serialize = "tickCount", deserialize = "tickCount"))]
-  pub tick_count: i32,
-  #[serde(rename(serialize = "currentTime", deserialize = "currentTime"))]
-  pub current_time: i32,
+    #[serde(rename(serialize = "currentDays", deserialize = "currentDays"))]
+    pub current_days: i32,
+    #[serde(rename(serialize = "currentHours", deserialize = "currentHours"))]
+    pub current_hours: i32,
+    #[serde(rename(serialize = "currentMinutes", deserialize = "currentMinutes"))]
+    pub current_minutes: i32,
+    #[serde(rename(serialize = "tickCount", deserialize = "tickCount"))]
+    pub tick_count: i32,
 }
 
-impl From<&GameViewHeaderState> for HashMap<ViewComponentIds, i32> {
-  fn from(value: &GameViewHeaderState) -> HashMap<ViewComponentIds, i32> {
-    let mut next = HashMap::new();
-    next.insert(ViewComponentIds::Game(GameIds::Time), value.current_time);
-    next.insert(ViewComponentIds::Game(GameIds::Turns), value.tick_count);
-    next
-  }
+impl From<&GameViewHeaderState> for HashMap<ViewComponentIds, String> {
+    fn from(value: &GameViewHeaderState) -> HashMap<ViewComponentIds, String> {
+        let mut next = HashMap::new();
+        next.insert(
+            ViewComponentIds::Game(GameIds::Time),
+            format!(
+                "{} {}:{}",
+                GameIds::Time.to_string(),
+                value.current_hours,
+                value.current_minutes
+            ),
+        );
+
+        next.insert(
+            ViewComponentIds::Game(GameIds::Day),
+            format!("{} {}", GameIds::Day.to_string(), value.current_days),
+        );
+
+        next.insert(
+            ViewComponentIds::Game(GameIds::Turns),
+            format!("{} {}", GameIds::Turns.to_string(), value.tick_count),
+        );
+
+        next
+    }
 }
 
 #[derive(Debug, Default, Clone, Serialize, Deserialize, Tsify, Eq, PartialEq)]
-pub struct GameViewFooterState {
-}
+pub struct GameViewFooterState {}

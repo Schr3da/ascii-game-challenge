@@ -23,14 +23,14 @@ fn render_label<B: Backend>(
         TextAlignment::Right => Alignment::Right,
     };
 
-    let data: HashMap<ViewComponentIds, i32> = view_data.into();
+    let data: HashMap<ViewComponentIds, String> = view_data.into();
 
     let title = match data.get(&label.id) {
-        Some(v) => format!("{}: {}", label.text, v),
-        None => label.text.clone(),
+        Some(v) => v,
+        None => &label.text,
     };
 
-    let paragraph = Paragraph::new(Spans::from(title)).alignment(alignment);
+    let paragraph = Paragraph::new(Spans::from(title.as_str())).alignment(alignment);
     context.render_widget(paragraph, size);
 }
 
