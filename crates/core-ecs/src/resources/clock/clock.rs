@@ -23,11 +23,13 @@ pub struct ClockResource {
 
 impl Default for ClockResource {
     fn default() -> Self {
+        let total_minutes = (DEFAULT_HOURS as f32 * MINUTES_PER_HOUR as f32).floor() as i32;
+
         ClockResource {
             days: DEFAULT_DAYS,
             hours: DEFAULT_HOURS,
             minutes: 0,
-            total_minutes: 0,
+            total_minutes,
             ticks: 0,
         }
     }
