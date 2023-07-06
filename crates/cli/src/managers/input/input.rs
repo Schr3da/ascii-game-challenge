@@ -1,6 +1,4 @@
 use crossterm::event::{Event, KeyEvent, MouseEvent};
-use debounce::EventDebouncer;
-use std::time::Duration;
 use tokio::sync::mpsc::*;
 use tokio::task;
 
@@ -37,24 +35,16 @@ impl InputManager {
 
         let sender = self.event_sender.clone();
         let thread = task::spawn(async move {
-            let delay = Duration::from_millis(16);
-
-            let debounced_sender = sender.clone();
-            let debounce_send_event = EventDebouncer::new(delay, move |data: InpuEvents| {
-                _ = debounced_sender.blocking_send(data);
-            });
-
             loop {
                 match crossterm::event::read() {
                     Ok(Event::Key(e)) => {
                         _ = sender.send(InpuEvents::Keyboard(e)).await;
                     }
                     Ok(Event::Mouse(e)) => {
-                        debounce_send_event.put(InpuEvents::Mouse(e));
+                        _ = sender.send(InpuEvents::Mouse(e)).await;
                     }
                     Ok(Event::Resize(columns, rows)) => {
-                        debounce_send_event
-                            .put(InpuEvents::Window(WindowEvents::Resize(columns, rows)));
+                        _ = sender.send(InpuEvents::Window(WindowEvents::Resize(columns, rows))).await;
                     }
                     _ => continue,
                 };
