@@ -7,12 +7,12 @@ use crate::export::prelude::*;
 
 pub async fn webview_init_handler(
     event: Option<WebViewEvents>,
-    state: &mut AppState,
+    sender: &EcsSender,
     window: &Window,
-) -> bool {
+) {
     let unwrapped_event = match event {
         Some(e) => e,
-        None => return false,
+        None => return,
     };
 
     let size = window.inner_size().unwrap_or_default();
@@ -24,23 +24,20 @@ pub async fn webview_init_handler(
                 size.height as u16,
             ));
 
-            state.send(next).await;
-            true
+            _ = sender.send(EcsEvents::Send(next)).await;
         }
-        _ => false,
+        _ => {}
     }
 }
 
-pub async fn webview_event_handler(event: Option<WebViewEvents>, state: &mut AppState) -> bool {
+pub async fn webview_event_handler(event: Option<WebViewEvents>, sender: &EcsSender) {
     let unwrapped_event = match event {
         Some(e) => e,
-        None => return false,
+        None => return,
     };
 
     match unwrapped_event {
-        WebViewEvents::OnEcsEvent(e) => state.send(e).await,
-        _ => return false,
+        WebViewEvents::OnEcsEvent(e) => _ = sender.send(EcsEvents::Send(e)).await,
+        _ => return,
     };
-
-    return true;
 }

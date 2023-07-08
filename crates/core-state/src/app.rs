@@ -9,6 +9,8 @@ use core_shared::prelude::*;
 
 use crate::prelude::*;
 
+pub type EcsSender = Sender<EcsEvents>;
+
 pub struct AppState {
     pub ecs: Shared<Core>,
     pub ecs_task: Option<task::JoinHandle<()>>,

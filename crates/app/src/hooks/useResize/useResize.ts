@@ -10,28 +10,29 @@ export const useResize = () => {
 
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
 
-  const applicationDidResize = useCallback(() => {
-    clearTimeout(debounceTimer.current);
+  const handleResize = useCallback(() => {
+    setWindowWidth(window.innerWidth);
+    setWindowHeight(window.innerHeight);
 
-    debounceTimer.current = setTimeout(() => {
-      setWindowWidth(window.innerWidth);
-      setWindowHeight(window.innerHeight);
+    const { columns, rows } = calculateGridSize();
 
-      const { columns, rows } = calculateGridSize();
-
-      ApiService.sendEcsEvent({
-        General: { OnApplicationResize: [columns, rows] },
-      });
-    }, 30);
+    ApiService.sendEcsEvent({
+      General: { OnApplicationResize: [columns, rows] },
+    });
   }, []);
 
+  const applicationWillResize = useCallback(() => {
+    clearTimeout(debounceTimer.current);
+    debounceTimer.current = setTimeout(handleResize, 16);
+  }, [handleResize]);
+
   const registerWindowResize = useCallback(() => {
-    window.addEventListener("resize", applicationDidResize);
+    window.addEventListener("resize", applicationWillResize);
   }, []);
 
   const unregisterWindowResize = useCallback(() => {
     clearTimeout(debounceTimer.current);
-    window.removeEventListener("resize", applicationDidResize);
+    window.removeEventListener("resize", applicationWillResize);
   }, []);
 
   return {

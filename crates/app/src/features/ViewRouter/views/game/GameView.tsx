@@ -21,10 +21,10 @@ export const GameView = () => {
     return null;
   }
 
-  return (
+    return (
     <div className="relative w-full h-full flex flex-col">
-      <GameHeader className="basis-20 shrink-0 bg-white" state={null} />
-      <div ref={ref} className="relative flex-1">
+      <GameHeader className="shrink-0" state={null} />
+      <div ref={ref} className="relative flex-1 overflow-hidden">
         <Stage className="pixi-canvas" width={width} height={height}>
           <Text
             text="C"
@@ -52,7 +52,7 @@ export const GameView = () => {
           />
         </Stage>
       </div>
-      <GameFooter className="basis-20 shrink-0 bg-white" state={null} />
+      <GameFooter className="shrink-0" state={null} />
     </div>
   );
 };

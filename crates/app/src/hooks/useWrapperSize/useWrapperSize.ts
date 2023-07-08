@@ -17,7 +17,5 @@ export const useWrapperSize = <T extends HTMLElement | null>(
     setHeight(ref.current.clientHeight);
   }, [windowWidth, windowHeight]);
 
-    console.log(height);
-
   return { width, height };
 };
