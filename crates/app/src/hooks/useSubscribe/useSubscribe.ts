@@ -1,16 +1,18 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { SubscriptionCallback, sharedInstance } from "../../services";
 
 export const useSubscribe = (cb: SubscriptionCallback) => {
+
+  const id = useRef("");
+  
   useEffect(() => {
-    let id = "";
     sharedInstance().then((instance) => {
-      id = instance.subscribe(cb);
+      id.current = instance.subscribe(cb);
     });
 
     return () => {
       sharedInstance().then((instance) => {
-        instance.unsubscribe(id);
+        instance.unsubscribe(id.current);
       });
     };
   }, [cb]);

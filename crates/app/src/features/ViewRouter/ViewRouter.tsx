@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import { MainMenu, Options, PixiCanvas } from "./views";
+import { MainMenuView, OptionsView, GameView } from "./views";
 import { NavigationRoutes } from "../../providers/Navigation/Navigation.types";
 import { useKeyboardControls } from "../../hooks";
 import { ViewRouterProps } from "./ViewRouter.types";
@@ -10,9 +10,13 @@ export const ViewRouter = ({ className }: ViewRouterProps) => {
   return (
     <div className={className}>
       <Routes>
-        <Route path={NavigationRoutes.MainMenu} element={<MainMenu />} index />
-        <Route path={NavigationRoutes.Options} element={<Options />} />
-        <Route path={NavigationRoutes.Canvas} element={<PixiCanvas />} />
+        <Route
+          path={NavigationRoutes.MainMenu}
+          element={<MainMenuView />}
+          index
+        />
+        <Route path={NavigationRoutes.Options} element={<OptionsView />} />
+        <Route path={NavigationRoutes.Game} element={<GameView />} />
       </Routes>
     </div>
   );

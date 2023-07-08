@@ -28,7 +28,7 @@ export const NavigationProvider = ({ children }: PropsWithChildren) => {
         case "Options":
           return navigate(NavigationRoutes.Options);
         case "Game":
-          return navigate(NavigationRoutes.Canvas);
+          return navigate(NavigationRoutes.Game);
       }
     },
     [navigate]

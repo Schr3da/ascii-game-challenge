@@ -9,6 +9,8 @@ import {
 export type EcsContextValue = {
   previousView: UiView | null;
   nextView: UiView | null;
+  previousPopupView: UiView | null;
+  nextPopupView: UiView | null;
   previousGeneralEvent: GeneralSubscription;
   nextGeneralEvent: GeneralSubscription;
   previousUiEvent: UiSubscription;
@@ -16,4 +18,5 @@ export type EcsContextValue = {
   previousRendererEvent: RenderSubscription;
   nextRendererEvent: RenderSubscription;
   isViewComponentSelected: (id: ViewComponentIds) => boolean;
+  isPopupViewComponentSelected: (id: ViewComponentIds) => boolean;
 };

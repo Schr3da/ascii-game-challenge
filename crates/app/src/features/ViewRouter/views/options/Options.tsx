@@ -4,7 +4,7 @@ import { useEcsContext } from "../../../../providers";
 
 const BackId: ViewComponentIds = { Options: "Back" };
 
-export const Options = () => {
+export const OptionsView = () => {
   const { isViewComponentSelected } = useEcsContext();
 
   return (

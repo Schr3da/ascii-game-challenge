@@ -12,7 +12,7 @@ const App = () => {
 
   const wrapperClassName = useMemo(() => {
     const next =
-      "h-screen w-screen overflow-hidden bg-black text-white px-2 pb-2 flex flex-col";
+      "h-screen w-screen overflow-hidden bg-black text-white px-2 pb-0 flex flex-col";
 
     switch (platform) {
       case Platforms.Macos:

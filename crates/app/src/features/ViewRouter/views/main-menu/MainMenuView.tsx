@@ -8,7 +8,7 @@ const OptionId: ViewComponentIds = { Main: "Options" };
 
 const QuitId: ViewComponentIds = { Main: "Quit" };
 
-export const MainMenu = () => {
+export const MainMenuView = () => {
   const { isViewComponentSelected } = useEcsContext();
 
   return (
