@@ -21,7 +21,7 @@ export const GameFooter = ({ className, state }: GameFooterProps) => {
   }, [state]);
 
   return (
-    <div className={clsx("flex flex-column overflow-hidden", className)}>
+    <div className={clsx("flex flex-column overflow-hidden justify-center", className)}>
       <div className="flex-1">[ESC] Menu</div>
       <div className="flex-1">Gold</div>
       <div className="flex-1">Wood</div>

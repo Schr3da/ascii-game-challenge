@@ -12,19 +12,19 @@ const App = () => {
 
   const wrapperClassName = useMemo(() => {
     const next =
-      "h-screen w-screen overflow-hidden bg-black text-white px-2 pb-0 flex flex-col";
+      "h-screen w-screen overflow-hidden bg-black text-white pb-0 flex flex-col";
 
     switch (platform) {
       case Platforms.Macos:
         return clsx(next, "rounded-xl");
       default:
-        return clsx(next, "rounded-md");
+        return clsx(next, "rounded-xl");
     }
   }, [platform]);
 
   return (
     <div className={wrapperClassName}>
-      <WindowHeader className="basis-7 shrink-0 grow-0" platform={platform} />
+      <WindowHeader className="basis-7 shrink-0 grow-0 px-2" platform={platform} />
       <ViewRouter className="flex-1 overflow-hidden" />
     </div>
   );
