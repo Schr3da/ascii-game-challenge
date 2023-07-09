@@ -1,13 +1,14 @@
-import { Container, Stage } from "@pixi/react";
+import { Stage } from "@pixi/react";
 import { useMemo, useRef } from "react";
 import { useWrapperSize } from "../../../../hooks";
-import { useAssetsContext, useEcsContext } from "../../../../providers";
+import { AssetsProvider, useEcsContext } from "../../../../providers";
 import { GameHeader } from "./GameHeader";
 import { GameFooter } from "./GameFooter";
-import { isGameCanvas, toAbsolutePosition } from "../../../../utils";
-import { GameTileData, GameViewData } from "./GameView.types";
+import { isGameCanvas } from "../../../../utils";
+import { GameCellData, GameViewGridData } from "./GameView.types";
+import { GameGrid } from "./GameGrid";
 
-const defaultCanvasData: GameViewData = [Array<GameTileData>(), null];
+const defaultCanvasData: GameViewGridData = [Array<GameCellData>(), null];
 
 export const GameView = () => {
   const ref = useRef<HTMLDivElement | null>(null);
@@ -15,8 +16,6 @@ export const GameView = () => {
   const { width, height } = useWrapperSize(ref);
 
   const { nextView } = useEcsContext();
-
-  let { backgrounds, asciis, assetWidth, assetHeight } = useAssetsContext();
 
   const isGameView = useMemo(() => {
     if (nextView == null) {
@@ -48,21 +47,9 @@ export const GameView = () => {
       <GameHeader className="px-2 shrink-0" state={null} />
       <div ref={ref} className="relative flex-1 overflow-hidden">
         <Stage className="pixi-canvas" width={width} height={height}>
-          {data[0].map((d, i) => {
-            let cell = d[0];
-            let position = toAbsolutePosition(d[1]);
-            return (
-              <Container
-                key={`game-tile-${i}`}
-                width={assetWidth}
-                height={assetHeight}
-                position={position}
-              >
-                {backgrounds.get("default")}
-                {asciis.get("default")}
-              </Container>
-            );
-          })}
+          <AssetsProvider>
+            <GameGrid data={data}/>
+          </AssetsProvider>
         </Stage>
       </div>
       <GameFooter className="px-2 shrink-0" state={null} />

@@ -1,8 +1,7 @@
-import { ReactNode } from "react";
+import { RenderTexture, Texture } from "pixi.js";
 
 export type AssetsContextValue = {
   assetWidth: number;
   assetHeight: number;
-  backgrounds: Map<string, ReactNode>;
-  asciis: Map<string, ReactNode>;
+  textures: Map<string, RenderTexture>;
 };

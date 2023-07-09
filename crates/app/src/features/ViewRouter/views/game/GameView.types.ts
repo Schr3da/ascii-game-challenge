@@ -1,5 +1,5 @@
 import { Cell, Position, SelectedCell } from "../../../../shared";
 
-export type GameTileData = [Cell, Position];
+export type GameCellData = [Cell, Position];
 
-export type GameViewData = [[Cell, Position][], SelectedCell | null]
+export type GameViewGridData = [[Cell, Position][], SelectedCell | null]
