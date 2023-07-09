@@ -1,11 +1,10 @@
-import { Stage } from "@pixi/react";
+import { Container, Stage } from "@pixi/react";
 import { useMemo, useRef } from "react";
 import { useWrapperSize } from "../../../../hooks";
-import { useEcsContext } from "../../../../providers";
+import { useAssetsContext, useEcsContext } from "../../../../providers";
 import { GameHeader } from "./GameHeader";
 import { GameFooter } from "./GameFooter";
-import { GameTile } from "./GameTiles";
-import { isGameCanvas, toAbsolutePosition, toAbsoluteSize } from "../../../../utils";
+import { isGameCanvas, toAbsolutePosition } from "../../../../utils";
 import { GameTileData, GameViewData } from "./GameView.types";
 
 const defaultCanvasData: GameViewData = [Array<GameTileData>(), null];
@@ -16,6 +15,8 @@ export const GameView = () => {
   const { width, height } = useWrapperSize(ref);
 
   const { nextView } = useEcsContext();
+
+  let { backgrounds, asciis, assetWidth, assetHeight } = useAssetsContext();
 
   const isGameView = useMemo(() => {
     if (nextView == null) {
@@ -50,17 +51,17 @@ export const GameView = () => {
           {data[0].map((d, i) => {
             let cell = d[0];
             let position = toAbsolutePosition(d[1]);
-            let size = toAbsoluteSize();
-
-            console.log(cell, position, size);
-
-            return <GameTile
-              key={`game-tile-${i}`}
-              cell={cell}
-              width={size.width}
-              height={size.height}
-              position={position}
-            />
+            return (
+              <Container
+                key={`game-tile-${i}`}
+                width={assetWidth}
+                height={assetHeight}
+                position={position}
+              >
+                {backgrounds.get("default")}
+                {asciis.get("default")}
+              </Container>
+            );
           })}
         </Stage>
       </div>

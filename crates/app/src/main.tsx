@@ -4,8 +4,10 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import {
   ApplicationProvider,
+  AssetsContext,
   EcsProvider,
   NavigationProvider,
+  AssetsProvider,
 } from "./providers";
 
 import "./styles.css";
@@ -13,11 +15,13 @@ import "./styles.css";
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <BrowserRouter>
     <ApplicationProvider>
-      <EcsProvider>
-        <NavigationProvider>
-          <App />
-        </NavigationProvider>
-      </EcsProvider>
+      <AssetsProvider>
+        <EcsProvider>
+          <NavigationProvider>
+            <App />
+          </NavigationProvider>
+        </EcsProvider>
+      </AssetsProvider>
     </ApplicationProvider>
   </BrowserRouter>
 );
