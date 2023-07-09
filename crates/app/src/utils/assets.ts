@@ -48,10 +48,12 @@ export const createBackgroundTexture = (color: string, renderer: PIXI.IRenderer<
 
 export const createSymbolTexture = (color: string, renderer: PIXI.IRenderer<PIXI.ICanvas>): PIXI.RenderTexture => {
   const renderTexture = createRenderTexture();
-  const fontSize = Math.ceil(renderTexture.width * 0.8);
+  const width = renderTexture.width * 0.8;
+  const fontSize = Math.floor(width);
   const style = createTextStyle(color, fontSize);
+
   const text = new PIXI.Text("C", style);
-  text.position = new PIXI.Point(renderTexture.width * 0.2);
+  text.position = new PIXI.Point(renderTexture.width - width);
 
   renderer.render(text, { renderTexture });
   return renderTexture;
