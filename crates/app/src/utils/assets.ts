@@ -19,10 +19,9 @@ const createRenderTexture = () => {
 const createTextStyle = (color: string, fontSize: number) => {
   return new PIXI.TextStyle({
     align: "center",
-    fontFamily: '"Source Sans Pro", Helvetica, sans-serif',
     fontSize,
-    fontWeight: "400",
-    fill: [color, color], // gradient
+    fontWeight: "300",
+    fill: [color, color], 
     stroke: color,
     strokeThickness: 1,
     letterSpacing: 1,
@@ -61,7 +60,8 @@ export const createSymbolTexture = (
   const fontSize = Math.floor(width);
   const style = createTextStyle(color, fontSize);
   const text = new PIXI.Text(symbol, style);
-  text.position = new PIXI.Point(renderTexture.width * 0.2);
+  text.anchor.set(0.5);
+  text.position = new PIXI.Point(renderTexture.width * 0.5, text.height* 0.5);
 
   if (renderer == null) {
     return renderTexture;
