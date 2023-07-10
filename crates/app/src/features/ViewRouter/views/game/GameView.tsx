@@ -3,7 +3,6 @@ import { useMemo, useRef } from "react";
 import { useWrapperSize } from "../../../../hooks";
 import { GameTexturesProvider, useEcsContext } from "../../../../providers";
 import { GameHeader } from "./GameHeader";
-import { GameFooter } from "./GameFooter";
 import { isGameCanvas } from "../../../../utils";
 import { GameCellData, GameViewGridData } from "./GameView.types";
 import { GameGrid } from "./GameGrid";
@@ -52,7 +51,6 @@ export const GameView = () => {
           </GameTexturesProvider>
         </Stage>
       </div>
-      <GameFooter className="px-2 shrink-0" state={null} />
     </div>
   );
 };

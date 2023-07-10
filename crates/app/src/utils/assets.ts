@@ -57,7 +57,8 @@ export const createSymbolTexture = (
   renderer: PIXI.IRenderer<PIXI.ICanvas> | null
 ): PIXI.RenderTexture => {
   const renderTexture = createRenderTexture();
-  const fontSize = Math.ceil(renderTexture.width * 0.8);
+  const width = renderTexture.width * 0.8;
+  const fontSize = Math.floor(width);
   const style = createTextStyle(color, fontSize);
   const text = new PIXI.Text(symbol, style);
   text.position = new PIXI.Point(renderTexture.width * 0.2);
