@@ -1,7 +1,5 @@
-import { RenderTexture, Texture } from "pixi.js";
+import { AsciiIds, Cell } from "../../shared";
 
-export type AssetsContextValue = {
-  assetWidth: number;
-  assetHeight: number;
-  textures: Map<string, RenderTexture>;
-};
+export type AssetProviderContextValue = {
+  assets: Record<AsciiIds, Cell>;
+}

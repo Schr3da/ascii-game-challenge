@@ -6,6 +6,7 @@ import {
   ApplicationProvider,
   EcsProvider,
   NavigationProvider,
+  AssetProvider,
 } from "./providers";
 
 import "./styles.css";
@@ -14,9 +15,11 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <BrowserRouter>
     <ApplicationProvider>
       <EcsProvider>
-        <NavigationProvider>
-          <App />
-        </NavigationProvider>
+        <AssetProvider>
+          <NavigationProvider>
+            <App />
+          </NavigationProvider>
+        </AssetProvider>
       </EcsProvider>
     </ApplicationProvider>
   </BrowserRouter>

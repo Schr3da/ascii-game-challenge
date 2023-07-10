@@ -1,6 +1,7 @@
 import * as PIXI from "pixi.js";
 
 import { toAbsoluteSize } from "./grid";
+import { Ascii } from "../shared";
 
 const createRenderTexture = () => {
   const size = toAbsoluteSize();
@@ -33,7 +34,7 @@ const createTextStyle = (color: string, fontSize: number) => {
   });
 }
 
-export const createBackgroundTexture = (color: string, renderer: PIXI.IRenderer<PIXI.ICanvas>): PIXI.RenderTexture => {
+export const createBackgroundTexture = (color: string, renderer: PIXI.IRenderer<PIXI.ICanvas> | null): PIXI.RenderTexture => {
   const renderTexture = createRenderTexture();
 
   let graphic = new PIXI.Graphics();
@@ -42,17 +43,42 @@ export const createBackgroundTexture = (color: string, renderer: PIXI.IRenderer<
   graphic.drawRect(0, 0, renderTexture.width, renderTexture.height);
   graphic.endFill();
 
+  if (renderer == null) {
+    return renderTexture;
+  }
+
   renderer.render(graphic, { renderTexture });
   return renderTexture;
 }
 
-export const createSymbolTexture = (color: string, renderer: PIXI.IRenderer<PIXI.ICanvas>): PIXI.RenderTexture => {
+export const createSymbolTexture = (
+  symbol: string,
+  color: string,
+  renderer: PIXI.IRenderer<PIXI.ICanvas> | null
+): PIXI.RenderTexture => {
   const renderTexture = createRenderTexture();
   const fontSize = Math.ceil(renderTexture.width * 0.8);
   const style = createTextStyle(color, fontSize);
-  const text = new PIXI.Text("C", style);
+  const text = new PIXI.Text(symbol, style);
   text.position = new PIXI.Point(renderTexture.width * 0.2);
+
+  if (renderer == null) {
+    return renderTexture;
+  }
 
   renderer.render(text, { renderTexture });
   return renderTexture;
+}
+
+export const symbolToString = (next: Ascii): string => {
+  switch (next) {
+    case "space":
+      return " ";
+    case "plus":
+      return "+";
+    case "tilde":
+      return "~";
+    case "doubleTilde":
+      return "≈";
+  }
 }

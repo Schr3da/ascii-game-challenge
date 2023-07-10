@@ -1,5 +1,8 @@
 use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
 use tsify::Tsify;
+
+use crate::prelude::*;
 
 #[derive(Clone, Tsify, Serialize, Deserialize)]
 pub enum GeneralEvents {
@@ -11,6 +14,7 @@ pub enum GeneralEvents {
 #[derive(Debug, Clone, Eq, PartialEq, Tsify, Serialize, Deserialize)]
 pub enum GeneralSubscription {
     OnApplicationDidStart,
+    OnApplicationDidLoadAssets(HashMap<AsciiIds, Cell>),
     OnApplicationDidInitialise,
     OnApplicationDidClose,
 }

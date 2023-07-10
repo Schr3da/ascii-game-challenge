@@ -1,2 +1,2 @@
 export * from "./Assets";
-export * from "./useAssets";
+export * from "./useAssetsContext";

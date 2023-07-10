@@ -3,10 +3,18 @@ use tauri::Window;
 use core_dtos::prelude::*;
 use core_state::prelude::*;
 
-async fn handle_general(event: &GeneralSubscription, state: &mut AppState) -> bool {
+async fn handle_general(
+    event: &GeneralSubscription,
+    state: &mut AppState,
+    window: &Window,
+) -> bool {
     match event {
         GeneralSubscription::OnApplicationDidStart => true,
         GeneralSubscription::OnApplicationDidClose => false,
+        GeneralSubscription::OnApplicationDidLoadAssets(_) => {
+            _ = window.emit("ecs-subscription", event);
+            true
+        }
         GeneralSubscription::OnApplicationDidInitialise => {
             let next = SendEvents::Renderer(RenderEvents::OnWorldWillUpdate);
             state.send(next).await;
@@ -68,7 +76,7 @@ pub async fn subscription_handler(
     };
 
     match unwrapped_event {
-        SubscriptionEvents::General(e) => handle_general(e, state).await,
+        SubscriptionEvents::General(e) => handle_general(e, state, window).await,
         SubscriptionEvents::Ui(e) => handle_ui(e).await,
         SubscriptionEvents::Renderer(e) => handle_renderer(e, state, window).await,
         SubscriptionEvents::Command(e) => handle_command(e, state).await,

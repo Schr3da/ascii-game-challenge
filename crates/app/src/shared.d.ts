@@ -7,16 +7,11 @@ export interface Interaction {
 
 export type Ascii = "space" | "plus" | "tilde" | "doubleTilde";
 
-export interface GameViewFooterState {}
+export type UiSubscription = "UnknownUiSubscription";
 
-export interface GameViewHeaderState {
-    currentDays: string;
-    currentHours: string;
-    currentMinutes: string;
-    tickCount: string;
-}
+export type UiEvents = { OnSelect: SelectionDirections } | { OnSelectById: ViewComponentIds } | { OnClick: ViewComponentIds } | "OnCloseView";
 
-export type GameIds = "Day" | "Time" | "Turns" | "Canvas" | "Menu" | "Stones" | "Wood" | "Food" | "None";
+export type TextAlignment = "Center" | "Left" | "Right";
 
 export interface UiLabel {
     id: ViewComponentIds;
@@ -26,19 +21,22 @@ export interface UiLabel {
 
 export type CellColors = { rgb: [number, number, number] };
 
+export type UiPopupViewIds = "Command" | "QuickAction";
+
+export type SelectionDirections = "Next" | "Previous";
+
 export type RenderSubscription = { OnWorldDidUpdate: [UiView | null, UiView | null, GameStatus] };
 
 export type RenderEvents = { OnUpdateSelectedCell: SelectedCellNavigation } | "OnWorldWillUpdate";
 
+export type ViewComponentIds = { Main: MainMenuIds } | { Options: OptionMenuIds } | { Game: GameIds } | { CommandPopup: CommandIds } | "QuickAction";
+
 export type UiViewIds = "Main" | "Game" | "Options" | { Popup: UiPopupViewIds };
 
-export type UiPopupViewIds = "Command" | "QuickAction";
-
-export type TextAlignment = "Center" | "Left" | "Right";
-
-export type SelectionDirections = "Next" | "Previous";
-
-export type ViewComponentIds = { Main: MainMenuIds } | { Options: OptionMenuIds } | { Game: GameIds } | { CommandPopup: CommandIds } | "QuickAction";
+export interface Sprite {
+    asset: Asset;
+    frame: Rect;
+}
 
 export interface Rect {
     x: number;
@@ -61,20 +59,9 @@ export interface UiLayout {
     constraints: LayoutConstraints[];
 }
 
-export interface Position {
-    x: number;
-    y: number;
-}
+export type AsciiIds = "sand" | "shallowWater" | "deepWater" | "unknownAsciiId";
 
 export type GameStatus = "GameDidNotStart" | "GameDidStart" | "GameDidPaused" | "GameWillEnded";
-
-export interface Asset {
-    id: AssetTypes;
-    cells: Cell[];
-    description: string | null;
-}
-
-export type AssetTypes = "wall" | "unknownAssetType";
 
 export interface SelectedCell {
     top: number;
@@ -91,9 +78,29 @@ export interface Cell {
     isBold: boolean;
 }
 
-export type UiSubscription = "UnknownUiSubscription";
+export interface Asset {
+    id: AssetTypes;
+    cells: Cell[];
+    description: string | null;
+}
 
-export type UiEvents = { OnSelect: SelectionDirections } | { OnSelectById: ViewComponentIds } | { OnClick: ViewComponentIds } | "OnCloseView";
+export type AssetTypes = "wall" | "unknownAssetType";
+
+export interface Position {
+    x: number;
+    y: number;
+}
+
+export interface GameViewFooterState {}
+
+export interface GameViewHeaderState {
+    currentDays: string;
+    currentHours: string;
+    currentMinutes: string;
+    tickCount: string;
+}
+
+export type GameIds = "Day" | "Time" | "Turns" | "Canvas" | "Menu" | "Stones" | "Wood" | "Food" | "None";
 
 export type LayoutConstraints = { Percentage: number } | { Value: number } | { MinValue: number } | { MaxValue: number };
 
@@ -104,6 +111,8 @@ export type EcsEvents = { Send: SendEvents } | { Subscriber: SubscriptionEvents 
 export type SubscriptionEvents = { General: GeneralSubscription } | { Ui: UiSubscription } | { Renderer: RenderSubscription } | { Command: CommandSubscription };
 
 export type SendEvents = { General: GeneralEvents } | { Ui: UiEvents } | { Commands: CommandInputEvents } | { QuickAction: QuickActionEvents } | { Renderer: RenderEvents } | "Tick";
+
+export type ViewDataTypes = "NoViewData" | "QuickActionData" | { GameHeader: GameViewHeaderState } | { CommandPopup: CommandPopupState };
 
 export type CommandIds = "Move" | "Build" | "Inspect" | "UnknownCommandId";
 
@@ -116,11 +125,7 @@ export interface UiView {
 
 export type UiViewChild = { List: UiList } | { Label: UiLabel } | { Section: UiView } | "Placeholder" | { GameCanvas: [[Cell, Position][], SelectedCell | null] };
 
-export type ViewDataTypes = "NoViewData" | "QuickActionData" | { GameHeader: GameViewHeaderState } | { CommandPopup: CommandPopupState };
-
-export type QuickNavigationSubscription = { OnQuickActionDidUpdate: string };
-
-export type QuickActionEvents = "New" | "Execute" | "Cancel";
+export type SelectedCellNavigation = "Up" | "Down" | "Left" | "Right" | { Custom: [number, number] };
 
 export interface CommandPopupState {
     currentSelectedGameTile: SelectedCell;
@@ -132,22 +137,19 @@ export interface UiViewState {
     view_data: ViewDataTypes;
 }
 
-export interface Sprite {
-    asset: Asset;
-    frame: Rect;
-}
+export type QuickNavigationSubscription = { OnQuickActionDidUpdate: string };
 
-export type SelectedCellNavigation = "Up" | "Down" | "Left" | "Right" | { Custom: [number, number] };
+export type QuickActionEvents = "New" | "Execute" | "Cancel";
 
 export type OptionMenuIds = "Title" | "OptionList" | "LevelOfDifficulty" | "Sound" | "Back";
+
+export type GeneralSubscription = "OnApplicationDidStart" | { OnApplicationDidLoadAssets: Record<AsciiIds, Cell> } | "OnApplicationDidInitialise" | "OnApplicationDidClose";
+
+export type GeneralEvents = { OnApplicationResize: [number, number] } | { OnApplicationWillInitialise: [number, number] } | "OnApplicationWillClose";
+
+export type MainMenuIds = "Title" | "MenuList" | "NewGame" | "Options" | "Quit";
 
 export type CommandSubscription = { OnCommandDidUpdate: string[] };
 
 export type CommandInputEvents = "New" | "Pop" | { Push: string } | { Execute: string[] } | "Cancel";
-
-export type MainMenuIds = "Title" | "MenuList" | "NewGame" | "Options" | "Quit";
-
-export type GeneralSubscription = "OnApplicationDidStart" | "OnApplicationDidInitialise" | "OnApplicationDidClose";
-
-export type GeneralEvents = { OnApplicationResize: [number, number] } | { OnApplicationWillInitialise: [number, number] } | "OnApplicationWillClose";
 

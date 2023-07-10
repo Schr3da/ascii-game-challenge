@@ -17,6 +17,7 @@ export const EcsContext = createContext<EcsContextValue | null>(null);
 const isGeneralSubscription = (event: any): event is GeneralSubscription =>
   event.OnApplicationDidStart ||
   event.OnApplicationDidInitialise ||
+  event.OnApplicationDidLoadAssets || 
   event.OnApplicationDidClose;
 
 const isUiSubscription = (event: any): event is UiSubscription =>

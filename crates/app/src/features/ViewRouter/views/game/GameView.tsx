@@ -1,7 +1,7 @@
 import { Stage } from "@pixi/react";
 import { useMemo, useRef } from "react";
 import { useWrapperSize } from "../../../../hooks";
-import { AssetsProvider, useEcsContext } from "../../../../providers";
+import { GameTexturesProvider, useEcsContext } from "../../../../providers";
 import { GameHeader } from "./GameHeader";
 import { GameFooter } from "./GameFooter";
 import { isGameCanvas } from "../../../../utils";
@@ -47,9 +47,9 @@ export const GameView = () => {
       <GameHeader className="px-2 shrink-0" state={null} />
       <div ref={ref} className="relative flex-1 overflow-hidden">
         <Stage className="pixi-canvas" width={width} height={height}>
-          <AssetsProvider>
-            <GameGrid data={data}/>
-          </AssetsProvider>
+          <GameTexturesProvider>
+            <GameGrid data={data} />
+          </GameTexturesProvider>
         </Stage>
       </div>
       <GameFooter className="px-2 shrink-0" state={null} />

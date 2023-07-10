@@ -1,6 +1,7 @@
 use serde::{Deserialize, Serialize};
+use tsify::Tsify;
 
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Hash, Tsify)]
 #[serde(rename_all = "camelCase")]
 pub enum AsciiIds {
     Sand,

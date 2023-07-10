@@ -18,7 +18,8 @@ impl Scheduler for InitScheduler {
     fn setup(&mut self) {
         self.schedule.add_systems((
             on_application_will_initialise_system,
-            on_application_did_initialise_system.after(on_application_will_close_system),
+            on_application_will_load_assets.after(on_application_will_initialise_system),
+            on_application_did_initialise_system.after(on_application_will_load_assets),
         ));
     }
 

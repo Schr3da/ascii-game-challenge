@@ -1,64 +1,24 @@
-import * as PIXI from "pixi.js";
-import {
-  PropsWithChildren,
-  createContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { PropsWithChildren, createContext, useEffect } from "react";
+import { TextureService } from "../../services";
+import { useEcsContext } from "../Ecs";
+import { isApplicationDidLoadAssetsEvent } from "../../utils";
 
-import {
-  createBackgroundTexture,
-  createSymbolTexture,
-  toAbsoluteSize,
-} from "../../utils";
-import { AssetsContextValue } from "./Assets.types";
-import { useApp } from "@pixi/react";
+export const AssetContext = createContext(null);
 
-export const AssetsContext = createContext<AssetsContextValue | null>(null);
-
-export const AssetsProvider = ({ children }: PropsWithChildren) => {
-  const { renderer } = useApp();
-
-  const textures = useRef(new Map<string, PIXI.RenderTexture>());
-
-  const [size] = useState(toAbsoluteSize());
-
-  const [isInitialised, setIsInitialised] = useState(false);
+export const AssetProvider = ({ children }: PropsWithChildren) => {
+  const { nextGeneralEvent } = useEcsContext();
 
   useEffect(() => {
-    textures.current.set(
-      "default-background",
-      createBackgroundTexture("#000000", renderer)
-    );
+    if (nextGeneralEvent == null) {
+      return;
+    }
 
-    textures.current.set(
-      "default-symbol",
-      createSymbolTexture("#ff0000", renderer)
-    );
+    if (!isApplicationDidLoadAssetsEvent(nextGeneralEvent)) {
+      return;
+    }
 
-    textures.current.set(
-      "default-background-selected",
-      createBackgroundTexture("#ffffff", renderer)
-    );
+    TextureService.rawAssets = nextGeneralEvent.OnApplicationDidLoadAssets;
+  }, [nextGeneralEvent]);
 
-    textures.current.set(
-      "default-symbol-selected",
-      createSymbolTexture("#00ff00", renderer)
-    );
-
-    setIsInitialised(true);
-  }, []);
-
-  return (
-    <AssetsContext.Provider
-      value={{
-        assetWidth: size.width,
-        assetHeight: size.height,
-        textures: textures.current,
-      }}
-    >
-      {isInitialised && children}
-    </AssetsContext.Provider>
-  );
+  return <AssetContext.Provider value={null}>{children}</AssetContext.Provider>;
 };

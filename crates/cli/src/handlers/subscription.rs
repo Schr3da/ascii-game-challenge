@@ -12,6 +12,7 @@ async fn handle_general(event: GeneralSubscription, state: &mut AppState) -> boo
     match event {
         GeneralSubscription::OnApplicationDidStart => true,
         GeneralSubscription::OnApplicationDidClose => false,
+        GeneralSubscription::OnApplicationDidLoadAssets(_) => true,
         GeneralSubscription::OnApplicationDidInitialise => {
             let next = SendEvents::Renderer(RenderEvents::OnWorldWillUpdate);
             state.send(next).await;
