@@ -3,8 +3,16 @@ import { config } from "./config";
 
 export const calculateGridSize = () => {
   const size = config.tileSize;
-  const columns = Math.ceil(window.innerWidth / size) ;
-  const rows = Math.ceil(window.innerHeight / size) - 1;
+  const columns = Math.floor(window.innerWidth / size);
+  const rows = Math.floor(window.innerHeight / size) - 1;
+
+  return { columns, rows };
+};
+
+export const toGridCoordinate = (xAbsolute: number, yAbsolute: number) => {
+  const size = config.tileSize;
+  const columns = Math.floor(xAbsolute / size);
+  const rows = Math.floor(yAbsolute / size) - 1;
 
   return { columns, rows };
 };

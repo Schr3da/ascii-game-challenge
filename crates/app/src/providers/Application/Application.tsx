@@ -41,7 +41,7 @@ export const ApplicationProvider = ({ children }: PropsWithChildren) => {
     setPlatform(platform);
     setIsInitialised(true);
 
-    ApiService.sendEcsEvent({
+    await ApiService.sendEcsEvent({
       General: { OnApplicationWillInitialise: [columns, rows] },
     });
   }, []);

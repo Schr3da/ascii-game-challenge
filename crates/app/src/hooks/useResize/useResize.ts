@@ -10,13 +10,13 @@ export const useResize = () => {
 
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
 
-  const handleResize = useCallback(() => {
+  const handleResize = useCallback(async () => {
     setWindowWidth(window.innerWidth);
     setWindowHeight(window.innerHeight);
 
     const { columns, rows } = calculateGridSize();
 
-    ApiService.sendEcsEvent({
+    await ApiService.sendEcsEvent({
       General: { OnApplicationResize: [columns, rows] },
     });
   }, []);

@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+
+@font-face {
+  font-family: Savior;
+  src: local('Savior'), url(@/assets/fonts/Savior.ttf) format('truetype');
+}
+
 :root {
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
   font-size: 16px;
