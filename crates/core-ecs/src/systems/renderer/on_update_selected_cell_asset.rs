@@ -5,6 +5,7 @@ use crate::prelude::*;
 
 pub fn on_update_selected_cell_asset_system(
     mut store: ResMut<UiStore>,
+    camera: Res<Camera2d>,
     assets: Res<AssetResources>,
 ) {
     let mut tile = match &mut store.selected_game_tile {
@@ -14,7 +15,7 @@ pub fn on_update_selected_cell_asset_system(
 
     let next = assets
         .terrain
-        .get_ascii(tile.frame.x, tile.frame.y + tile.top as i32);
+        .get_ascii(camera.position.x + tile.frame.x, camera.position.y + tile.frame.y + tile.top as i32);
 
     let mut cell = assets
         .cell_cache

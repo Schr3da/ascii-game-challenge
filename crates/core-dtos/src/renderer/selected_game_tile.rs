@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 use tsify::Tsify;
 
-use crate::prelude::{Cell, Rect, ViewDataTypes, CommandPopupState};
+use crate::prelude::{Cell, CommandPopupState, Rect, ViewDataTypes};
 
 #[derive(Debug, Clone, Serialize, Deserialize, Eq, PartialEq, Tsify)]
 pub struct SelectedCell {
@@ -29,7 +29,7 @@ impl Default for SelectedCell {
 
 impl From<&SelectedCell> for ViewDataTypes {
     fn from(value: &SelectedCell) -> Self {
-        ViewDataTypes::CommandPopup(CommandPopupState{
+        ViewDataTypes::CommandPopup(CommandPopupState {
             current_selected_game_tile: value.clone(),
         })
     }

@@ -90,6 +90,19 @@ async fn handle_run_tick(app_state: &mut AppState) {
     app_state.send(event).await;
 }
 
+async fn handle_camera_navigation(app_state: &mut AppState, next: CameraNavigation) {
+    if app_state.ecs_current_game_status != GameStatus::GameDidStart {
+        return;
+    }
+
+    if app_state.is_popup_visible() {
+        return;
+    }
+
+    let event = SendEvents::Renderer(RenderEvents::OnUpdateCamera(next));
+    app_state.send(event).await
+}
+
 pub async fn handle_view_event(event: KeyEvent, app_state: &mut AppState) -> bool {
     match event.code {
         KeyCode::Esc => handle_close_view(app_state).await,
@@ -102,6 +115,10 @@ pub async fn handle_view_event(event: KeyEvent, app_state: &mut AppState) -> boo
         KeyCode::Char('n') => handle_run_tick(app_state).await,
         KeyCode::Char(' ') => handle_show_command_popup(app_state).await,
         KeyCode::Char(':') => handle_show_quick_action_popup(app_state).await,
+        KeyCode::Char('j') => handle_camera_navigation(app_state, CameraNavigation::Left).await,
+        KeyCode::Char('l') => handle_camera_navigation(app_state, CameraNavigation::Right).await,
+        KeyCode::Char('i') => handle_camera_navigation(app_state, CameraNavigation::Up).await,
+        KeyCode::Char('k') => handle_camera_navigation(app_state, CameraNavigation::Down).await,
         _ => return false,
     };
 

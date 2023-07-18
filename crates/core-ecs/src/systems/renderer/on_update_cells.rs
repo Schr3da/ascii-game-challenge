@@ -13,12 +13,18 @@ fn get_canvas_frame(camera: &Res<Camera2d>, top: u16, bottom: u16) -> Rect {
     }
 }
 
-fn get_visible_canvas_cells(frame: &Rect, assets: &Res<AssetResources>) -> Vec<(Cell, Position)> {
+fn get_visible_canvas_cells(
+    frame: &Rect,
+    camera: &Res<Camera2d>,
+    assets: &Res<AssetResources>,
+) -> Vec<(Cell, Position)> {
     let mut next = Vec::new();
 
     for y in frame.y..frame.height {
         for x in 0..frame.width {
-            let ascii = assets.terrain.get_ascii(x, y);
+            let ascii = assets
+                .terrain
+                .get_ascii(camera.position.x + x, camera.position.y + y);
             let position = Position { x, y };
 
             if let Some(c) = assets.cell_cache.get(&ascii) {
@@ -79,7 +85,7 @@ pub fn on_update_cells_system(
         match child {
             UiViewChild::GameCanvas(_, _) => {
                 let frame = get_canvas_frame(&camera, top, bottom);
-                let visible_cells = get_visible_canvas_cells(&frame, &assets);
+                let visible_cells = get_visible_canvas_cells(&frame, &camera, &assets);
                 let selected_cell = store.selected_game_tile.clone();
 
                 *child = UiViewChild::GameCanvas(visible_cells, selected_cell);

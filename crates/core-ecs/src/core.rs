@@ -47,7 +47,7 @@ impl Default for Core {
         let mut assets = AssetResources::default();
         assets.load();
         world.insert_resource(assets);
-        
+
         let game_clock = ClockResource::default();
         world.insert_resource(game_clock);
 
@@ -141,9 +141,9 @@ impl Core {
 
     fn handle_renderer_event(&mut self, event: RenderEvents) {
         match event {
-            RenderEvents::OnUpdateSelectedCell(_) | RenderEvents::OnWorldWillUpdate => {
-                self.render_scheduler.run(&mut self.world)
-            }
+            RenderEvents::OnUpdateCamera(_)
+            | RenderEvents::OnUpdateSelectedCell(_)
+            | RenderEvents::OnWorldWillUpdate => self.render_scheduler.run(&mut self.world),
         }
     }
 

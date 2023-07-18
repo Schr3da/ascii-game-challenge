@@ -12,7 +12,7 @@ pub struct Terrain {
 
 const SEA_LEVEL: f64 = 0.0;
 
-const MAP_SIZE: usize = 256;
+pub static MAP_SIZE: usize = 256;
 
 impl Terrain {
     fn generate_land(&mut self) {

@@ -44,7 +44,9 @@ impl InputManager {
                         _ = sender.send(InpuEvents::Mouse(e)).await;
                     }
                     Ok(Event::Resize(columns, rows)) => {
-                        _ = sender.send(InpuEvents::Window(WindowEvents::Resize(columns, rows))).await;
+                        _ = sender
+                            .send(InpuEvents::Window(WindowEvents::Resize(columns, rows)))
+                            .await;
                     }
                     _ => continue,
                 };

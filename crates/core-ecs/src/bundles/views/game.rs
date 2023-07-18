@@ -6,7 +6,11 @@ pub fn get_top_bar() -> UiViewChild {
         layout: UiLayout {
             margin: 0,
             alignment: LayoutAlignments::Horizontal,
-            constraints: vec![LayoutConstraints::Percentage(20), LayoutConstraints::Percentage(60), LayoutConstraints::Percentage(20)],
+            constraints: vec![
+                LayoutConstraints::Percentage(20),
+                LayoutConstraints::Percentage(60),
+                LayoutConstraints::Percentage(20),
+            ],
         },
         state: UiViewState {
             selected_id: ViewComponentIds::Game(GameIds::None),

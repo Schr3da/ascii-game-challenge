@@ -1,3 +1,4 @@
+mod camera_navigation;
 mod command;
 mod events;
 mod game_states;
@@ -12,6 +13,7 @@ mod view_data_types;
 mod window;
 
 pub mod prelude {
+    pub use super::camera_navigation::*;
     pub use super::command::*;
     pub use super::events::*;
     pub use super::game_states::*;
