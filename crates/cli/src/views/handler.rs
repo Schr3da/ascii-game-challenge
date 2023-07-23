@@ -20,3 +20,10 @@ pub fn draw_view_to_terminal_handler<B: Backend>(context: &mut Frame<B>, view: &
         },
     };
 }
+
+pub fn draw_cursor_to_terminal_handler<B: Backend>(
+    context: &mut Frame<B>,
+    tile: &Option<SelectedCell>,
+) {
+    render_selected_cell(context, tile);
+}

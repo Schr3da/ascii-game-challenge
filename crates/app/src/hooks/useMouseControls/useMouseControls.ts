@@ -16,7 +16,6 @@ export const useMouseControls = () => {
       if (nextView.id !== "Game") {
         return;
       }
-
     },
     [nextView]
   );

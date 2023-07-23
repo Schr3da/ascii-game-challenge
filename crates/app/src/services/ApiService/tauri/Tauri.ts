@@ -3,14 +3,14 @@ import { appWindow } from "@tauri-apps/api/window";
 import { UnlistenFn, listen, Event } from "@tauri-apps/api/event";
 
 import {
-  GameStatusSubscriptionCallback,
+  GameMetaSubscriptionCallback,
   PopupRenderSubscriptionCallback,
   SubscriptionCallback,
   ViewRenderSubscriptionCallback,
 } from "../../SubscribeService";
 
 import { Platforms } from "../ApiService.types";
-import { EcsSubscriptionIds, GameStatus, SendEvents, UiView } from "../../../shared.d";
+import { EcsSubscriptionIds, GameMeta, SendEvents, UiView } from "../../../shared.d";
 
 export class TauriApi {
   private static didSubscribe = false;
@@ -23,7 +23,7 @@ export class TauriApi {
 
   private static viewRenderListener: UnlistenFn = () => { };
 
-  private static gameStatusListener: UnlistenFn = () => { };
+  private static gameMetaListener: UnlistenFn = () => { };
 
   public static getPlatform = async (): Promise<Platforms> => {
     const next = await os.platform();
@@ -132,23 +132,23 @@ export class TauriApi {
     TauriApi.popupRenderListener = () => { };
   }
 
-  public static async gameStatusSubscriptionListener(
-    cb: GameStatusSubscriptionCallback
+  public static async gameMetaSubscriptionListener(
+    cb: GameMetaSubscriptionCallback
   ) {
-    const subscriptionId: EcsSubscriptionIds = "GameStatusSubscription";
+    const subscriptionId: EcsSubscriptionIds = "GameMetaSubscription";
 
-    TauriApi.disposeGameStatusSubscriptionListener();
-    TauriApi.gameStatusListener = await listen(
+    TauriApi.disposeGameMetaSubscriptionListener();
+    TauriApi.gameMetaListener = await listen(
       subscriptionId,
-      (event: Event<GameStatus>) => {
+      (event: Event<GameMeta>) => {
         event.payload && cb(event.payload);
       }
     );
   }
 
-  public static disposeGameStatusSubscriptionListener() {
-    TauriApi.gameStatusListener();
-    TauriApi.gameStatusListener = () => { };
+  public static disposeGameMetaSubscriptionListener() {
+    TauriApi.gameMetaListener();
+    TauriApi.gameMetaListener = () => { };
   }
 
   public static async sendEcsEvent(event: SendEvents) {

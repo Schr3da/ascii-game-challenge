@@ -31,7 +31,7 @@ async fn handle_renderer(
     terminal: &mut Terminal<CrosstermBackend<Stdout>>,
 ) -> bool {
     match event {
-        RenderSubscription::OnWorldDidUpdate(v, p, s) => {
+        RenderSubscription::OnWorldDidUpdate(v, p, m) => {
             app_state.ecs_current_view_state = match &v {
                 Some(UiView { state, .. }) => Some(state.clone()),
                 _ => None,
@@ -42,11 +42,12 @@ async fn handle_renderer(
                 _ => None,
             };
 
-            app_state.ecs_current_game_status = s;
+            app_state.ecs_current_game_status = m.status;
 
             _ = terminal.draw(|f| {
                 draw_view_to_terminal_handler(f, &v);
                 draw_view_to_terminal_handler(f, &p);
+                draw_cursor_to_terminal_handler(f, &m.cursor);
             });
         }
     };

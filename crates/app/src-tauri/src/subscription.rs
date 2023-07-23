@@ -32,14 +32,16 @@ async fn handle_renderer(
     window: &Window,
 ) -> bool {
     match event {
-        RenderSubscription::OnWorldDidUpdate(v, p, s) => {
+        RenderSubscription::OnWorldDidUpdate(v, p, m) => {
             if let Some(n) = v {
-                dispatch_view_data(n, s, app_state, window);
+                dispatch_view_data(n, app_state, window);
             }
 
             if let Some(n) = p {
                 dispatch_popup_data(n, app_state, window);
             }
+
+            dispatch_game_meta(m, app_state, window);
         }
     };
 

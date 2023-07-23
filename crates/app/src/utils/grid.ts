@@ -26,3 +26,5 @@ export const toAbsoluteSize = () => ({
   width: 1 * config.tileSize,
   height: 1 * config.tileSize,
 });
+
+export const defaultPosition = toAbsolutePosition({ x: 0, y: 0 });

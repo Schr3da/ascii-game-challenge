@@ -1,13 +1,17 @@
 import { Stage } from "@pixi/react";
 import { useMemo, useRef } from "react";
 import { useMouseControls, useWrapperSize } from "../../../../hooks";
-import { GameTexturesProvider, useViewContext } from "../../../../providers";
+import {
+  GameMetaProvider,
+  GameTexturesProvider,
+  useViewContext,
+} from "../../../../providers";
 import { GameHeader } from "./GameHeader";
 import { isGameCanvas } from "../../../../utils";
-import { GameCellData, GameViewGridData } from "./GameView.types";
+import { GameViewGridData } from "./GameView.types";
 import { GameGrid } from "./GameGrid";
 
-const defaultCanvasData: GameViewGridData = [Array<GameCellData>(), null];
+const defaultCanvasData: GameViewGridData = [];
 
 export const GameView = () => {
   const ref = useRef<HTMLDivElement | null>(null);
@@ -55,7 +59,9 @@ export const GameView = () => {
           onMouseDown={handleMouseDown}
         >
           <GameTexturesProvider>
-            <GameGrid data={data} />
+            <GameMetaProvider>
+              <GameGrid data={data} />
+            </GameMetaProvider>
           </GameTexturesProvider>
         </Stage>
       </div>

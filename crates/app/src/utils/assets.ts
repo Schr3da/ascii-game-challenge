@@ -33,6 +33,8 @@ const createTextStyle = (color: string, fontSize: number) => {
   });
 }
 
+export const defaultTexture = createRenderTexture();
+
 export const createBackgroundTexture = (color: string, renderer: PIXI.IRenderer<PIXI.ICanvas> | null): PIXI.RenderTexture => {
   const renderTexture = createRenderTexture();
 

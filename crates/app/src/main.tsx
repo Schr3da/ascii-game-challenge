@@ -9,7 +9,6 @@ import {
   PopupProvider,
   GeneralProvider,
   UiProvider,
-  GameStatusProvider,
 } from "./providers";
 
 import "./styles.css";
@@ -19,19 +18,17 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <BrowserRouter>
     <ApplicationProvider>
       <GeneralProvider>
-        <GameStatusProvider>
-          <UiProvider>
-            <ViewProvider>
-              <PopupProvider>
-                <AssetProvider>
-                  <NavigationProvider>
-                    <App />
-                  </NavigationProvider>
-                </AssetProvider>
-              </PopupProvider>
-            </ViewProvider>
-          </UiProvider>
-        </GameStatusProvider>
+        <UiProvider>
+          <ViewProvider>
+            <PopupProvider>
+              <AssetProvider>
+                <NavigationProvider>
+                  <App />
+                </NavigationProvider>
+              </AssetProvider>
+            </PopupProvider>
+          </ViewProvider>
+        </UiProvider>
       </GeneralProvider>
     </ApplicationProvider>
   </BrowserRouter>

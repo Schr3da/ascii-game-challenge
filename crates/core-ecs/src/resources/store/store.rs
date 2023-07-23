@@ -10,3 +10,12 @@ pub struct UiStore {
     pub current_game_status: GameStatus,
     pub selected_game_tile: Option<SelectedCell>,
 }
+
+impl UiStore {
+    pub fn into_meta(&self) -> GameMeta {
+        GameMeta {
+            status: self.current_game_status.clone(),
+            cursor: self.selected_game_tile.clone(),
+        }
+    }
+}

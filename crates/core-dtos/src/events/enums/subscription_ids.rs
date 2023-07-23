@@ -6,7 +6,7 @@ pub enum EcsSubscriptionIds {
     GeneralSubscription,
     ViewSubscription,
     PopupSubscription,
-    GameStatusSubscription,
+    GameMetaSubscription,
 }
 
 impl ToString for EcsSubscriptionIds {
@@ -15,7 +15,7 @@ impl ToString for EcsSubscriptionIds {
             Self::GeneralSubscription => "GeneralSubscription".to_string(),
             Self::ViewSubscription => "ViewSubscription".to_string(),
             Self::PopupSubscription => "PopupSubscription".to_string(),
-            Self::GameStatusSubscription => "GameStatusSubscription".to_string(),
+            Self::GameMetaSubscription => "GameMetaSubscription".to_string(),
         }
     }
 }

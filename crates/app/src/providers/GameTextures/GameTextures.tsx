@@ -1,4 +1,3 @@
-import * as PIXI from "pixi.js";
 import {
   PropsWithChildren,
   createContext,
@@ -7,11 +6,7 @@ import {
   useState,
 } from "react";
 
-import {
-  createBackgroundTexture,
-  createSymbolTexture,
-  toAbsoluteSize,
-} from "../../utils";
+import { toAbsoluteSize } from "../../utils";
 import { useApp } from "@pixi/react";
 import { GameTexturesContextValue } from "./GameTextures.types";
 import { TextureService } from "../../services";

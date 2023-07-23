@@ -83,12 +83,11 @@ pub fn on_update_cells_system(
 
     for child in &mut view.children {
         match child {
-            UiViewChild::GameCanvas(_, _) => {
+            UiViewChild::GameCanvas(_) => {
                 let frame = get_canvas_frame(&camera, top, bottom);
                 let visible_cells = get_visible_canvas_cells(&frame, &camera, &assets);
-                let selected_cell = store.selected_game_tile.clone();
-
-                *child = UiViewChild::GameCanvas(visible_cells, selected_cell);
+                
+                *child = UiViewChild::GameCanvas(visible_cells);
 
                 break;
             }

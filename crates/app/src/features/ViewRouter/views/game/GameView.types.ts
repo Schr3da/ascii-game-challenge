@@ -1,5 +1,6 @@
-import { Cell, Position, SelectedCell } from "../../../../shared.d";
+import { Cell, Position } from "../../../../shared.d";
 
 export type GameCellData = [Cell, Position];
 
-export type GameViewGridData = [[Cell, Position][], SelectedCell | null]
+export type GameViewGridData = [Cell, Position][]
+

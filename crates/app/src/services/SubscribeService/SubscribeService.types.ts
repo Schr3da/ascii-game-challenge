@@ -1,5 +1,5 @@
 import {
-  GameStatus,
+  GameMeta,
   GeneralSubscription,
   RenderSubscription,
   SelectedCell,
@@ -16,7 +16,7 @@ export type SubscriptionCallback =
   | GeneralSubscriptionCallback
   | ViewRenderSubscriptionCallback
   | PopupRenderSubscriptionCallback
-  | GameStatusSubscriptionCallback;
+  | GameMetaSubscriptionCallback;
 
 export type GeneralSubscriptionCallback = (
   event: SubscriptionEventTypes
@@ -26,7 +26,7 @@ export type ViewRenderSubscriptionCallback = (view: UiView | null) => void;
 
 export type PopupRenderSubscriptionCallback = (view: UiView | null) => void;
 
-export type GameStatusSubscriptionCallback = (status: GameStatus) => void;
+export type GameMetaSubscriptionCallback = (meta: GameMeta) => void;
 
 export type SelectedTileRenderSubscriptionCallback = (
   view: SelectedCell
@@ -36,5 +36,5 @@ export type Subscriptions = {
   GeneralSubscription: { [id: string]: GeneralSubscriptionCallback | null };
   ViewSubscription: { [id: string]: ViewRenderSubscriptionCallback | null };
   PopupSubscription: { [id: string]: PopupRenderSubscriptionCallback };
-  GameStatusSubscription: { [id: string]: GameStatusSubscriptionCallback };
+  GameMetaSubscription: { [id: string]: GameMetaSubscriptionCallback };
 };

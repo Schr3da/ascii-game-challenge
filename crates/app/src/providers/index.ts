@@ -6,4 +6,4 @@ export * from "./View";
 export * from "./Popup";
 export * from "./General";
 export * from "./Ui";
-export * from "./GameStatus";
+export * from "./GameMeta";

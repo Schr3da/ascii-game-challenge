@@ -5,7 +5,11 @@ import {
 } from "./SubscribeService.types";
 
 import { ApiService } from "../ApiService";
-import { EcsSubscriptionIds, GameStatus, UiView } from "../../shared.d";
+import {
+  EcsSubscriptionIds,
+  GameMeta,
+  UiView,
+} from "../../shared.d";
 
 class SubscribeService {
   public isInitialised = false;
@@ -14,7 +18,7 @@ class SubscribeService {
     GeneralSubscription: {},
     ViewSubscription: {},
     PopupSubscription: {},
-    GameStatusSubscription: {},
+    GameMetaSubscription: {},
   };
 
   public init = async () => {
@@ -31,8 +35,8 @@ class SubscribeService {
     );
 
     await ApiService.ecsGameStatusSubscriptionListener(
-      this.onReceivedGameStatus
-    )
+      this.onReceivedGameMetaSubscriptionEvent
+    );
 
     await ApiService.webviewDidSubscribe();
     this.isInitialised = true;
@@ -48,35 +52,33 @@ class SubscribeService {
     Object.values(this.subscriptions.ViewSubscription).forEach((cb) => {
       cb && cb(view);
     });
-  }
+  };
 
   private onReceivedPopupSubscriptionEvent = (view: UiView | null) => {
     Object.values(this.subscriptions.PopupSubscription).forEach((cb) => {
       cb && cb(view);
     });
-  }
+  };
 
-  private onReceivedGameStatus = (status: GameStatus) => {
-    Object.values(this.subscriptions.GameStatusSubscription).forEach((cb) => {
+  private onReceivedGameMetaSubscriptionEvent = (status: GameMeta) => {
+    Object.values(this.subscriptions.GameMetaSubscription).forEach((cb) => {
       cb && cb(status);
     });
-  }
+  };
 
   public subscribe = (
     topic: EcsSubscriptionIds,
     cb: SubscriptionCallback
   ): string => {
-    const id = `subscriber-${topic}-id-${Object.keys(this.subscriptions).length
-      }`;
+    const id = `subscriber-${topic}-id-${
+      Object.keys(this.subscriptions).length
+    }`;
 
     this.subscriptions[topic][id] = cb;
     return id;
   };
 
-  public unsubscribe = (
-    topic: EcsSubscriptionIds,
-    id: string
-  ) => {
+  public unsubscribe = (topic: EcsSubscriptionIds, id: string) => {
     this.subscriptions[topic][id] = null;
   };
 
@@ -97,7 +99,7 @@ class SubscribeService {
       GeneralSubscription: {},
       PopupSubscription: {},
       ViewSubscription: {},
-      GameStatusSubscription: {},
+      GameMetaSubscription: {},
     };
   }
 }

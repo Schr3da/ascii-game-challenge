@@ -1,7 +1,7 @@
 import { TauriApi } from "./tauri";
 
 import { SendEvents } from "../../shared.d";
-import { GameStatusSubscriptionCallback, PopupRenderSubscriptionCallback, SubscriptionCallback, ViewRenderSubscriptionCallback } from "../SubscribeService";
+import { GameMetaSubscriptionCallback, PopupRenderSubscriptionCallback, SubscriptionCallback, ViewRenderSubscriptionCallback } from "../SubscribeService";
 import { Platforms } from "./ApiService.types";
 
 export class ApiService {
@@ -81,12 +81,12 @@ export class ApiService {
     await TauriApi.popupRenderSubscriptionListener(cb);
   };
 
-  public static ecsGameStatusSubscriptionListener = async (cb: GameStatusSubscriptionCallback) => {
+  public static ecsGameStatusSubscriptionListener = async (cb: GameMetaSubscriptionCallback) => {
     if (!this.isTauriSuppored) {
       return Promise.resolve();
     }
 
-    await TauriApi.gameStatusSubscriptionListener(cb);
+    await TauriApi.gameMetaSubscriptionListener(cb);
   };
 
   public static sendEcsEvent = async (event: SendEvents) => {

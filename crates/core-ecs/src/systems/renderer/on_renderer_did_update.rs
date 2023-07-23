@@ -24,6 +24,10 @@ pub fn on_renderer_did_update_system(
     _ = subscription
         .sender
         .blocking_send(EcsEvents::Subscriber(SubscriptionEvents::Renderer(
-            RenderSubscription::OnWorldDidUpdate(view, popup, store.current_game_status.clone()),
+            RenderSubscription::OnWorldDidUpdate(
+                view,
+                popup,
+                store.into_meta(),
+            ),
         )));
 }
