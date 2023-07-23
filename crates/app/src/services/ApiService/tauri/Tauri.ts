@@ -1,19 +1,29 @@
 import { invoke, os } from "@tauri-apps/api";
 import { appWindow } from "@tauri-apps/api/window";
 import { UnlistenFn, listen, Event } from "@tauri-apps/api/event";
-import { SendEvents } from "../../../shared";
+
 import {
+  GameStatusSubscriptionCallback,
+  PopupRenderSubscriptionCallback,
   SubscriptionCallback,
-  SubscriptionEventTypes,
+  ViewRenderSubscriptionCallback,
 } from "../../SubscribeService";
+
 import { Platforms } from "../ApiService.types";
+import { EcsSubscriptionIds, GameStatus, SendEvents, UiView } from "../../../shared.d";
 
 export class TauriApi {
   private static didSubscribe = false;
 
   private static didMount = false;
 
-  private static ecsListener: UnlistenFn = () => {};
+  private static generalListener: UnlistenFn = () => { };
+
+  private static popupRenderListener: UnlistenFn = () => { };
+
+  private static viewRenderListener: UnlistenFn = () => { };
+
+  private static gameStatusListener: UnlistenFn = () => { };
 
   public static getPlatform = async (): Promise<Platforms> => {
     const next = await os.platform();
@@ -66,23 +76,82 @@ export class TauriApi {
     TauriApi.didSubscribe = true;
   }
 
-  public static async ecsSubscriptionListener(cb: SubscriptionCallback) {
-    TauriApi.disposeEcsSubscriptionListener();
-    TauriApi.ecsListener = await listen(
-      "ecs-subscription",
-      (event: Event<SubscriptionEventTypes | null>) => {
+  public static async ecsGeneralSubscriptionListener(cb: SubscriptionCallback) {
+    const subscriptionId: EcsSubscriptionIds = "GeneralSubscription";
+
+    TauriApi.disposeEcsGeneralSubscriptionListener();
+    TauriApi.generalListener = await listen(
+      subscriptionId,
+      (event: Event<| null>) => {
         const payload = event.payload;
         payload && cb(payload);
       }
     );
   }
 
-  public static async sendEcsEvent(event: SendEvents) {
-    await invoke("webview_ecs_event", { event });
+  public static disposeEcsGeneralSubscriptionListener() {
+    TauriApi.generalListener();
+    TauriApi.generalListener = () => { };
   }
 
-  public static disposeEcsSubscriptionListener() {
-    TauriApi.ecsListener();
-    TauriApi.ecsListener = () => {};
+  public static async viewRenderSubscriptionListener(
+    cb: ViewRenderSubscriptionCallback
+  ) {
+    const subscriptionId: EcsSubscriptionIds = "ViewSubscription";
+
+    TauriApi.disposeViewRenderSubscriptionListener();
+    TauriApi.viewRenderListener = await listen(
+      subscriptionId,
+      (event: Event<UiView>) => {
+        event.payload && cb(event.payload);
+      }
+    );
+  }
+
+  public static disposeViewRenderSubscriptionListener() {
+    TauriApi.viewRenderListener();
+    TauriApi.viewRenderListener = () => { };
+  }
+
+  public static async popupRenderSubscriptionListener(
+    cb: PopupRenderSubscriptionCallback
+  ) {
+    const subscriptionId: EcsSubscriptionIds = "PopupSubscription";
+
+    TauriApi.disposePopupRenderSubscriptionListener();
+    TauriApi.popupRenderListener = await listen(
+      subscriptionId,
+      (event: Event<UiView>) => {
+        event.payload && cb(event.payload);
+      }
+    );
+  }
+
+  public static disposePopupRenderSubscriptionListener() {
+    TauriApi.popupRenderListener();
+    TauriApi.popupRenderListener = () => { };
+  }
+
+  public static async gameStatusSubscriptionListener(
+    cb: GameStatusSubscriptionCallback
+  ) {
+    const subscriptionId: EcsSubscriptionIds = "GameStatusSubscription";
+
+    TauriApi.disposeGameStatusSubscriptionListener();
+    TauriApi.gameStatusListener = await listen(
+      subscriptionId,
+      (event: Event<GameStatus>) => {
+        event.payload && cb(event.payload);
+      }
+    );
+  }
+
+  public static disposeGameStatusSubscriptionListener() {
+    TauriApi.gameStatusListener();
+    TauriApi.gameStatusListener = () => { };
+  }
+
+  public static async sendEcsEvent(event: SendEvents) {
+    await invoke("webview_ecs_event", { event });
   }
 }

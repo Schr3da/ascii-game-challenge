@@ -22,6 +22,8 @@ pub struct AppState {
     pub ecs_current_popup_state: Option<UiViewState>,
     pub ecs_current_command: Vec<String>,
     pub ecs_current_game_status: GameStatus,
+    pub ecs_current_view: Option<UiView>,
+    pub ecs_current_popup: Option<UiView>,
 }
 
 impl Default for AppState {
@@ -40,6 +42,8 @@ impl Default for AppState {
             ecs_current_popup_state: None,
             ecs_current_command: Vec::new(),
             ecs_current_game_status: GameStatus::GameDidNotStart,
+            ecs_current_view: None,
+            ecs_current_popup: None,
         }
     }
 }

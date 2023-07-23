@@ -1,12 +1,12 @@
 import { PropsWithChildren, createContext, useEffect } from "react";
 import { TextureService } from "../../services";
-import { useEcsContext } from "../Ecs";
 import { isApplicationDidLoadAssetsEvent } from "../../utils";
+import { useGeneralContext } from "../General";
 
 export const AssetContext = createContext(null);
 
 export const AssetProvider = ({ children }: PropsWithChildren) => {
-  const { nextGeneralEvent } = useEcsContext();
+  const { nextGeneralEvent } = useGeneralContext();
 
   useEffect(() => {
     if (nextGeneralEvent == null) {

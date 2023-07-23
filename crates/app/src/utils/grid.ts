@@ -1,4 +1,4 @@
-import { Position } from "../shared";
+import { Position } from "../shared.d";
 import { config } from "./config";
 
 export const calculateGridSize = () => {

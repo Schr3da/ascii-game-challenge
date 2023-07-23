@@ -1,10 +1,10 @@
 import { useCallback, useEffect } from "react";
 import { ApiService } from "../../services";
-import { useEcsContext } from "../../providers";
-import { UiView } from "../../shared";
+import { UiView } from "../../shared.d";
+import { useViewContext } from "../../providers/View/useViewContext";
 
 export const useKeyboardControls = () => {
-  const { nextView, } = useEcsContext();
+  const { nextView, } = useViewContext();
 
   const handleGameViewControls = useCallback(async (event: KeyboardEvent) => {
     switch (event.key) {

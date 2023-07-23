@@ -1,4 +1,4 @@
-import { UiViewState } from "../../../../../shared";
+import { UiViewState } from "../../../../../shared.d";
 
 export type GameFooterProps = {
   className: String;

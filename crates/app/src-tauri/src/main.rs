@@ -6,6 +6,7 @@ mod js_api;
 mod signal;
 mod subscription;
 mod webview;
+mod dispatchers;
 
 use crate::export::prelude::*;
 use tauri::Manager;

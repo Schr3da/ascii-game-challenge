@@ -3,22 +3,21 @@ use tauri::Window;
 use core_dtos::prelude::*;
 use core_state::prelude::*;
 
+use crate::export::prelude::*;
+
 async fn handle_general(
     event: &GeneralSubscription,
     state: &mut AppState,
     window: &Window,
 ) -> bool {
     match event {
-        GeneralSubscription::OnApplicationDidStart => true,
-        GeneralSubscription::OnApplicationDidClose => false,
+        GeneralSubscription::OnApplicationDidStart => dispatch_application_did_start(),
+        GeneralSubscription::OnApplicationDidClose => dispatch_application_did_close(),
         GeneralSubscription::OnApplicationDidLoadAssets(_) => {
-            _ = window.emit("ecs-subscription", event);
-            true
+            dispatch_dispatch_assets_did_load(event, window)
         }
         GeneralSubscription::OnApplicationDidInitialise => {
-            let next = SendEvents::Renderer(RenderEvents::OnWorldWillUpdate);
-            state.send(next).await;
-            true
+            dispatch_appliaction_did_initialise(state).await
         }
     }
 }
@@ -34,23 +33,13 @@ async fn handle_renderer(
 ) -> bool {
     match event {
         RenderSubscription::OnWorldDidUpdate(v, p, s) => {
-            app_state.ecs_current_view_state = match &v {
-                Some(UiView { state, .. }) => Some(state.clone()),
-                _ => None,
-            };
-
-            app_state.ecs_current_popup_state = match &p {
-                Some(UiView { state, .. }) => Some(state.clone()),
-                _ => None,
-            };
-
-            app_state.ecs_current_game_status = s.clone();
-
-            if v.is_none() && p.is_none() {
-                return true;
+            if let Some(n) = v {
+                dispatch_view_data(n, s, app_state, window);
             }
 
-            _ = window.emit("ecs-subscription", event);
+            if let Some(n) = p {
+                dispatch_popup_data(n, app_state, window);
+            }
         }
     };
 

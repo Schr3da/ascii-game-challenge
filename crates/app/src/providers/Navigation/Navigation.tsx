@@ -6,15 +6,15 @@ import {
 } from "react";
 import { useNavigate } from "react-router-dom";
 import { NavigationRoutes } from "./Navigation.types";
-import { useEcsContext } from "../Ecs";
-import { UiView } from "../../shared";
+import { UiView } from "../../shared.d";
+import { useViewContext } from "../View/useViewContext";
 
 export const NavigationContext = createContext<null>(null);
 
 export const NavigationProvider = ({ children }: PropsWithChildren) => {
   const navigate = useNavigate();
 
-  const { previousView, nextView } = useEcsContext();
+  const { previousView, nextView } = useViewContext();
 
   const handleNavigation = useCallback(
     (view: UiView | null) => {

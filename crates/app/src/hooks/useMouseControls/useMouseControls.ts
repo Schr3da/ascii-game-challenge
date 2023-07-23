@@ -1,11 +1,11 @@
-import { MouseEventHandler, useCallback } from "react";
-import { useEcsContext } from "../../providers";
+import { useCallback } from "react";
 import { MouseEvent } from "react";
 import { ApiService } from "../../services";
 import { toGridCoordinate } from "../../utils";
+import { useViewContext } from "../../providers/View/useViewContext";
 
 export const useMouseControls = () => {
-  const { nextView } = useEcsContext();
+  const { nextView } = useViewContext();
 
   const handleMouseMove = useCallback(
     (event: MouseEvent) => {

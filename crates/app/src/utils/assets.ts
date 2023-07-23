@@ -1,7 +1,7 @@
 import * as PIXI from "pixi.js";
 
 import { toAbsoluteSize } from "./grid";
-import { Ascii } from "../shared";
+import { Ascii } from "../shared.d";
 
 const createRenderTexture = () => {
   const size = toAbsoluteSize();

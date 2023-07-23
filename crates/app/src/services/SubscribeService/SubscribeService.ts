@@ -3,43 +3,102 @@ import {
   SubscriptionCallback,
   SubscriptionEventTypes,
 } from "./SubscribeService.types";
+
 import { ApiService } from "../ApiService";
+import { EcsSubscriptionIds, GameStatus, UiView } from "../../shared.d";
 
 class SubscribeService {
   public isInitialised = false;
 
-  private subscriptions: Subscriptions = {};
+  private subscriptions: Subscriptions = {
+    GeneralSubscription: {},
+    ViewSubscription: {},
+    PopupSubscription: {},
+    GameStatusSubscription: {},
+  };
 
   public init = async () => {
-    await ApiService.ecsSubscriptionListener(this.handleEvent);
+    await ApiService.ecsGeneralSubscriptionListener(
+      this.onReceivedGeneralEvent
+    );
+
+    await ApiService.ecsViewRenderSubscriptionListener(
+      this.onReceivedViewSubscriptionEvent
+    );
+
+    await ApiService.ecsPopRenderSubscriptionListener(
+      this.onReceivedPopupSubscriptionEvent
+    );
+
+    await ApiService.ecsGameStatusSubscriptionListener(
+      this.onReceivedGameStatus
+    )
+
     await ApiService.webviewDidSubscribe();
     this.isInitialised = true;
   };
 
-  private handleEvent = (event: SubscriptionEventTypes) => {
-    Object.values(this.subscriptions).forEach((cb) => {
+  private onReceivedGeneralEvent = (event: SubscriptionEventTypes) => {
+    Object.values(this.subscriptions.GeneralSubscription).forEach((cb) => {
       cb && cb(event);
     });
   };
 
-  public subscribe = (cb: SubscriptionCallback): string => {
-    const nextId = `subscriber-id-${Object.keys(this.subscriptions).length}`;
-    this.subscriptions[nextId] = cb;
-    return nextId;
+  private onReceivedViewSubscriptionEvent = (view: UiView | null) => {
+    Object.values(this.subscriptions.ViewSubscription).forEach((cb) => {
+      cb && cb(view);
+    });
+  }
+
+  private onReceivedPopupSubscriptionEvent = (view: UiView | null) => {
+    Object.values(this.subscriptions.PopupSubscription).forEach((cb) => {
+      cb && cb(view);
+    });
+  }
+
+  private onReceivedGameStatus = (status: GameStatus) => {
+    Object.values(this.subscriptions.GameStatusSubscription).forEach((cb) => {
+      cb && cb(status);
+    });
+  }
+
+  public subscribe = (
+    topic: EcsSubscriptionIds,
+    cb: SubscriptionCallback
+  ): string => {
+    const id = `subscriber-${topic}-id-${Object.keys(this.subscriptions).length
+      }`;
+
+    this.subscriptions[topic][id] = cb;
+    return id;
   };
 
-  public unsubscribe = (id: string) => {
-    this.subscriptions[id] = null;
+  public unsubscribe = (
+    topic: EcsSubscriptionIds,
+    id: string
+  ) => {
+    this.subscriptions[topic][id] = null;
   };
 
   public dispose() {
-    ApiService.disposeEcsSubscriptionListener();
+    ApiService.disposeEcsGeneralSubscriptionListener();
+    ApiService.disposeEcsViewRenderSubscriptionListener();
+    ApiService.disposeEcsPopupRenderSubscriptionListener();
 
-    for (let id in this.subscriptions) {
-      this.unsubscribe(id);
-    }
+    (Object.keys(this.subscriptions) as Array<EcsSubscriptionIds>).forEach(
+      (topic) => {
+        for (let id in this.subscriptions) {
+          this.unsubscribe(topic, id);
+        }
+      }
+    );
 
-    this.subscriptions = {};
+    this.subscriptions = {
+      GeneralSubscription: {},
+      PopupSubscription: {},
+      ViewSubscription: {},
+      GameStatusSubscription: {},
+    };
   }
 }
 

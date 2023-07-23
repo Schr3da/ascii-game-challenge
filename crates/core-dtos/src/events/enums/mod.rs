@@ -8,6 +8,7 @@ mod quick_action;
 mod render;
 mod select;
 mod selected_cell_navigation;
+mod subscription_ids;
 mod ui;
 mod view_data_types;
 mod window;
@@ -23,6 +24,7 @@ pub mod prelude {
     pub use super::render::*;
     pub use super::select::*;
     pub use super::selected_cell_navigation::*;
+    pub use super::subscription_ids::*;
     pub use super::ui::*;
     pub use super::view_data_types::*;
     pub use super::window::*;

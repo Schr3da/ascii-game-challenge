@@ -1,4 +1,4 @@
-import { CellColors } from "../shared";
+import { CellColors } from "../shared.d";
 
 export const numberToHex = (value: number) => {
   return value.toString(16);

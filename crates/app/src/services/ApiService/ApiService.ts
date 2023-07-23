@@ -1,7 +1,7 @@
 import { TauriApi } from "./tauri";
 
-import { SendEvents } from "../../shared";
-import { SubscriptionCallback } from "../SubscribeService";
+import { SendEvents } from "../../shared.d";
+import { GameStatusSubscriptionCallback, PopupRenderSubscriptionCallback, SubscriptionCallback, ViewRenderSubscriptionCallback } from "../SubscribeService";
 import { Platforms } from "./ApiService.types";
 
 export class ApiService {
@@ -57,12 +57,36 @@ export class ApiService {
     await TauriApi.webviewDidSubscribe();
   };
 
-  public static ecsSubscriptionListener = async (cb: SubscriptionCallback) => {
+  public static ecsGeneralSubscriptionListener = async (cb: SubscriptionCallback) => {
     if (!this.isTauriSuppored) {
       return Promise.resolve();
     }
 
-    await TauriApi.ecsSubscriptionListener(cb);
+    await TauriApi.ecsGeneralSubscriptionListener(cb);
+  };
+
+  public static ecsViewRenderSubscriptionListener = async (cb: ViewRenderSubscriptionCallback) => {
+    if (!this.isTauriSuppored) {
+      return Promise.resolve();
+    }
+
+    await TauriApi.viewRenderSubscriptionListener(cb);
+  };
+
+  public static ecsPopRenderSubscriptionListener = async (cb: PopupRenderSubscriptionCallback) => {
+    if (!this.isTauriSuppored) {
+      return Promise.resolve();
+    }
+
+    await TauriApi.popupRenderSubscriptionListener(cb);
+  };
+
+  public static ecsGameStatusSubscriptionListener = async (cb: GameStatusSubscriptionCallback) => {
+    if (!this.isTauriSuppored) {
+      return Promise.resolve();
+    }
+
+    await TauriApi.gameStatusSubscriptionListener(cb);
   };
 
   public static sendEcsEvent = async (event: SendEvents) => {
@@ -74,11 +98,28 @@ export class ApiService {
     await TauriApi.sendEcsEvent(event);
   };
 
-  public static disposeEcsSubscriptionListener = () => {
+  public static disposeEcsGeneralSubscriptionListener = () => {
     if (!this.isTauriSuppored) {
       return;
     }
 
-    TauriApi.disposeEcsSubscriptionListener();
+    TauriApi.disposeEcsGeneralSubscriptionListener();
+  };
+
+
+  public static disposeEcsViewRenderSubscriptionListener = () => {
+    if (!this.isTauriSuppored) {
+      return;
+    }
+
+    TauriApi.disposeViewRenderSubscriptionListener();
+  };
+
+  public static disposeEcsPopupRenderSubscriptionListener = () => {
+    if (!this.isTauriSuppored) {
+      return;
+    }
+
+    TauriApi.disposePopupRenderSubscriptionListener();
   };
 }

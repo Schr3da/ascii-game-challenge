@@ -1,4 +1,4 @@
-import { GameViewFooterState, GameViewHeaderState, Cell, Position, SelectedCell, SubscriptionEvents, GeneralSubscription, AsciiIds, UiSubscription, RenderSubscription } from "../shared";
+import { GameViewFooterState, GameViewHeaderState, Cell, Position, SelectedCell, SubscriptionEvents, GeneralSubscription, AsciiIds, UiSubscription, RenderSubscription } from "../shared.d";
 
 export const isGameViewHeaderState = (data: any): data is GameViewHeaderState => {
   return data != null && data.GameHeader != null;

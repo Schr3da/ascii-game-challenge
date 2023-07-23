@@ -1,7 +1,7 @@
 import { Stage } from "@pixi/react";
 import { useMemo, useRef } from "react";
 import { useMouseControls, useWrapperSize } from "../../../../hooks";
-import { GameTexturesProvider, useEcsContext } from "../../../../providers";
+import { GameTexturesProvider, useViewContext } from "../../../../providers";
 import { GameHeader } from "./GameHeader";
 import { isGameCanvas } from "../../../../utils";
 import { GameCellData, GameViewGridData } from "./GameView.types";
@@ -16,7 +16,7 @@ export const GameView = () => {
 
   const { width, height } = useWrapperSize(ref);
 
-  const { nextView } = useEcsContext();
+  const { nextView } = useViewContext();
 
   const isGameView = useMemo(() => {
     if (nextView == null) {

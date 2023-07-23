@@ -1,4 +1,4 @@
-import { Cell, Position, SelectedCell } from "../../../../shared";
+import { Cell, Position, SelectedCell } from "../../../../shared.d";
 
 export type GameCellData = [Cell, Position];
 
