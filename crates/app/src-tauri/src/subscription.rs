@@ -14,7 +14,7 @@ async fn handle_general(
         GeneralSubscription::OnApplicationDidStart => dispatch_application_did_start(),
         GeneralSubscription::OnApplicationDidClose => dispatch_application_did_close(),
         GeneralSubscription::OnApplicationDidLoadAssets(_) => {
-            dispatch_dispatch_assets_did_load(event, window)
+            dispatch_assets_did_load(event, window)
         }
         GeneralSubscription::OnApplicationDidInitialise => {
             dispatch_appliaction_did_initialise(state).await
@@ -40,7 +40,7 @@ async fn handle_renderer(
             if let Some(n) = p {
                 dispatch_popup_data(n, app_state, window);
             }
-
+            
             dispatch_game_meta(m, app_state, window);
         }
     };

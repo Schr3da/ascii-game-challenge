@@ -27,7 +27,7 @@ export const GeneralProvider = ({ children }: PropsWithChildren) => {
       if (!isGeneralSubscription(event)) {
         return;
       }
-      console.log(event);
+
       setPreviousGeneralEvent(nextGeneralEvent);
       setNextGeneralEvent(event);
     },

@@ -14,7 +14,7 @@ pub async fn dispatch_appliaction_did_initialise(state: &mut AppState) -> bool {
     true
 }
 
-pub fn dispatch_dispatch_assets_did_load(event: &GeneralSubscription, window: &Window) -> bool {
+pub fn dispatch_assets_did_load(event: &GeneralSubscription, window: &Window) -> bool {
     _ = window.emit(&EcsSubscriptionIds::GeneralSubscription.to_string(), event);
     true
 }

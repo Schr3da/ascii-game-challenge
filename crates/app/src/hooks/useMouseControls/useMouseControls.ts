@@ -8,7 +8,7 @@ export const useMouseControls = () => {
   const { nextView } = useViewContext();
 
   const handleMouseMove = useCallback(
-    (event: MouseEvent) => {
+    ({ clientX, clientY }: MouseEvent) => {
       if (nextView == null) {
         return;
       }
@@ -16,6 +16,16 @@ export const useMouseControls = () => {
       if (nextView.id !== "Game") {
         return;
       }
+
+      let { columns, rows } = toGridCoordinate(clientX, clientY);
+
+      ApiService.sendEcsEvent({
+        Renderer: {
+          OnUpdateSelectedCell: {
+            Custom: [columns, rows]
+          }
+        }
+      });
     },
     [nextView]
   );

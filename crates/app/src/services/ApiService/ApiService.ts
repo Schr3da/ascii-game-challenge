@@ -94,7 +94,6 @@ export class ApiService {
       return Promise.resolve();
     }
 
-    console.log("sending event to rust: ", event);
     await TauriApi.sendEcsEvent(event);
   };
 

@@ -9,7 +9,7 @@ import {
 import { toAbsoluteSize } from "../../utils";
 import { useApp } from "@pixi/react";
 import { GameTexturesContextValue } from "./GameTextures.types";
-import { TextureService } from "../../services";
+import { ApiService, TextureService } from "../../services";
 
 export const GameTexturesContext =
   createContext<GameTexturesContextValue | null>(null);
@@ -26,7 +26,11 @@ export const GameTexturesProvider = ({ children }: PropsWithChildren) => {
   useEffect(() => {
     textures.current.renderer = renderer;
     textures.current.createTextures();
-    setIsInitialised(true);
+
+    // Required to update one more time view
+    ApiService.sendEcsEvent({ Renderer: "OnWorldWillUpdate" }).then(() => {
+      setIsInitialised(true);
+    });
   }, []);
 
   return (

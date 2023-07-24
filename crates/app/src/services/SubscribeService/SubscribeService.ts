@@ -39,6 +39,7 @@ class SubscribeService {
     );
 
     await ApiService.webviewDidSubscribe();
+
     this.isInitialised = true;
   };
 
@@ -70,9 +71,8 @@ class SubscribeService {
     topic: EcsSubscriptionIds,
     cb: SubscriptionCallback
   ): string => {
-    const id = `subscriber-${topic}-id-${
-      Object.keys(this.subscriptions).length
-    }`;
+    const id = `subscriber-${topic}-id-${Object.keys(this.subscriptions[topic]).length
+      }`;
 
     this.subscriptions[topic][id] = cb;
     return id;
@@ -104,11 +104,13 @@ class SubscribeService {
   }
 }
 
-const instance = new SubscribeService();
+let instance: SubscribeService | null = null;
 
 export const sharedInstance = async (): Promise<SubscribeService> => {
-  if (!instance.isInitialised) {
+  if (!instance) {
+    instance = new SubscribeService();
     await instance.init();
   }
+
   return instance;
 };
