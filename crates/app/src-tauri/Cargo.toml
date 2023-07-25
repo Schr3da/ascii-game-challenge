@@ -14,7 +14,7 @@ tauri-build = { version = "1.3", features = [] }
 tokio = {workspace = true}
 serde_json = {workspace = true}
 serde = {workspace = true}
-tauri = { version = "1.3", features = ["macos-private-api", "os-all", "shell-open", "window-close", "window-hide", "window-maximize", "window-minimize", "window-show", "window-start-dragging", "window-unmaximize", "window-unminimize"] }
+tauri = { version = "1.3", features = ["os-all", "shell-open", "window-close", "window-hide", "window-maximize", "window-minimize", "window-show", "window-start-dragging", "window-unmaximize", "window-unminimize"] }
 core-ecs = {path = "../../core-ecs"}
 core-serde = {path = "../../core-serde"}
 core-state = {path = "../../core-state"}

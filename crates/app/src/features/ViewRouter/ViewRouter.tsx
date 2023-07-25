@@ -1,12 +1,11 @@
 import { Route, Routes } from "react-router-dom";
 import { MainMenuView, OptionsView, GameView } from "./views";
 import { NavigationRoutes } from "../../providers/Navigation/Navigation.types";
-import { useKeyboardControls, useMouseControls } from "../../hooks";
+import { useKeyboardControls} from "../../hooks";
 import { ViewRouterProps } from "./ViewRouter.types";
 
 export const ViewRouter = ({ className }: ViewRouterProps) => {
   useKeyboardControls();
-  useMouseControls();
 
   return (
     <div className={className}>

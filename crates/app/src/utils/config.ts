@@ -1,4 +1,4 @@
 export const config = {
   enableLogs: true,
-  tileSize: 24,
+  tileSize: 32,
 };

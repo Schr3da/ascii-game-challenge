@@ -18,6 +18,14 @@ export const useKeyboardControls = () => {
         return await ApiService.sendEcsEvent({ Renderer: { OnUpdateSelectedCell: "Right" } });
       case "ArrowDown":
         return await ApiService.sendEcsEvent({ Renderer: { OnUpdateSelectedCell: "Down" } });
+      case "j":
+        return await ApiService.sendEcsEvent({Renderer: {OnUpdateCamera: "Left"}}); 
+      case "i":
+        return await ApiService.sendEcsEvent({Renderer: {OnUpdateCamera: "Up"}}); 
+      case "k":
+        return await ApiService.sendEcsEvent({Renderer: {OnUpdateCamera: "Down"}}); 
+      case "l":
+        return await ApiService.sendEcsEvent({Renderer: {OnUpdateCamera: "Right"}}); 
       default:
         return;
     }

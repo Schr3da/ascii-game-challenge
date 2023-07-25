@@ -16,9 +16,9 @@ const App = () => {
 
     switch (platform) {
       case Platforms.Macos:
-        return clsx(next, "rounded-xl");
+        return clsx(next);
       default:
-        return clsx(next, "rounded-xl");
+        return clsx(next);
     }
   }, [platform]);
 
