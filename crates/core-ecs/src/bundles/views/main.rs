@@ -14,40 +14,9 @@ pub fn main_view() -> UiView {
         },
         state: UiViewState {
             selected_id: ViewComponentIds::Main(MainMenuIds::Quit),
-            selectable_ids: vec![
-                ViewComponentIds::Main(MainMenuIds::NewGame),
-                ViewComponentIds::Main(MainMenuIds::Options),
-                ViewComponentIds::Main(MainMenuIds::Quit),
-            ],
+            selectable_ids: MainMenuIds::get_selectable_items(),
             ..UiViewState::default()
         },
-        children: vec![
-            UiViewChild::Label(UiLabel {
-                id: ViewComponentIds::Main(MainMenuIds::Title),
-                text: "Ascii game challenge".to_string(),
-                alignment: TextAlignment::Center,
-            }),
-            UiViewChild::List(UiList {
-                id: ViewComponentIds::Main(MainMenuIds::MenuList),
-                label: "Main Menu".to_string(),
-                children: vec![
-                    UiLabel {
-                        id: ViewComponentIds::Main(MainMenuIds::NewGame),
-                        text: "New Game".to_string(),
-                        alignment: TextAlignment::Left,
-                    },
-                    UiLabel {
-                        id: ViewComponentIds::Main(MainMenuIds::Options),
-                        text: "Options".to_string(),
-                        alignment: TextAlignment::Left,
-                    },
-                    UiLabel {
-                        id: ViewComponentIds::Main(MainMenuIds::Quit),
-                        text: "Quit".to_string(),
-                        alignment: TextAlignment::Left,
-                    },
-                ],
-            }),
-        ],
+        children: MainMenuIds::get_ui_items(),
     }
 }

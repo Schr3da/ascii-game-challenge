@@ -62,22 +62,6 @@ pub fn get_bottom_bar() -> UiViewChild {
                 text: GameIds::Menu.to_string(),
                 alignment: TextAlignment::Left,
             }),
-            UiViewChild::Label(UiLabel {
-                id: ViewComponentIds::Game(GameIds::Food),
-                text: GameIds::Food.to_string(),
-                alignment: TextAlignment::Left,
-            }),
-            UiViewChild::Label(UiLabel {
-                id: ViewComponentIds::Game(GameIds::Wood),
-                text: GameIds::Wood.to_string(),
-                alignment: TextAlignment::Left,
-            }),
-            UiViewChild::Label(UiLabel {
-                id: ViewComponentIds::Game(GameIds::Stones),
-                text: GameIds::Stones.to_string(),
-
-                alignment: TextAlignment::Left,
-            }),
         ],
     })
 }

@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 use tsify::Tsify;
 
-use crate::prelude::{ToSelectable, ViewComponentIds};
+use crate::prelude::*;
 
 #[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize, Hash, Tsify)]
 pub enum MainMenuIds {
@@ -32,6 +32,39 @@ impl ToSelectable for MainMenuIds {
             ViewComponentIds::Main(MainMenuIds::NewGame),
             ViewComponentIds::Main(MainMenuIds::Options),
             ViewComponentIds::Main(MainMenuIds::Quit),
+        ]
+    }
+}
+
+impl ToUiViewChildren for MainMenuIds {
+    fn get_ui_items() -> Vec<UiViewChild> {
+        vec![
+            UiViewChild::Label(UiLabel {
+                id: ViewComponentIds::Main(MainMenuIds::Title),
+                text: "Ascii game challenge".to_string(),
+                alignment: TextAlignment::Center,
+            }),
+            UiViewChild::List(UiList {
+                id: ViewComponentIds::Main(MainMenuIds::MenuList),
+                label: "Main Menu".to_string(),
+                children: vec![
+                    UiLabel {
+                        id: ViewComponentIds::Main(MainMenuIds::NewGame),
+                        text: "New Game".to_string(),
+                        alignment: TextAlignment::Left,
+                    },
+                    UiLabel {
+                        id: ViewComponentIds::Main(MainMenuIds::Options),
+                        text: "Options".to_string(),
+                        alignment: TextAlignment::Left,
+                    },
+                    UiLabel {
+                        id: ViewComponentIds::Main(MainMenuIds::Quit),
+                        text: "Quit".to_string(),
+                        alignment: TextAlignment::Left,
+                    },
+                ],
+            }),
         ]
     }
 }

@@ -9,7 +9,6 @@ use crate::prelude::*;
 pub enum ViewDataTypes {
     #[default]
     NoViewData,
-    QuickActionData,
     GameHeader(GameViewHeaderState),
     CommandPopup(CommandPopupState),
 }
@@ -19,7 +18,6 @@ impl From<&ViewDataTypes> for HashMap<ViewComponentIds, String> {
         match value {
             ViewDataTypes::GameHeader(s) => s.into(),
             ViewDataTypes::NoViewData
-            | ViewDataTypes::QuickActionData
             | ViewDataTypes::CommandPopup(_) => HashMap::new(),
         }
     }

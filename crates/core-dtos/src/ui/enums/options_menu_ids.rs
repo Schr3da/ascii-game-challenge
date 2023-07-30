@@ -35,3 +35,36 @@ impl ToSelectable for OptionMenuIds {
         ]
     }
 }
+
+impl ToUiViewChildren for OptionMenuIds {
+    fn get_ui_items() -> Vec<UiViewChild> {
+        vec![
+            UiViewChild::Label(UiLabel {
+                id: ViewComponentIds::Options(OptionMenuIds::Title),
+                text: "".to_string(),
+                alignment: TextAlignment::Center,
+            }),
+            UiViewChild::List(UiList {
+                id: ViewComponentIds::Options(OptionMenuIds::OptionList),
+                label: "Options".to_string(),
+                children: vec![
+                    UiLabel {
+                        id: ViewComponentIds::Options(OptionMenuIds::LevelOfDifficulty),
+                        text: "Level".to_string(),
+                        alignment: TextAlignment::Left,
+                    },
+                    UiLabel {
+                        id: ViewComponentIds::Options(OptionMenuIds::Sound),
+                        text: "Sound".to_string(),
+                        alignment: TextAlignment::Left,
+                    },
+                    UiLabel {
+                        id: ViewComponentIds::Options(OptionMenuIds::Back),
+                        text: "Back".to_string(),
+                        alignment: TextAlignment::Left,
+                    },
+                ],
+            }),
+        ]
+    }
+}

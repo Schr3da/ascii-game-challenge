@@ -8,7 +8,7 @@ use crate::export::prelude::*;
 
 async fn handle_keyboard_event(event: KeyEvent, app_state: &mut AppState) -> bool {
     match &app_state.ecs_current_popup_state.clone() {
-        Some(view_state) => handle_popup_event(event, app_state, view_state).await,
+        Some(_) => handle_popup_event(event, app_state).await,
         None => handle_view_event(event, app_state).await,
     }
 }

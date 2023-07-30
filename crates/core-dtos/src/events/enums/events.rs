@@ -8,7 +8,6 @@ pub enum SendEvents {
     General(GeneralEvents),
     Ui(UiEvents),
     Commands(CommandInputEvents),
-    QuickAction(QuickActionEvents),
     Renderer(RenderEvents),
     Tick,
 }

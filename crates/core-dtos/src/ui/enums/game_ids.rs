@@ -10,9 +10,6 @@ pub enum GameIds {
     Turns,
     Canvas,
     Menu,
-    Stones,
-    Wood,
-    Food,
     None,
 }
 
@@ -23,9 +20,6 @@ impl ToString for GameIds {
             Self::Time => "Time".to_string(),
             Self::Turns => "Turns".to_string(),
             Self::Menu => "[ecs] Menu".to_string(),
-            Self::Stones => "Stones".to_string(),
-            Self::Wood => "Wood".to_string(),
-            Self::Food => "Gold".to_string(),
             Self::Canvas => "".to_string(),
             Self::None => "".to_string(),
         }

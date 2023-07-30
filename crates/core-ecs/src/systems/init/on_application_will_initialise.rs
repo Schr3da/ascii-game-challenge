@@ -46,11 +46,6 @@ pub fn on_application_will_initialise_system(
                     selectable_ids: CommandIds::get_selectable_items(),
                     ..UiViewState::default()
                 },
-                UiPopupViewIds::QuickAction => UiViewState {
-                    selected_id: ViewComponentIds::QuickAction,
-                    selectable_ids: Vec::new(),
-                    view_data: ViewDataTypes::QuickActionData,
-                },
             },
         };
     }
