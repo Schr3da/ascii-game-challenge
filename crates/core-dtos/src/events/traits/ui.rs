@@ -1,5 +1,5 @@
 use crate::prelude::UiViewChild;
 
-pub trait ToUiViewChildren{
+pub trait ToUiViewChildren {
     fn get_ui_items() -> Vec<UiViewChild>;
 }

@@ -60,6 +60,7 @@ impl Default for Core {
         world.spawn(options_view());
         world.spawn(game_view());
         world.spawn(command_popup_view());
+        world.spawn(buildings_view());
 
         Core {
             world,
@@ -124,6 +125,7 @@ impl Core {
     fn handle_ui_event(&mut self, event: UiEvents) {
         match event {
             UiEvents::OnSelect(_)
+            | UiEvents::OnShortcut(_)
             | UiEvents::OnSelectById(_)
             | UiEvents::OnClick(_)
             | UiEvents::OnCloseView => {

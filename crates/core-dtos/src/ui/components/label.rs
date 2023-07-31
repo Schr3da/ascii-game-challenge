@@ -9,4 +9,5 @@ pub struct UiLabel {
     pub id: ViewComponentIds,
     pub text: String,
     pub alignment: TextAlignment,
+    pub shortcut: Option<String>,
 }

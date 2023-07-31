@@ -17,6 +17,17 @@ impl Default for CommandIds {
     }
 }
 
+impl ToShortcut for CommandIds {
+    fn get_shortcut(&self) -> Option<String> {
+        match self {
+            Self::Move => Some("m".to_string()),
+            Self::Build(_) => Some("b".to_string()),
+            Self::Inspect => Some("i".to_string()),
+            Self::UnknownCommandId => None,
+        }
+    }
+}
+
 impl ToSelectable for CommandIds {
     type Item = ViewComponentIds;
 
@@ -38,17 +49,20 @@ impl ToUiViewChildren for CommandIds {
                 UiLabel {
                     id: ViewComponentIds::CommandPopup(CommandIds::Move),
                     alignment: TextAlignment::Left,
-                    text: "[m] Move".to_string(),
+                    text: "Move".to_string(),
+                    shortcut: CommandIds::Move.get_shortcut(),
                 },
                 UiLabel {
                     id: ViewComponentIds::CommandPopup(CommandIds::Build(None)),
                     alignment: TextAlignment::Left,
-                    text: "[b] Build".to_string(),
+                    text: "Build".to_string(),
+                    shortcut: CommandIds::Build(None).get_shortcut(),
                 },
                 UiLabel {
                     id: ViewComponentIds::CommandPopup(CommandIds::Inspect),
                     alignment: TextAlignment::Left,
-                    text: "[i] Inspect".to_string(),
+                    text: "Inspect".to_string(),
+                    shortcut: CommandIds::Inspect.get_shortcut(),
                 },
             ],
         })]

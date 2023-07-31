@@ -1,6 +1,7 @@
 mod camera_navigation;
 mod command;
 mod events;
+mod game_meta;
 mod game_states;
 mod general;
 mod layout;
@@ -11,12 +12,12 @@ mod subscription_ids;
 mod ui;
 mod view_data_types;
 mod window;
-mod game_meta;
 
 pub mod prelude {
     pub use super::camera_navigation::*;
     pub use super::command::*;
     pub use super::events::*;
+    pub use super::game_meta::*;
     pub use super::game_states::*;
     pub use super::general::*;
     pub use super::layout::*;
@@ -27,5 +28,4 @@ pub mod prelude {
     pub use super::ui::*;
     pub use super::view_data_types::*;
     pub use super::window::*;
-    pub use super::game_meta::*;
 }

@@ -40,7 +40,7 @@ async fn handle_renderer(
             if let Some(n) = p {
                 dispatch_popup_data(n, app_state, window);
             }
-            
+
             dispatch_game_meta(m, app_state, window);
         }
     };

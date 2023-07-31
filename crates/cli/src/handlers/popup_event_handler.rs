@@ -3,10 +3,7 @@ use crossterm::event::*;
 use core_dtos::prelude::*;
 use core_state::prelude::*;
 
-pub async fn handle_popup_event(
-    event: KeyEvent,
-    app_state: &mut AppState,
-) -> bool {
+pub async fn handle_popup_event(event: KeyEvent, app_state: &mut AppState) -> bool {
     match event.code {
         KeyCode::Backspace => {
             let event = SendEvents::Commands(CommandInputEvents::Pop);
@@ -35,7 +32,7 @@ pub async fn handle_popup_event(
             app_state.send(event).await;
         }
         KeyCode::Char(s) => {
-            let event = SendEvents::Commands(CommandInputEvents::Push(s.to_string()));
+            let event = SendEvents::Ui(UiEvents::OnShortcut(s.to_string()));
             app_state.send(event).await;
         }
         _ => return false,

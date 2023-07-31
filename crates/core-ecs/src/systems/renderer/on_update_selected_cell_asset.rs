@@ -13,9 +13,10 @@ pub fn on_update_selected_cell_asset_system(
         None => return,
     };
 
-    let next = assets
-        .terrain
-        .get_ascii(camera.position.x + tile.frame.x, camera.position.y + tile.frame.y + tile.top as i32);
+    let next = assets.terrain.get_ascii(
+        camera.position.x + tile.frame.x,
+        camera.position.y + tile.frame.y + tile.top as i32,
+    );
 
     let mut cell = assets
         .cell_cache

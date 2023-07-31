@@ -17,8 +17,7 @@ impl From<&ViewDataTypes> for HashMap<ViewComponentIds, String> {
     fn from(value: &ViewDataTypes) -> Self {
         match value {
             ViewDataTypes::GameHeader(s) => s.into(),
-            ViewDataTypes::NoViewData
-            | ViewDataTypes::CommandPopup(_) => HashMap::new(),
+            ViewDataTypes::NoViewData | ViewDataTypes::CommandPopup(_) => HashMap::new(),
         }
     }
 }

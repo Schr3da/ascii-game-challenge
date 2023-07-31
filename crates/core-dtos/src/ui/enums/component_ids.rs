@@ -16,3 +16,21 @@ impl Default for ViewComponentIds {
         ViewComponentIds::Main(MainMenuIds::NewGame)
     }
 }
+
+impl ToRoute for ViewComponentIds{
+    fn to_view_route(&self) -> Option<UiViewIds> {
+        match self {
+            Self::Main(MainMenuIds::NewGame) => Some(UiViewIds::Game), 
+            Self::Main(MainMenuIds::Options) => Some(UiViewIds::Options), 
+            _ => None,
+        }
+    }
+
+    fn to_popup_route(&self) -> Option<UiPopupViewIds> {
+        match self {
+            Self::CommandPopup(CommandIds::Build(_)) => Some(UiPopupViewIds::Buildings),
+            _ => None,
+        }
+        
+    }
+}

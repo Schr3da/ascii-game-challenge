@@ -36,6 +36,18 @@ impl ToSelectable for MainMenuIds {
     }
 }
 
+impl ToShortcut for MainMenuIds {
+    fn get_shortcut(&self) -> Option<String> {
+        match self {
+            Self::Title => None,
+            Self::MenuList => None,
+            Self::NewGame => Some("n".to_string()),
+            Self::Options => Some("s".to_string()),
+            Self::Quit => Some("q".to_string()),
+        }
+    }
+}
+
 impl ToUiViewChildren for MainMenuIds {
     fn get_ui_items() -> Vec<UiViewChild> {
         vec![
@@ -43,6 +55,7 @@ impl ToUiViewChildren for MainMenuIds {
                 id: ViewComponentIds::Main(MainMenuIds::Title),
                 text: "Ascii game challenge".to_string(),
                 alignment: TextAlignment::Center,
+                shortcut: MainMenuIds::Title.get_shortcut(),
             }),
             UiViewChild::List(UiList {
                 id: ViewComponentIds::Main(MainMenuIds::MenuList),
@@ -52,16 +65,19 @@ impl ToUiViewChildren for MainMenuIds {
                         id: ViewComponentIds::Main(MainMenuIds::NewGame),
                         text: "New Game".to_string(),
                         alignment: TextAlignment::Left,
+                        shortcut: MainMenuIds::NewGame.get_shortcut(),
                     },
                     UiLabel {
                         id: ViewComponentIds::Main(MainMenuIds::Options),
                         text: "Options".to_string(),
                         alignment: TextAlignment::Left,
+                        shortcut: MainMenuIds::Options.get_shortcut(),
                     },
                     UiLabel {
                         id: ViewComponentIds::Main(MainMenuIds::Quit),
                         text: "Quit".to_string(),
                         alignment: TextAlignment::Left,
+                        shortcut: MainMenuIds::Quit.get_shortcut(),
                     },
                 ],
             }),

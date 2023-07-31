@@ -23,16 +23,19 @@ pub fn get_top_bar() -> UiViewChild {
                 id: ViewComponentIds::Game(GameIds::Time),
                 text: GameIds::Time.to_string(),
                 alignment: TextAlignment::Left,
+                shortcut: GameIds::Time.get_shortcut(),
             }),
             UiViewChild::Label(UiLabel {
                 id: ViewComponentIds::Game(GameIds::Day),
                 text: GameIds::Time.to_string(),
                 alignment: TextAlignment::Center,
+                shortcut: GameIds::Day.get_shortcut(),
             }),
             UiViewChild::Label(UiLabel {
                 id: ViewComponentIds::Game(GameIds::Turns),
                 text: GameIds::Turns.to_string(),
                 alignment: TextAlignment::Right,
+                shortcut: GameIds::Turns.get_shortcut(),
             }),
         ],
     })
@@ -45,7 +48,7 @@ pub fn get_bottom_bar() -> UiViewChild {
             margin: 0,
             alignment: LayoutAlignments::Horizontal,
             constraints: vec![
-                LayoutConstraints::Percentage(40),
+                LayoutConstraints::Percentage(20),
                 LayoutConstraints::Percentage(20),
                 LayoutConstraints::Percentage(20),
                 LayoutConstraints::Percentage(20),
@@ -61,6 +64,13 @@ pub fn get_bottom_bar() -> UiViewChild {
                 id: ViewComponentIds::Game(GameIds::Menu),
                 text: GameIds::Menu.to_string(),
                 alignment: TextAlignment::Left,
+                shortcut: GameIds::Menu.get_shortcut(),
+            }),
+            UiViewChild::Label(UiLabel {
+                id: ViewComponentIds::Game(GameIds::Actions),
+                text: GameIds::Actions.to_string(),
+                alignment: TextAlignment::Left,
+                shortcut: GameIds::Actions.get_shortcut(),
             }),
         ],
     })

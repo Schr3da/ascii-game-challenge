@@ -1,12 +1,12 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+mod dispatchers;
 mod export;
 mod init;
 mod js_api;
 mod signal;
 mod subscription;
 mod webview;
-mod dispatchers;
 
 use crate::export::prelude::*;
 use tauri::Manager;

@@ -46,6 +46,11 @@ pub fn on_application_will_initialise_system(
                     selectable_ids: CommandIds::get_selectable_items(),
                     ..UiViewState::default()
                 },
+                UiPopupViewIds::Buildings => UiViewState {
+                    selected_id: ViewComponentIds::CommandPopup(CommandIds::Build(None)),
+                    selectable_ids: BuildingIds::get_selectable_items(),
+                    ..UiViewState::default()
+                },
             },
         };
     }

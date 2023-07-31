@@ -94,6 +94,11 @@ async fn handle_camera_navigation(app_state: &mut AppState, next: CameraNavigati
     app_state.send(event).await
 }
 
+pub async fn handle_key_pressed(shortcut: String, app_state: &mut AppState) {
+    let event = SendEvents::Ui(UiEvents::OnShortcut(shortcut));
+    app_state.send(event).await;
+}
+
 pub async fn handle_view_event(event: KeyEvent, app_state: &mut AppState) -> bool {
     match event.code {
         KeyCode::Esc => handle_close_view(app_state).await,
@@ -109,6 +114,7 @@ pub async fn handle_view_event(event: KeyEvent, app_state: &mut AppState) -> boo
         KeyCode::Char('l') => handle_camera_navigation(app_state, CameraNavigation::Right).await,
         KeyCode::Char('i') => handle_camera_navigation(app_state, CameraNavigation::Up).await,
         KeyCode::Char('k') => handle_camera_navigation(app_state, CameraNavigation::Down).await,
+        KeyCode::Char(s) => handle_key_pressed(s.to_string(), app_state).await,
         _ => return false,
     };
 

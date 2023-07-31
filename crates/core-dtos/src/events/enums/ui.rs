@@ -8,6 +8,7 @@ pub enum UiEvents {
     OnSelect(SelectionDirections),
     OnSelectById(ViewComponentIds),
     OnClick(ViewComponentIds),
+    OnShortcut(String),
     OnCloseView,
 }
 

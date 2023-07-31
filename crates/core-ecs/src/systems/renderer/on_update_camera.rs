@@ -63,10 +63,7 @@ fn calcualte_position_y(direction: CameraNavigation, camera: &ResMut<Camera2d>) 
     }
 }
 
-pub fn on_update_camera_system(
-    mut camera: ResMut<Camera2d>,
-    subscriber: Res<Subscriber>,
-) {
+pub fn on_update_camera_system(mut camera: ResMut<Camera2d>, subscriber: Res<Subscriber>) {
     let next = match &subscriber.next_event {
         Some(SendEvents::Renderer(RenderEvents::OnUpdateCamera(n))) => n.clone(),
         _ => {

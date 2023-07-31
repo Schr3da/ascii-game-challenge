@@ -1,4 +1,4 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 use tsify::Tsify;
 
 use crate::prelude::*;
@@ -8,4 +8,3 @@ pub struct GameMeta {
     pub status: GameStatus,
     pub cursor: Option<SelectedCell>,
 }
-

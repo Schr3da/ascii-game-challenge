@@ -86,7 +86,7 @@ pub fn on_update_cells_system(
             UiViewChild::GameCanvas(_) => {
                 let frame = get_canvas_frame(&camera, top, bottom);
                 let visible_cells = get_visible_canvas_cells(&frame, &camera, &assets);
-                
+
                 *child = UiViewChild::GameCanvas(visible_cells);
 
                 break;

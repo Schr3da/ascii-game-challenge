@@ -1,5 +1,3 @@
-use std::collections::HashMap;
-
 use core_dtos::prelude::*;
 use tui::backend::Backend;
 use tui::layout;
@@ -23,12 +21,7 @@ fn render_label<B: Backend>(
         TextAlignment::Right => Alignment::Right,
     };
 
-    let data: HashMap<ViewComponentIds, String> = view_data.into();
-
-    let title = match data.get(&label.id) {
-        Some(v) => v,
-        None => &label.text,
-    };
+    let title = ui_label_full_title_with(view_data, label);
 
     let paragraph = Paragraph::new(Spans::from(title.as_str())).alignment(alignment);
     context.render_widget(paragraph, size);
@@ -45,11 +38,13 @@ fn render_list<B: Backend>(
         .iter()
         .enumerate()
         .map(|(_, label)| {
-            let text = format!(" {}", label.text);
+            let title = ui_label_full_title(label);
 
             match selected_id == &label.id {
-                true => ListItem::new(text).style(Style::default().bg(Color::Red).fg(Color::White)),
-                false => ListItem::new(text),
+                true => {
+                    ListItem::new(title).style(Style::default().bg(Color::Red).fg(Color::White))
+                }
+                false => ListItem::new(title),
             }
         })
         .collect();

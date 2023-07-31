@@ -8,11 +8,21 @@ pub enum BuildingIds {
     Lumbarjack,
 }
 
+impl ToShortcut for BuildingIds {
+    fn get_shortcut(&self) -> Option<String> {
+        match self {
+            BuildingIds::Lumbarjack => Some("l".to_string()),
+        }
+    }
+}
+
 impl ToSelectable for BuildingIds {
-    type Item = BuildingIds;
+    type Item = ViewComponentIds;
 
     fn get_selectable_items() -> Vec<Self::Item> {
-        vec![BuildingIds::Lumbarjack]
+        vec![ViewComponentIds::CommandPopup(CommandIds::Build(Some(
+            BuildingIds::Lumbarjack,
+        )))]
     }
 }
 
@@ -26,7 +36,8 @@ impl ToUiViewChildren for BuildingIds {
                     BuildingIds::Lumbarjack,
                 ))),
                 alignment: TextAlignment::Left,
-                text: "[l] Lumbarjack".to_string(),
+                text: "Lumbarjack".to_string(),
+                shortcut: BuildingIds::Lumbarjack.get_shortcut(),
             }],
         })]
     }

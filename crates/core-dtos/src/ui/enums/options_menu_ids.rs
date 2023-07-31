@@ -24,6 +24,18 @@ impl ToString for OptionMenuIds {
     }
 }
 
+impl ToShortcut for OptionMenuIds {
+    fn get_shortcut(&self) -> Option<String> {
+        match self {
+            Self::Title => None,
+            Self::OptionList => None,
+            Self::LevelOfDifficulty => Some("d".to_string()),
+            Self::Sound => Some("s".to_string()),
+            Self::Back => Some("esc".to_string()),
+        }
+    }
+}
+
 impl ToSelectable for OptionMenuIds {
     type Item = ViewComponentIds;
 
@@ -43,6 +55,7 @@ impl ToUiViewChildren for OptionMenuIds {
                 id: ViewComponentIds::Options(OptionMenuIds::Title),
                 text: "".to_string(),
                 alignment: TextAlignment::Center,
+                shortcut: OptionMenuIds::Title.get_shortcut(),
             }),
             UiViewChild::List(UiList {
                 id: ViewComponentIds::Options(OptionMenuIds::OptionList),
@@ -52,16 +65,19 @@ impl ToUiViewChildren for OptionMenuIds {
                         id: ViewComponentIds::Options(OptionMenuIds::LevelOfDifficulty),
                         text: "Level".to_string(),
                         alignment: TextAlignment::Left,
+                        shortcut: OptionMenuIds::LevelOfDifficulty.get_shortcut(),
                     },
                     UiLabel {
                         id: ViewComponentIds::Options(OptionMenuIds::Sound),
                         text: "Sound".to_string(),
                         alignment: TextAlignment::Left,
+                        shortcut: OptionMenuIds::Sound.get_shortcut(),
                     },
                     UiLabel {
                         id: ViewComponentIds::Options(OptionMenuIds::Back),
                         text: "Back".to_string(),
                         alignment: TextAlignment::Left,
+                        shortcut: OptionMenuIds::Back.get_shortcut(),
                     },
                 ],
             }),

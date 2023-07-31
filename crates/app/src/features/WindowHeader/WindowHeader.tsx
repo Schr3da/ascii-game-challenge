@@ -1,7 +1,6 @@
 import { Platforms } from "../../services";
-import { MacosHeader } from "./Macos";
-import { WindowsHeader } from "./Windows";
 import { WindowHeaderProps } from "./WindowHeader.types";
+import { CommonHeader } from "./CommonHeader";
 
 export const WindowHeader = ({ className, platform }: WindowHeaderProps) => {
   switch (platform) {
@@ -9,9 +8,9 @@ export const WindowHeader = ({ className, platform }: WindowHeaderProps) => {
     case Platforms.Android:
     case Platforms.iOS:
       return null;
+    case Platforms.Linux:
+    case Platforms.Windows:
     case Platforms.Macos:
-      return <MacosHeader className={className} />;
-    default:
-      return <WindowsHeader className={className} />;
+      return <CommonHeader className={className} />;
   }
 };

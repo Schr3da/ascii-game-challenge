@@ -10,6 +10,7 @@ pub enum GameIds {
     Turns,
     Canvas,
     Menu,
+    Actions,
     None,
 }
 
@@ -19,9 +20,20 @@ impl ToString for GameIds {
             Self::Day => "Day".to_string(),
             Self::Time => "Time".to_string(),
             Self::Turns => "Turns".to_string(),
-            Self::Menu => "[ecs] Menu".to_string(),
+            Self::Menu => "Menu".to_string(),
+            Self::Actions=> "Actions".to_string(),
             Self::Canvas => "".to_string(),
             Self::None => "".to_string(),
+        }
+    }
+}
+
+impl ToShortcut for GameIds {
+    fn get_shortcut(&self) -> Option<String> {
+        match self {
+        Self::Menu => Some("ecs".to_string()),
+        Self::Actions => Some("space".to_string()),
+        _ => None,
         }
     }
 }

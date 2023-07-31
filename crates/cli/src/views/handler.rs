@@ -15,7 +15,9 @@ pub fn draw_view_to_terminal_handler<B: Backend>(context: &mut Frame<B>, view: &
         UiViewIds::Options => _ = render_options(context, next),
         UiViewIds::Game => _ = render_game(context, next),
         UiViewIds::Popup(p) => match p {
-            UiPopupViewIds::Command => _ = render_command_popup(context, next),
+            UiPopupViewIds::Buildings | UiPopupViewIds::Command => {
+                _ = render_command_popup(context, next)
+            }
         },
     };
 }
