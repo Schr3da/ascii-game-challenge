@@ -1,3 +1,4 @@
+import * as Pixi from "pixi.js";
 import { Stage } from "@pixi/react";
 import { useMemo, useRef } from "react";
 import { useMouseControls, useWrapperSize } from "../../../../hooks";
@@ -10,6 +11,8 @@ import { GameHeader } from "./GameHeader";
 import { isGameCanvas } from "../../../../utils";
 import { GameViewGridData } from "./GameView.types";
 import { GameGrid } from "./GameGrid";
+
+Pixi.settings.RESOLUTION = 2;
 
 const defaultCanvasData: GameViewGridData = [];
 
