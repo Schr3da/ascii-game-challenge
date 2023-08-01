@@ -32,7 +32,7 @@ impl EcsState for AppState {
                 match core_receiver.recv().await {
                     Some(EcsEvents::Send(e)) => ecs.handle_event(e),
                     Some(EcsEvents::Subscriber(e)) => {
-                        _ = scoped_subcription_sender.send(e).await;
+                        _ = scoped_subcription_sender.try_send(e);
                     }
                     _ => continue,
                 };
@@ -52,6 +52,6 @@ impl EcsState for AppState {
     }
 
     async fn send(&mut self, event: SendEvents) {
-        _ = self.ecs_event_sender.send(EcsEvents::Send(event)).await;
+        _ = self.ecs_event_sender.try_send(EcsEvents::Send(event));
     }
 }

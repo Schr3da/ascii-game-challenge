@@ -15,8 +15,7 @@ async fn handle_keyboard_event(event: KeyEvent, app_state: &mut AppState) -> boo
 
 async fn handle_mouse_event(event: MouseEvent, app_state: &mut AppState) -> bool {
     if app_state.is_popup_visible() {
-        // needed as sleep would cause channel issue
-        return true;
+        return false;
     }
 
     if !app_state.has_game_started() {

@@ -4,7 +4,7 @@ use tsify::*;
 use crate::prelude::SelectedCell;
 
 #[derive(Debug, Default, Clone, Serialize, Deserialize, Tsify, Eq, PartialEq)]
-pub struct CommandPopupState {
+pub struct PopupState {
     #[serde(rename(
         serialize = "currentSelectedGameTile",
         deserialize = "currentSelectedGameTile"

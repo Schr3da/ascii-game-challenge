@@ -52,6 +52,7 @@ pub fn on_application_will_initialise_system(
                     ..UiViewState::default()
                 },
             },
+            UiViewIds::Quit => return,
         };
     }
 }

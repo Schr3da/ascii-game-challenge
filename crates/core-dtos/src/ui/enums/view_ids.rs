@@ -9,6 +9,7 @@ pub enum UiViewIds {
     Game,
     Options,
     Popup(UiPopupViewIds),
+    Quit,
 }
 
 impl Default for UiViewIds {

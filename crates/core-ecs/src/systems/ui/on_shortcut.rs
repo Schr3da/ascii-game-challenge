@@ -39,12 +39,12 @@ fn find_shortcut_recursive(shortcut: &String, children: &Vec<UiViewChild>) -> Op
     })
 }
 
-fn handle_shortcut_for_view(
+fn find_shortcut_for_view(
     shortcut: &String,
     id: &UiViewIds,
-    views_query: Query<&UiView>,
+    views: &Query<&mut UiView>,
 ) -> Option<UiLabel> {
-    let view = match views_query.iter().find(|v| &v.id == id) {
+    let view = match views.iter().find(|v| &v.id == id) {
         Some(v) => v,
         None => return None,
     };
@@ -52,13 +52,13 @@ fn handle_shortcut_for_view(
     find_shortcut_recursive(shortcut, &view.children)
 }
 
-fn handle_shortcut_for_popup(
+fn find_shortcut_for_popup(
     shortcut: &String,
     id: &UiPopupViewIds,
-    views_query: Query<&UiView>,
+    views: &Query<&mut UiView>,
 ) -> Option<UiLabel> {
     let id_to_compare = UiViewIds::Popup(id.clone());
-    let view = match views_query.iter().find(|v| &v.id == &id_to_compare) {
+    let view = match views.iter().find(|v| &v.id == &id_to_compare) {
         Some(v) => v,
         None => return None,
     };
@@ -69,7 +69,7 @@ fn handle_shortcut_for_popup(
 pub fn on_shortcut_system(
     mut store: ResMut<UiStore>,
     subscriber: Res<Subscriber>,
-    views_query: Query<&UiView>,
+    views: Query<&mut UiView>,
 ) {
     let shortcut = match &subscriber.next_event {
         Some(SendEvents::Ui(UiEvents::OnShortcut(s))) => s,
@@ -77,8 +77,8 @@ pub fn on_shortcut_system(
     };
 
     let next = match &store.current_popup {
-        Some(id) => handle_shortcut_for_popup(shortcut, id, views_query),
-        None => handle_shortcut_for_view(shortcut, &store.current_view, views_query),
+        Some(id) => find_shortcut_for_popup(shortcut, id, &views),
+        None => find_shortcut_for_view(shortcut, &store.current_view, &views),
     };
 
     let label = match next {
@@ -88,13 +88,10 @@ pub fn on_shortcut_system(
 
     if store.current_popup.is_some() {
         return match label.id.to_popup_route() {
-            Some(p) => store.current_popup = Some(p),
+            Some(p) => set_next_popup(p, store, views),
             None => return,
         };
     }
 
-    match label.id.to_view_route() {
-        Some(v) => store.current_view = v,
-        None => return,
-    };
+    set_next_view(label.id, &mut store, &subscriber);
 }

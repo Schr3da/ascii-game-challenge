@@ -11,7 +11,7 @@ pub fn buildings_view() -> UiView {
         state: UiViewState {
             selected_id: ViewComponentIds::CommandPopup(CommandIds::Move),
             selectable_ids: BuildingIds::get_selectable_items(),
-            view_data: ViewDataTypes::CommandPopup(CommandPopupState::default()),
+            view_data: ViewDataTypes::Popup(PopupState::default()),
             ..Default::default()
         },
         children: BuildingIds::get_ui_items(),

@@ -3,6 +3,8 @@ import * as PIXI from "pixi.js";
 import { toAbsoluteSize } from "./grid";
 import { Ascii } from "../shared.d";
 
+PIXI.settings.RESOLUTION = 2;
+
 const createRenderTexture = () => {
   const size = toAbsoluteSize();
 
@@ -62,6 +64,7 @@ export const createSymbolTexture = (
   const fontSize = Math.floor(width);
   const style = createTextStyle(color, fontSize);
   const text = new PIXI.Text(symbol, style);
+  text.resolution = 2;
   text.anchor.set(0.5);
   text.position = new PIXI.Point(renderTexture.width * 0.5, text.height* 0.5);
 

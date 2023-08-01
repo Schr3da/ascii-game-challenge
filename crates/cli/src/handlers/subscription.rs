@@ -46,8 +46,8 @@ async fn handle_renderer(
 
             _ = terminal.draw(|f| {
                 draw_view_to_terminal_handler(f, &v);
-                draw_view_to_terminal_handler(f, &p);
                 draw_cursor_to_terminal_handler(f, &m.cursor);
+                draw_view_to_terminal_handler(f, &p);
             });
         }
     };

@@ -38,15 +38,14 @@ impl InputManager {
             loop {
                 match crossterm::event::read() {
                     Ok(Event::Key(e)) => {
-                        _ = sender.send(InpuEvents::Keyboard(e)).await;
+                        _ = sender.try_send(InpuEvents::Keyboard(e));
                     }
                     Ok(Event::Mouse(e)) => {
-                        _ = sender.send(InpuEvents::Mouse(e)).await;
+                        _ = sender.try_send(InpuEvents::Mouse(e));
                     }
                     Ok(Event::Resize(columns, rows)) => {
                         _ = sender
-                            .send(InpuEvents::Window(WindowEvents::Resize(columns, rows)))
-                            .await;
+                            .try_send(InpuEvents::Window(WindowEvents::Resize(columns, rows)));
                     }
                     _ => continue,
                 };

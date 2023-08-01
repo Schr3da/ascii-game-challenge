@@ -12,8 +12,6 @@ import { isGameCanvas } from "../../../../utils";
 import { GameViewGridData } from "./GameView.types";
 import { GameGrid } from "./GameGrid";
 
-Pixi.settings.RESOLUTION = 2;
-
 const defaultCanvasData: GameViewGridData = [];
 
 export const GameView = () => {

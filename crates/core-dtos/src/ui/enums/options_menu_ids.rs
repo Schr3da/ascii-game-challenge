@@ -36,6 +36,22 @@ impl ToShortcut for OptionMenuIds {
     }
 }
 
+impl ToRoute for OptionMenuIds {
+    fn to_view_route(&self) -> Option<UiViewIds> {
+        match self {
+            Self::Title => None,
+            Self::OptionList => None,
+            Self::LevelOfDifficulty => None,
+            Self::Sound => None,
+            Self::Back => Some(UiViewIds::Main),
+        }
+    }
+
+    fn to_popup_route(&self) -> Option<UiPopupViewIds> {
+        return None;
+    }
+}
+
 impl ToSelectable for OptionMenuIds {
     type Item = ViewComponentIds;
 
