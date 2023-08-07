@@ -9,6 +9,7 @@ members = [
   "crates/core-state",
   "crates/core-terrain",
   "crates/core-formatters",
+  "crates/core-inputs",
   "crates/app/src-tauri",
   "examples/*"
 ]
