@@ -17,10 +17,10 @@ pub async fn handle_window_event(event: WindowEvents, app_state: &mut AppState) 
     true
 }
 
-pub async fn handle_keyboard_event(event: Keys, app_state: &mut AppState) -> bool {
+pub async fn handle_keyboard_event(key: Keys, app_state: &mut AppState) -> bool {
     match &app_state.ecs_current_popup_state.clone() {
-        Some(_) => handle_popup_event(event, app_state).await,
-        None => handle_view_event(event, app_state).await,
+        Some(_) => handle_popup_event(key, app_state).await,
+        None => handle_view_event(key, app_state).await,
     }
 }
 

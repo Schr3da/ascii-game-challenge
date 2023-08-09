@@ -25,6 +25,7 @@ fn main() {
             webview_did_mount,
             webview_did_subscribe,
             webview_ecs_event,
+            webview_input_event,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

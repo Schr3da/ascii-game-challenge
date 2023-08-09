@@ -1,8 +1,6 @@
 use core_dtos::prelude::*;
 use core_state::prelude::*;
 
-use crate::prelude::*;
-
 pub async fn handle_popup_event(key: Keys, app_state: &mut AppState) -> bool {
     match key {
         Keys::Backspace => {

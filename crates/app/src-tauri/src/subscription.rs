@@ -57,16 +57,11 @@ pub async fn handle_command(event: &CommandSubscription, app_state: &mut AppStat
 }
 
 pub async fn subscription_handler(
-    event: Option<SubscriptionEvents>,
+    event: SubscriptionEvents,
     state: &mut AppState,
     window: &Window,
 ) -> bool {
-    let unwrapped_event = match &event {
-        Some(e) => e,
-        None => return true,
-    };
-
-    match unwrapped_event {
+    match &event {
         SubscriptionEvents::General(e) => handle_general(e, state, window).await,
         SubscriptionEvents::Ui(e) => handle_ui(e).await,
         SubscriptionEvents::Renderer(e) => handle_renderer(e, state, window).await,

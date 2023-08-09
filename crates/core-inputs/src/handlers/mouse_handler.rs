@@ -1,8 +1,6 @@
 use core_dtos::prelude::*;
 use core_state::prelude::*;
 
-use crate::prelude::MouseEvent;
-
 async fn handle_did_move(column: i32, row: i32, app_state: &mut AppState) {
     app_state
         .send(SendEvents::Renderer(RenderEvents::OnUpdateSelectedCell(

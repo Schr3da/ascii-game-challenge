@@ -4,4 +4,5 @@ pub enum WebViewEvents {
     OnDidMount,
     OnDidSubscribe,
     OnEcsEvent(SendEvents),
+    OnInputEvent(InputEvents)
 }

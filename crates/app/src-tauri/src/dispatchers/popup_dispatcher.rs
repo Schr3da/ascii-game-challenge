@@ -11,7 +11,7 @@ pub fn dispatch_popup_data(view: &UiView, app_state: &mut AppState, window: &Win
         None => true,
     };
 
-    if should_rerender {
+    if !should_rerender {
         return true;
     }
 

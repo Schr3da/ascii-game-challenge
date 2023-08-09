@@ -100,10 +100,10 @@ pub async fn handle_key_pressed(shortcut: String, app_state: &mut AppState) {
 }
 
 pub async fn handle_view_event(key: Keys, app_state: &mut AppState) -> bool {
-    match key{
+    match key {
         Keys::Esc => handle_close_view(app_state).await,
         Keys::DownArrow | Keys::Tab => handle_down_arrow_key(app_state).await,
-        Keys::UpArrow| Keys::BackTab => handle_up_arrow_key(app_state).await,
+        Keys::UpArrow | Keys::BackTab => handle_up_arrow_key(app_state).await,
         Keys::LeftArrow => handle_left_arrow_key(app_state).await,
         Keys::RightArrow => handle_right_arrow_key(app_state).await,
         Keys::Enter => handle_enter_key(app_state).await,
