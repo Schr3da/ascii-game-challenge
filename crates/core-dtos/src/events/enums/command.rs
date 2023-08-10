@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 use tsify::Tsify;
 
-#[derive(Clone, Deserialize, Serialize, Tsify)]
+#[derive(Debug, Clone, Deserialize, Serialize, Tsify)]
 pub enum CommandInputEvents {
     New,
     Pop,

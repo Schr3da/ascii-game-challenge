@@ -3,7 +3,7 @@ use tsify::Tsify;
 
 use crate::prelude::*;
 
-#[derive(Clone, Tsify, Serialize, Deserialize)]
+#[derive(Debug, Clone, Tsify, Serialize, Deserialize)]
 pub enum RenderEvents {
     OnUpdateCamera(CameraNavigation),
     OnUpdateSelectedCell(SelectedCellNavigation),

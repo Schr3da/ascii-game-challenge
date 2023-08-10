@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 use tsify::Tsify;
 
-#[derive(Eq, PartialEq, Clone, Tsify, Serialize, Deserialize)]
+#[derive(Debug, Eq, PartialEq, Clone, Tsify, Serialize, Deserialize)]
 pub enum CameraNavigation {
     Left,
     Right,

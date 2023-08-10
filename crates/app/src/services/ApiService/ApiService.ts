@@ -41,12 +41,12 @@ export class ApiService {
     TauriApi.maximiseApplication();
   };
 
-  public static webviewDidMount = async () => {
+  public static webviewDidMount = async (columns: number, rows: number) => {
     if (!this.isTauriSuppored) {
       return Promise.resolve();
     }
 
-    await TauriApi.webviewDidMount();
+    await TauriApi.webviewDidMount(columns, rows);
   };
 
   public static webviewDidSubscribe = async () => {
@@ -73,7 +73,7 @@ export class ApiService {
     await TauriApi.viewRenderSubscriptionListener(cb);
   };
 
-  public static ecsPopRenderSubscriptionListener = async (cb: PopupRenderSubscriptionCallback) => {
+  public static ecsPopupRenderSubscriptionListener = async (cb: PopupRenderSubscriptionCallback) => {
     if (!this.isTauriSuppored) {
       return Promise.resolve();
     }

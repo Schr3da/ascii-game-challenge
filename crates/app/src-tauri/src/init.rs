@@ -17,8 +17,8 @@ pub fn run(window: Window, mut js_receiver: Receiver<WebViewEvents>) {
             None => panic!("Unable to receive initial webview event"),
         };
 
-        webview_event_handler(initial_webview_event, &window, &mut state).await;
-        
+        webview_event_handler(initial_webview_event, &mut state).await;
+
         loop {
             let is_continue = match state.ecs_subscription_receiver.try_recv() {
                 Ok(e) => subscription_handler(e, &mut state, &window).await,
@@ -31,7 +31,7 @@ pub fn run(window: Window, mut js_receiver: Receiver<WebViewEvents>) {
             }
 
             let did_receive_input = match js_receiver.try_recv() {
-                Ok(e) => webview_event_handler(e, &window, &mut state).await,
+                Ok(e) => webview_event_handler(e, &mut state).await,
                 Err(_) => false,
             };
 

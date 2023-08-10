@@ -58,12 +58,12 @@ export class TauriApi {
     appWindow.maximize();
   }
 
-  public static async webviewDidMount() {
+  public static async webviewDidMount(columns: number, rows: number) {
     if (TauriApi.didMount) {
       throw new Error("webviewDidMount should only be called once");
     }
 
-    await invoke("webview_did_mount", { isMounted: true });
+    await invoke("webview_did_mount", { isMounted: true, columns, rows});
     TauriApi.didMount = true;
   }
 

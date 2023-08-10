@@ -1,10 +1,11 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 
 import { ApiService } from "../../services";
 import { calculateGridSize } from "../../utils";
+import {useDebounce} from "../useDebounce";
 
 export const useResize = () => {
-  const debounceTimer = useRef<NodeJS.Timeout>();
+  const {debounce, clearDebounce} = useDebounce();
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -22,18 +23,17 @@ export const useResize = () => {
   }, []);
 
   const applicationWillResize = useCallback(() => {
-    clearTimeout(debounceTimer.current);
-    debounceTimer.current = setTimeout(handleResize, 16);
-  }, [handleResize]);
+    debounce(handleResize, 16);
+  }, [handleResize, debounce]);
 
   const registerWindowResize = useCallback(() => {
     window.addEventListener("resize", applicationWillResize);
   }, []);
 
   const unregisterWindowResize = useCallback(() => {
-    clearTimeout(debounceTimer.current);
+    clearDebounce();
     window.removeEventListener("resize", applicationWillResize);
-  }, []);
+  }, [clearDebounce]);
 
   return {
     windowWidth,

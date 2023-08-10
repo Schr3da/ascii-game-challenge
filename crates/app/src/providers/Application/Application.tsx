@@ -32,18 +32,15 @@ export const ApplicationProvider = ({ children }: PropsWithChildren) => {
       return;
     }
 
-    const { columns, rows } = calculateGridSize();
     const platform = await ApiService.getPlatform();
 
-    await ApiService.webviewDidMount();
+    const { columns, rows } = calculateGridSize();
+    await ApiService.webviewDidMount(columns, rows);
+
     registerWindowResize();
 
     setPlatform(platform);
     setIsInitialised(true);
-
-    await ApiService.sendEcsEvent({
-      General: { OnApplicationWillInitialise: [columns, rows] },
-    });
   }, []);
 
   const applicationWillUnmount = useCallback(() => {

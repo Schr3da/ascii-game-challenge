@@ -1,18 +1,12 @@
 use core_inputs::prelude::{handle_keyboard_event, handle_mouse_event};
-use tauri::Window;
 
 use core_dtos::prelude::*;
 use core_state::prelude::*;
 
 use crate::export::prelude::*;
 
-async fn handle_did_subscribe(window: &Window, app_state: &mut AppState) -> bool {
-    let size = window.inner_size().unwrap_or_default();
-
-    let next = SendEvents::General(GeneralEvents::OnApplicationWillInitialise(
-        size.width as u16,
-        size.height as u16,
-    ));
+async fn handle_did_mount(columns: u16, rows: u16, app_state: &mut AppState) -> bool {
+    let next = SendEvents::General(GeneralEvents::OnApplicationWillInitialise(columns, rows));
 
     _ = app_state.send(next).await;
     true
@@ -33,15 +27,11 @@ async fn handle_ecs_event(event: SendEvents, app_state: &mut AppState) -> bool {
     true
 }
 
-pub async fn webview_event_handler(
-    event: WebViewEvents,
-    window: &Window,
-    app_state: &mut AppState,
-) -> bool {
+pub async fn webview_event_handler(event: WebViewEvents, app_state: &mut AppState) -> bool {
     match event {
         WebViewEvents::OnEcsEvent(e) => handle_ecs_event(e, app_state).await,
         WebViewEvents::OnInputEvent(e) => handle_input_event(e, app_state).await,
-        WebViewEvents::OnDidSubscribe => handle_did_subscribe(window, app_state).await,
+        WebViewEvents::OnDidMount(c, r) => handle_did_mount(c, r, app_state).await,
         _ => false,
     }
 }

@@ -1,8 +1,6 @@
 use core_dtos::prelude::*;
 use core_state::prelude::*;
 
-use crate::prelude::*;
-
 async fn handle_game_canvas_navigation(app_state: &mut AppState, next: SelectedCellNavigation) {
     if !app_state.has_game_started() {
         return;

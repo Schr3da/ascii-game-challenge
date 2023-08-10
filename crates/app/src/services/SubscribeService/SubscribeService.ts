@@ -30,7 +30,7 @@ class SubscribeService {
       this.onReceivedViewSubscriptionEvent
     );
 
-    await ApiService.ecsPopRenderSubscriptionListener(
+    await ApiService.ecsPopupRenderSubscriptionListener(
       this.onReceivedPopupSubscriptionEvent
     );
 
