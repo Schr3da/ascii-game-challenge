@@ -14,7 +14,7 @@ pub fn on_update_selected_cell_position_system(
         _ => return,
     };
 
-    let mut cell = match &mut store.selected_game_tile {
+    let cell = match &mut store.selected_game_tile {
         Some(c) => c,
         None => return,
     };

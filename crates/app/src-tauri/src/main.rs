@@ -12,12 +12,19 @@ use crate::export::prelude::*;
 use tauri::Manager;
 
 fn main() {
+    let should_open_dev_tools: bool = std::env::var("TAURI_DEV_TOOLS").is_ok();
+
     let (signal, signal_receiver) = JsSignal::new();
 
     tauri::Builder::default()
         .manage(signal)
         .setup(move |app| {
             let main_window = app.get_window("main").unwrap();
+
+            if should_open_dev_tools {
+                main_window.open_devtools();
+            }
+
             init::run(main_window, signal_receiver);
             Ok(())
         })

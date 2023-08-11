@@ -10,7 +10,7 @@ import {
 } from "../../SubscribeService";
 
 import { Platforms } from "../ApiService.types";
-import { EcsSubscriptionIds, GameMeta, SendEvents, UiView } from "../../../shared.d";
+import { EcsSubscriptionIds, GameMeta, InputEvents, SendEvents, UiView } from "../../../shared.d";
 
 export class TauriApi {
   private static didSubscribe = false;
@@ -153,5 +153,9 @@ export class TauriApi {
 
   public static async sendEcsEvent(event: SendEvents) {
     await invoke("webview_ecs_event", { event });
+  }
+
+  public static async sendInputEvent(event: InputEvents) {
+    await invoke("webview_input_event", { event });
   }
 }

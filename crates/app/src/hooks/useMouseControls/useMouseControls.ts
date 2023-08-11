@@ -23,40 +23,15 @@ export const useMouseControls = () => {
       let { columns, rows } = toGridCoordinate(clientX, clientY);
 
       debounce(
-        () =>
-          ApiService.sendEcsEvent({
-            Renderer: {
-              OnUpdateSelectedCell: {
-                Custom: [columns, rows],
-              },
-            },
-          }),
-        8
+        () => ApiService.sendMouseEvent({ OnMove: [columns, rows] }), 8
       );
     },
     [nextView, debounce]
   );
 
   const handleMouseDown = useCallback(
-    async (event: MouseEvent) => {
-      if (nextView == null) {
-        return;
-      }
-
-      if (nextView.id !== "Game") {
-        return;
-      }
-
-      const { clientX, clientY } = event;
-      const next = toGridCoordinate(clientX, clientY);
-
-      await ApiService.sendEcsEvent({
-        Renderer: {
-          OnUpdateSelectedCell: {
-            Custom: [next.columns, next.rows],
-          },
-        },
-      });
+    async (_event: MouseEvent) => {
+      await ApiService.sendMouseEvent({ OnPress: true });
     },
     [nextView]
   );

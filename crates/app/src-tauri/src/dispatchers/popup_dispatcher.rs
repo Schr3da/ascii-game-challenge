@@ -3,21 +3,29 @@ use tauri::Window;
 use core_dtos::prelude::*;
 use core_state::prelude::*;
 
-pub fn dispatch_popup_data(view: &UiView, app_state: &mut AppState, window: &Window) -> bool {
-    app_state.ecs_current_popup_state = Some(view.state.clone());
+pub fn dispatch_popup_data(
+    next: &Option<UiView>,
+    app_state: &mut AppState,
+    window: &Window,
+) -> bool {
+    let previous = app_state.ecs_current_popup.clone();
 
-    let should_rerender = match &app_state.ecs_current_popup {
-        Some(v) => v != view,
-        None => true,
+    match next {
+        Some(view) => {
+            app_state.ecs_current_popup_state = Some(view.state.clone());
+            app_state.ecs_current_popup = next.clone();
+        }
+        None => {
+            app_state.ecs_current_popup_state = None;
+            app_state.ecs_current_popup = None;
+        }
     };
 
-    if !should_rerender {
+    if previous == app_state.ecs_current_popup {
         return true;
     }
 
-    app_state.ecs_current_popup = Some(view.clone());
-
-    _ = window.emit(&EcsSubscriptionIds::PopupSubscription.to_string(), view);
+    _ = window.emit(&EcsSubscriptionIds::PopupSubscription.to_string(), next);
 
     true
 }

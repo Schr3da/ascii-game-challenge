@@ -1,6 +1,6 @@
 import { TauriApi } from "./tauri";
 
-import { SendEvents } from "../../shared.d";
+import { InputEvents, Keys, SendEvents, MouseEvent } from "../../shared.d";
 import { GameMetaSubscriptionCallback, PopupRenderSubscriptionCallback, SubscriptionCallback, ViewRenderSubscriptionCallback } from "../SubscribeService";
 import { Platforms } from "./ApiService.types";
 
@@ -96,6 +96,33 @@ export class ApiService {
 
     await TauriApi.sendEcsEvent(event);
   };
+
+  public static sendKeyboardPressEvent = async (key: Keys) => {
+    const event: InputEvents = {
+      Keyboard: {
+        OnPress: key,
+      }
+    }
+
+    if (!this.isTauriSuppored) {
+      return Promise.resolve();
+    }
+
+    await TauriApi.sendInputEvent(event);
+  }
+
+  public static sendMouseEvent = async (event: MouseEvent) => {
+    const next: InputEvents = {
+      Mouse: event
+    }
+
+    if (!this.isTauriSuppored) {
+      return Promise.resolve();
+    }
+
+    await TauriApi.sendInputEvent(next);
+  }
+
 
   public static disposeEcsGeneralSubscriptionListener = () => {
     if (!this.isTauriSuppored) {

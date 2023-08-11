@@ -1,80 +1,38 @@
 import { useCallback, useEffect } from "react";
 import { ApiService } from "../../services";
-import { UiView } from "../../shared.d";
 import { useViewContext } from "../../providers/View/useViewContext";
 
 export const useKeyboardControls = () => {
-  const { nextView, } = useViewContext();
-
-  const handleGameViewControls = useCallback(async (event: KeyboardEvent) => {
-    switch (event.key) {
+  const handleInput = useCallback(async ({ key }: KeyboardEvent) => {
+    console.log(key);
+    switch (key) {
       case "Escape":
-        return await ApiService.sendEcsEvent({ Ui: "OnCloseView" });
+        return await ApiService.sendKeyboardPressEvent("Esc");
       case "ArrowUp":
-        return await ApiService.sendEcsEvent({ Renderer: { OnUpdateSelectedCell: "Up" } });
+        return await ApiService.sendKeyboardPressEvent("UpArrow");
       case "ArrowLeft":
-        return await ApiService.sendEcsEvent({ Renderer: { OnUpdateSelectedCell: "Left" } });
+        return await ApiService.sendKeyboardPressEvent("LeftArrow");
       case "ArrowRight":
-        return await ApiService.sendEcsEvent({ Renderer: { OnUpdateSelectedCell: "Right" } });
+        return await ApiService.sendKeyboardPressEvent("RightArrow");
       case "ArrowDown":
-        return await ApiService.sendEcsEvent({ Renderer: { OnUpdateSelectedCell: "Down" } });
-      case "j":
-        return await ApiService.sendEcsEvent({Renderer: {OnUpdateCamera: "Left"}}); 
-      case "i":
-        return await ApiService.sendEcsEvent({Renderer: {OnUpdateCamera: "Up"}}); 
-      case "k":
-        return await ApiService.sendEcsEvent({Renderer: {OnUpdateCamera: "Down"}}); 
-      case "l":
-        return await ApiService.sendEcsEvent({Renderer: {OnUpdateCamera: "Right"}}); 
+        return await ApiService.sendKeyboardPressEvent("DownArrow");
+      case "Enter": 
+        return await ApiService.sendKeyboardPressEvent("Enter");
       default:
-        return;
-    }
-  }, []);
-
-  const handleBasicViewControls = useCallback(async (event: KeyboardEvent, view: UiView) => {
-    switch (event.key) {
-      case "q":
-        return await ApiService.sendEcsEvent({ General: "OnApplicationWillClose" });
-      case "Escape":
-        return await ApiService.sendEcsEvent({ Ui: "OnCloseView" });
-      case "ArrowUp":
-        return await ApiService.sendEcsEvent({ Ui: { OnSelect: "Previous" } });
-      case "ArrowLeft":
-        return await ApiService.sendEcsEvent({ Renderer: { OnUpdateSelectedCell: "Left" } });
-      case "ArrowRight":
-        return await ApiService.sendEcsEvent({ Renderer: { OnUpdateSelectedCell: "Right" } });
-      case "Tab":
-      case "ArrowDown":
-        return await ApiService.sendEcsEvent({ Ui: { OnSelect: "Next" } });
-      case "Enter":
-        return await ApiService.sendEcsEvent({
-          Ui: { OnClick: view.state.selected_id },
-        });
-      default:
-        return;
+        return await ApiService.sendKeyboardPressEvent({ Char: key });
     }
   }, []);
 
   const handleKeyUp = useCallback(
     async (event: KeyboardEvent) => {
       event.preventDefault();
-
-      if (nextView == null) {
-        return;
-      }
-
-      if (nextView.id === "Game") {
-        return handleGameViewControls(event);
-      }
-
-      await handleBasicViewControls(event, nextView);
+      await handleInput(event);
     },
-    [nextView, handleGameViewControls, handleBasicViewControls]
+    [handleInput]
   );
 
   useEffect(() => {
     window.addEventListener("keyup", handleKeyUp);
     return () => window.removeEventListener("keyup", handleKeyUp);
   }, [handleKeyUp]);
-  nextView;
 };
