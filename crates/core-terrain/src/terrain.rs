@@ -12,11 +12,11 @@ pub struct Terrain {
 
 const SEA_LEVEL: f64 = 0.0;
 
-pub static MAP_SIZE: usize = 256;
+pub static MAP_SIZE: usize = 128;
 
 impl Terrain {
     fn generate_land(&mut self) {
-        let data = Fbm::<Perlin>::new(8)
+        let data = Fbm::<Perlin>::new(12)
             .set_frequency(0.2)
             .set_persistence(0.6)
             .set_lacunarity(2.1)

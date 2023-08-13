@@ -72,7 +72,7 @@ async fn handle_show_command_popup(app_state: &mut AppState) {
 
 async fn handle_run_tick(app_state: &mut AppState) {
     if app_state.ecs_current_game_status != GameStatus::GameDidStart {
-        return;
+        return handle_key_pressed('n'.to_string(), app_state).await;
     }
 
     let event = SendEvents::Tick;

@@ -48,10 +48,8 @@ pub fn get_bottom_bar() -> UiViewChild {
             margin: 0,
             alignment: LayoutAlignments::Horizontal,
             constraints: vec![
-                LayoutConstraints::Percentage(20),
-                LayoutConstraints::Percentage(20),
-                LayoutConstraints::Percentage(20),
-                LayoutConstraints::Percentage(20),
+                LayoutConstraints::Percentage(50),
+                LayoutConstraints::Percentage(50),
             ],
         },
         state: UiViewState {
