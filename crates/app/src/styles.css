@@ -4,8 +4,8 @@
 
 
 @font-face {
-  font-family: Savior;
-  src: local('Savior'), url(@/assets/fonts/Savior.ttf) format('truetype');
+  font-family: Arial;
+  src: local('Arial'), url(@/assets/fonts/arial.ttf) format('truetype');
 }
 
 :root {

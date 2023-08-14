@@ -1,5 +1,24 @@
 [
   {
+    "id": "notVisible",
+    "symbol": "#",
+    "isBold": false,
+    "background": {
+      "rgb": [
+        0,
+        0,
+        0
+      ]
+    },
+    "foreground": {
+      "rgb": [
+        128,
+        128,
+        128
+      ]
+    }
+  },
+  {
     "id": "sand",
     "symbol": "+",
     "isBold": false,

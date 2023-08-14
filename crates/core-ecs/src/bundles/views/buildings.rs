@@ -9,7 +9,7 @@ pub fn buildings_view() -> UiView {
             constraints: vec![LayoutConstraints::Percentage(100)],
         },
         state: UiViewState {
-            selected_id: ViewComponentIds::CommandPopup(CommandIds::Move),
+            selected_id: ViewComponentIds::CommandPopup(CommandIds::Build(Some(BuildingIds::Lumbarjack))),
             selectable_ids: BuildingIds::get_selectable_items(),
             view_data: ViewDataTypes::Popup(PopupState::default()),
             ..Default::default()

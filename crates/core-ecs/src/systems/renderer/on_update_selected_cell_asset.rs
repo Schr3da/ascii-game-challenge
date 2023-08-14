@@ -8,7 +8,7 @@ pub fn on_update_selected_cell_asset_system(
     camera: Res<Camera2d>,
     assets: Res<AssetResources>,
 ) {
-    let mut tile = match &mut store.selected_game_tile {
+    let tile = match &mut store.selected_game_tile {
         Some(c) => c,
         None => return,
     };

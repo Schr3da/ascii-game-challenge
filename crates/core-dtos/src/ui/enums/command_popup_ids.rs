@@ -5,24 +5,20 @@ use crate::prelude::*;
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Hash, Tsify)]
 pub enum CommandIds {
-    Move,
     Build(Option<BuildingIds>),
-    Inspect,
     UnknownCommandId,
 }
 
 impl Default for CommandIds {
     fn default() -> Self {
-        CommandIds::Move
+        CommandIds::Build(None)
     }
 }
 
 impl ToShortcut for CommandIds {
     fn get_shortcut(&self) -> Option<String> {
         match self {
-            Self::Move => Some("m".to_string()),
             Self::Build(_) => Some("b".to_string()),
-            Self::Inspect => Some("i".to_string()),
             Self::UnknownCommandId => None,
         }
     }
@@ -33,9 +29,7 @@ impl ToSelectable for CommandIds {
 
     fn get_selectable_items() -> Vec<ViewComponentIds> {
         vec![
-            ViewComponentIds::CommandPopup(CommandIds::Move),
             ViewComponentIds::CommandPopup(CommandIds::Build(None)),
-            ViewComponentIds::CommandPopup(CommandIds::Inspect),
         ]
     }
 }
@@ -47,22 +41,10 @@ impl ToUiViewChildren for CommandIds {
             label: "Available Actions".to_string(),
             children: vec![
                 UiLabel {
-                    id: ViewComponentIds::CommandPopup(CommandIds::Move),
-                    alignment: TextAlignment::Left,
-                    text: "Move".to_string(),
-                    shortcut: CommandIds::Move.get_shortcut(),
-                },
-                UiLabel {
                     id: ViewComponentIds::CommandPopup(CommandIds::Build(None)),
                     alignment: TextAlignment::Left,
                     text: "Build".to_string(),
                     shortcut: CommandIds::Build(None).get_shortcut(),
-                },
-                UiLabel {
-                    id: ViewComponentIds::CommandPopup(CommandIds::Inspect),
-                    alignment: TextAlignment::Left,
-                    text: "Inspect".to_string(),
-                    shortcut: CommandIds::Inspect.get_shortcut(),
                 },
             ],
         })]

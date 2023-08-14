@@ -5,6 +5,7 @@ use tsify::Tsify;
 #[serde(rename_all = "camelCase")]
 pub enum AsciiIds {
     Sand,
+    NotVisible,
     ShallowWater,
     DeepWater,
     UnknownAsciiId,

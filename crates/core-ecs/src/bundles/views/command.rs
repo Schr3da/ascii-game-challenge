@@ -9,7 +9,7 @@ pub fn command_popup_view() -> UiView {
             constraints: vec![LayoutConstraints::Percentage(100)],
         },
         state: UiViewState {
-            selected_id: ViewComponentIds::CommandPopup(CommandIds::Move),
+            selected_id: ViewComponentIds::CommandPopup(CommandIds::Build(None)),
             selectable_ids: CommandIds::get_selectable_items(),
             view_data: ViewDataTypes::Popup(PopupState::default()),
             ..Default::default()

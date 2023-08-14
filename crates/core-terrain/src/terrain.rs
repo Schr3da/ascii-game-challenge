@@ -8,6 +8,7 @@ pub struct Terrain {
     pub land: NoiseMap,
     pub vegetation: NoiseMap,
     pub mountains: NoiseMap,
+    pub visibility: NoiseMap,
 }
 
 const SEA_LEVEL: f64 = 0.0;
@@ -81,21 +82,31 @@ impl Terrain {
             .build();
     }
 
+    fn generate_visibility(&mut self) {
+        let (width, height) = self.land.size();
+        self.visibility = NoiseMap::new(width, height);
+    }
+
     pub fn generate(&mut self) {
         self.generate_land();
         self.generate_vegetation();
         self.generate_mountains();
+        self.generate_visibility();
     }
 
     pub fn get_value(&self, x: i32, y: i32) -> f64 {
-        let land_value = self.land.get_value(x as usize, y as usize);
+        let visibility = self.visibility.get_value(x as usize, y as usize);
+        if visibility == 0.0 {
+            return -100.0;
+        }
+
         let mountain_value = self.mountains.get_value(x as usize, y as usize);
 
         if mountain_value > 0.0 {
             return mountain_value;
         }
 
-        return land_value;
+        return self.land.get_value(x as usize, y as usize);
     }
 
     fn contains_value(current: f64, start: f64, end: f64) -> bool {
@@ -103,6 +114,10 @@ impl Terrain {
     }
 
     pub fn value_to_ascii(&self, value: f64) -> AsciiIds {
+        if Self::contains_value(value, -100.0, -99.9) {
+            return AsciiIds::NotVisible;
+        }
+
         if Self::contains_value(value, -5.0, -0.5) {
             return AsciiIds::DeepWater;
         }
@@ -127,5 +142,6 @@ impl Terrain {
         self.land.write_to_file("land.png");
         self.vegetation.write_to_file("vegetation.png");
         self.mountains.write_to_file("mountain.png");
+        self.visibility.write_to_file("visibility.png");
     }
 }

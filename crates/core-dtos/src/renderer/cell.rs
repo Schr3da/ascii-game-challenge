@@ -11,6 +11,10 @@ pub struct Cell {
     pub foreground: CellColors,
     #[serde(rename = "isBold")]
     pub is_bold: bool,
+    #[serde(rename = "shortDescription")]
+    pub short_description: Option<String>,
+    #[serde(rename = "longDescription")]
+    pub long_description: Option<String>,
 }
 
 impl Default for Cell {
@@ -21,6 +25,8 @@ impl Default for Cell {
             symbol: Ascii::Space,
             background: CellColors::default(),
             foreground: CellColors::default(),
+            short_description: None,
+            long_description: None,
         }
     }
 }
