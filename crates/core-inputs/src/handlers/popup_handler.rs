@@ -3,22 +3,12 @@ use core_state::prelude::*;
 
 pub async fn handle_popup_event(key: Keys, app_state: &mut AppState) -> bool {
     match key {
-        Keys::Backspace => {
-            let event = SendEvents::Commands(CommandInputEvents::Pop);
-            app_state.send(event).await;
-        }
         Keys::Esc => {
-            let event = SendEvents::Commands(CommandInputEvents::Cancel);
+            let event = SendEvents::Ui(UiEvents::OnClosePopup);
             app_state.send(event).await;
         }
         Keys::Enter => {
-            let event = SendEvents::Commands(CommandInputEvents::Execute(
-                app_state.ecs_current_command.clone(),
-            ));
-            app_state.send(event).await;
-        }
-        Keys::Char(' ') => {
-            let event = SendEvents::Commands(CommandInputEvents::Cancel);
+            let event = SendEvents::Ui(UiEvents::OnOpenPopup(UiPopupViewIds::Actions));
             app_state.send(event).await;
         }
         Keys::DownArrow | Keys::Tab => {

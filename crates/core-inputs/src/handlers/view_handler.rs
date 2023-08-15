@@ -51,7 +51,7 @@ async fn handle_close_view(app_state: &mut AppState) {
 
 async fn handle_enter_key(app_state: &mut AppState) {
     if app_state.ecs_current_game_status == GameStatus::GameDidStart {
-        return handle_show_command_popup(app_state).await;
+        return handle_show_popup_menu(app_state).await;
     }
 
     if let Some(s) = &app_state.ecs_current_view_state {
@@ -65,8 +65,12 @@ async fn handle_quit_application(app_state: &mut AppState) {
     app_state.send(event).await;
 }
 
-async fn handle_show_command_popup(app_state: &mut AppState) {
-    let event = SendEvents::Commands(CommandInputEvents::New);
+async fn handle_show_popup_menu(app_state: &mut AppState) {
+    if !app_state.has_game_started() {
+        return;
+    }
+
+    let event = SendEvents::Ui(UiEvents::OnOpenPopup(UiPopupViewIds::Actions));
     app_state.send(event).await;
 }
 
@@ -107,7 +111,7 @@ pub async fn handle_view_event(key: Keys, app_state: &mut AppState) -> bool {
         Keys::Enter => handle_enter_key(app_state).await,
         Keys::Char('q') => handle_quit_application(app_state).await,
         Keys::Char('n') => handle_run_tick(app_state).await,
-        Keys::Char(' ') => handle_show_command_popup(app_state).await,
+        Keys::Char(' ') => handle_show_popup_menu(app_state).await,
         Keys::Char('j') => handle_camera_navigation(app_state, CameraNavigation::Left).await,
         Keys::Char('l') => handle_camera_navigation(app_state, CameraNavigation::Right).await,
         Keys::Char('i') => handle_camera_navigation(app_state, CameraNavigation::Up).await,

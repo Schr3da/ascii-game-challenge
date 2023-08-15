@@ -2,7 +2,7 @@ use core_dtos::prelude::*;
 
 pub fn command_popup_view() -> UiView {
     UiView {
-        id: UiViewIds::Popup(UiPopupViewIds::Command),
+        id: UiViewIds::Popup(UiPopupViewIds::Actions),
         layout: UiLayout {
             margin: 0,
             alignment: LayoutAlignments::Vertical,

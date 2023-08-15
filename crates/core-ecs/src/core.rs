@@ -12,7 +12,6 @@ pub struct Core {
     pub world: World,
     pub init_scheduler: InitScheduler,
     pub general_scheduler: GeneralScheduler,
-    pub command_scheduler: CommandScheduler,
     pub render_scheduler: RenderScheduler,
     pub ui_scheduler: UiScheduler,
     pub tick_scheduler: TickScheduler,
@@ -33,10 +32,7 @@ impl Default for Core {
 
         let mut ui_scheduler = UiScheduler::default();
         ui_scheduler.setup();
-
-        let mut command_scheduler = CommandScheduler::default();
-        command_scheduler.setup();
-
+        
         let mut tick_scheduler = TickScheduler::default();
         tick_scheduler.setup();
 
@@ -68,7 +64,6 @@ impl Default for Core {
             render_scheduler,
             ui_scheduler,
             general_scheduler,
-            command_scheduler,
             tick_scheduler,
         }
     }
@@ -103,7 +98,6 @@ impl EventHandler for Core {
 
         match event {
             SendEvents::Ui(e) => self.handle_ui_event(e),
-            SendEvents::Commands(e) => self.handle_command_event(e),
             SendEvents::Renderer(e) => self.handle_renderer_event(e),
             SendEvents::General(e) => self.handle_general_event(e),
             SendEvents::Tick => self.handle_tick_event(),
@@ -112,22 +106,14 @@ impl EventHandler for Core {
 }
 
 impl Core {
-    fn handle_command_event(&mut self, event: CommandInputEvents) {
-        match event {
-            CommandInputEvents::New
-            | CommandInputEvents::Cancel
-            | CommandInputEvents::Push(_)
-            | CommandInputEvents::Pop
-            | CommandInputEvents::Execute(_) => self.command_scheduler.run(&mut self.world),
-        }
-    }
-
     fn handle_ui_event(&mut self, event: UiEvents) {
         match event {
             UiEvents::OnSelect(_)
             | UiEvents::OnShortcut(_)
             | UiEvents::OnSelectById(_)
             | UiEvents::OnClick(_)
+            | UiEvents::OnOpenPopup(_)
+            | UiEvents::OnClosePopup
             | UiEvents::OnCloseView => {
                 self.ui_scheduler.run(&mut self.world);
             }

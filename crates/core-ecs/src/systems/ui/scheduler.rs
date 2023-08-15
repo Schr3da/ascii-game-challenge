@@ -17,6 +17,8 @@ impl Default for UiScheduler {
 impl Scheduler for UiScheduler {
     fn setup(&mut self) {
         self.schedule.add_systems((
+            on_open_popup_system,
+            on_close_popup_system,
             on_select_system,
             on_select_by_id_system,
             on_click_system,

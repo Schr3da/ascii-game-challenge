@@ -41,7 +41,7 @@ pub fn on_application_will_initialise_system(
                 ..UiViewState::default()
             },
             UiViewIds::Popup(id) => match id {
-                UiPopupViewIds::Command => UiViewState {
+                UiPopupViewIds::Actions => UiViewState {
                     selected_id: ViewComponentIds::CommandPopup(CommandIds::Build(None)),
                     selectable_ids: CommandIds::get_selectable_items(),
                     ..UiViewState::default()

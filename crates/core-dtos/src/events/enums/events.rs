@@ -7,7 +7,6 @@ use crate::prelude::*;
 pub enum SendEvents {
     General(GeneralEvents),
     Ui(UiEvents),
-    Commands(CommandInputEvents),
     Renderer(RenderEvents),
     Tick,
 }
@@ -17,7 +16,6 @@ pub enum SubscriptionEvents {
     General(GeneralSubscription),
     Ui(UiSubscription),
     Renderer(RenderSubscription),
-    Command(CommandSubscription),
 }
 
 #[derive(Clone, Tsify)]

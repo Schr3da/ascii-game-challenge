@@ -9,6 +9,8 @@ pub enum UiEvents {
     OnSelectById(ViewComponentIds),
     OnClick(ViewComponentIds),
     OnShortcut(String),
+    OnOpenPopup(UiPopupViewIds),
+    OnClosePopup,
     OnCloseView,
 }
 

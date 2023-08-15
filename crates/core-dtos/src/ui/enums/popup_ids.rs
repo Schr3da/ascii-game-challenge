@@ -3,12 +3,12 @@ use tsify::Tsify;
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Tsify)]
 pub enum UiPopupViewIds {
-    Command,
+    Actions,
     Buildings,
 }
 
 impl Default for UiPopupViewIds {
     fn default() -> Self {
-        UiPopupViewIds::Command
+        UiPopupViewIds::Actions
     }
 }

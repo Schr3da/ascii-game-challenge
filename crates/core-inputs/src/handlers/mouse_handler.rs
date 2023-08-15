@@ -14,7 +14,7 @@ async fn handle_did_select(is_primary_button: bool, app_state: &mut AppState) {
         return;
     }
 
-    let event = SendEvents::Commands(CommandInputEvents::New);
+    let event = SendEvents::Ui(UiEvents::OnOpenPopup(UiPopupViewIds::Actions));
     app_state.send(event).await;
 }
 
