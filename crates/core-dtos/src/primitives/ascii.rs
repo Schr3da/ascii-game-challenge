@@ -12,6 +12,8 @@ pub enum Ascii {
     Tilde,
     DoubleTilde,
     Hash,
+    H,
+    U,
 }
 
 impl Default for Ascii {
@@ -28,6 +30,8 @@ impl ToString for Ascii {
             Ascii::Tilde => "~".to_string(),
             Ascii::DoubleTilde => "≈".to_string(),
             Ascii::Hash => "#".to_string(),
+            Ascii::H => "H".to_string(),
+            Ascii::U => "U".to_string(),
         }
     }
 }
@@ -40,6 +44,8 @@ impl From<&str> for Ascii {
             "~" => Ascii::Tilde,
             "≈" => Ascii::DoubleTilde,
             "#" => Ascii::Hash,
+            "H" => Ascii::H,
+            "U" => Ascii::U,
             _ => Ascii::Space,
         }
     }

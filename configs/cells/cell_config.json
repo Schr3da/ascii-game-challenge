@@ -20,7 +20,7 @@
   },
   {
     "id": "visible",
-    "symbol": "›",
+    "symbol": " ",
     "isBold": false,
     "background": {
       "rgb": [
@@ -44,8 +44,8 @@
     "background": {
       "rgb": [
         0,
-        0,
-        255
+        255,
+        0
       ]
     },
     "foreground": {
