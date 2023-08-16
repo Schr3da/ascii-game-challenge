@@ -9,15 +9,18 @@ pub struct Terrain {
     pub vegetation: NoiseMap,
     pub mountains: NoiseMap,
     pub visibility: NoiseMap,
+    pub buildings: NoiseMap,
 }
 
 const SEA_LEVEL: f64 = 0.0;
+
+const PERLIN_SEED: u32 = 12;
 
 pub static MAP_SIZE: usize = 128;
 
 impl Terrain {
     fn generate_land(&mut self) {
-        let data = Fbm::<Perlin>::new(12)
+        let data = Fbm::<Perlin>::new(PERLIN_SEED)
             .set_frequency(0.2)
             .set_persistence(0.6)
             .set_lacunarity(2.1)
@@ -39,7 +42,7 @@ impl Terrain {
     }
 
     pub fn generate_vegetation(&mut self) {
-        let data = Fbm::<Perlin>::new(8)
+        let data = Fbm::<Perlin>::new(PERLIN_SEED)
             .set_frequency(0.2)
             .set_persistence(0.6)
             .set_lacunarity(2.5)
@@ -62,7 +65,7 @@ impl Terrain {
     }
 
     pub fn generate_mountains(&mut self) {
-        let data = Fbm::<Perlin>::new(8)
+        let data = Fbm::<Perlin>::new(PERLIN_SEED)
             .set_frequency(0.2)
             .set_persistence(0.6)
             .set_lacunarity(2.1)
@@ -87,55 +90,48 @@ impl Terrain {
         self.visibility = NoiseMap::new(width, height);
     }
 
+    fn generate_initial_buildings(&mut self) {
+        let (width, height) = self.land.size();
+        self.buildings = NoiseMap::new(width, height);
+
+        self.buildings.set_value(0, 0, AsciiIds::HeadQuarter.to_float());
+        self.visibility.set_value(0, 0, AsciiIds::Visible.to_float());
+    }
+
     pub fn generate(&mut self) {
         self.generate_land();
         self.generate_vegetation();
         self.generate_mountains();
         self.generate_visibility();
+        self.generate_initial_buildings();
     }
 
     pub fn get_value(&self, x: i32, y: i32) -> f64 {
+        /*
         let visibility = self.visibility.get_value(x as usize, y as usize);
-        if visibility == 0.0 {
+        if visibility == AsciiIds::NotVisible.to_float(){
             return -100.0;
         }
 
-        let mountain_value = self.mountains.get_value(x as usize, y as usize);
+        */
 
-        if mountain_value > 0.0 {
+        let building_value = self.buildings.get_value(x as usize, y as usize);
+        println!("{}", building_value);
+        if building_value > AsciiIds::UnknownAsciiId.to_float() {
+            return AsciiIds::HeadQuarter.to_float();
+        }
+
+        let mountain_value = self.mountains.get_value(x as usize, y as usize);
+        if mountain_value > AsciiIds::UnknownAsciiId.to_float() {
             return mountain_value;
         }
 
         return self.land.get_value(x as usize, y as usize);
     }
 
-    fn contains_value(current: f64, start: f64, end: f64) -> bool {
-        current >= start && current < end
-    }
-
-    pub fn value_to_ascii(&self, value: f64) -> AsciiIds {
-        if Self::contains_value(value, -100.0, -99.9) {
-            return AsciiIds::NotVisible;
-        }
-
-        if Self::contains_value(value, -5.0, -0.5) {
-            return AsciiIds::DeepWater;
-        }
-
-        if Self::contains_value(value, -0.5, 0.1) {
-            return AsciiIds::ShallowWater;
-        }
-
-        if Self::contains_value(value, 0.1, 2.5) {
-            return AsciiIds::Sand;
-        }
-
-        return AsciiIds::UnknownAsciiId;
-    }
-
     pub fn get_ascii(&self, x: i32, y: i32) -> AsciiIds {
         let next = self.get_value(x, y);
-        self.value_to_ascii(next)
+        AsciiIds::value_to_id(next)
     }
 
     pub fn save_as_images(&self) {
@@ -143,5 +139,6 @@ impl Terrain {
         self.vegetation.write_to_file("vegetation.png");
         self.mountains.write_to_file("mountain.png");
         self.visibility.write_to_file("visibility.png");
+        self.buildings.write_to_file("buildings.png");
     }
 }

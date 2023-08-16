@@ -9,11 +9,11 @@ pub fn command_popup_view() -> UiView {
             constraints: vec![LayoutConstraints::Percentage(100)],
         },
         state: UiViewState {
-            selected_id: ViewComponentIds::CommandPopup(CommandIds::Build(None)),
-            selectable_ids: CommandIds::get_selectable_items(),
+            selected_id: ViewComponentIds::Popup(PopupIds::Build(None)),
+            selectable_ids: PopupIds::get_selectable_items(),
             view_data: ViewDataTypes::Popup(PopupState::default()),
             ..Default::default()
         },
-        children: CommandIds::get_ui_items(),
+        children: PopupIds::get_ui_items(),
     }
 }

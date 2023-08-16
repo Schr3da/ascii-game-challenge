@@ -42,12 +42,12 @@ pub fn on_application_will_initialise_system(
             },
             UiViewIds::Popup(id) => match id {
                 UiPopupViewIds::Actions => UiViewState {
-                    selected_id: ViewComponentIds::CommandPopup(CommandIds::Build(None)),
-                    selectable_ids: CommandIds::get_selectable_items(),
+                    selected_id: ViewComponentIds::Popup(PopupIds::Build(None)),
+                    selectable_ids: PopupIds::get_selectable_items(),
                     ..UiViewState::default()
                 },
                 UiPopupViewIds::Buildings => UiViewState {
-                    selected_id: ViewComponentIds::CommandPopup(CommandIds::Build(None)),
+                    selected_id: ViewComponentIds::Popup(PopupIds::Build(None)),
                     selectable_ids: BuildingIds::get_selectable_items(),
                     ..UiViewState::default()
                 },

@@ -20,7 +20,7 @@ impl ToSelectable for BuildingIds {
     type Item = ViewComponentIds;
 
     fn get_selectable_items() -> Vec<Self::Item> {
-        vec![ViewComponentIds::CommandPopup(CommandIds::Build(Some(
+        vec![ViewComponentIds::Popup(PopupIds::Build(Some(
             BuildingIds::Lumbarjack,
         )))]
     }
@@ -29,10 +29,10 @@ impl ToSelectable for BuildingIds {
 impl ToUiViewChildren for BuildingIds {
     fn get_ui_items() -> Vec<UiViewChild> {
         vec![UiViewChild::List(UiList {
-            id: ViewComponentIds::CommandPopup(CommandIds::Build(None)),
+            id: ViewComponentIds::Popup(PopupIds::Build(None)),
             label: "Available Buildings".to_string(),
             children: vec![UiLabel {
-                id: ViewComponentIds::CommandPopup(CommandIds::Build(Some(
+                id: ViewComponentIds::Popup(PopupIds::Build(Some(
                     BuildingIds::Lumbarjack,
                 ))),
                 alignment: TextAlignment::Left,

@@ -8,7 +8,7 @@ pub enum ViewComponentIds {
     Main(MainMenuIds),
     Options(OptionMenuIds),
     Game(GameIds),
-    CommandPopup(CommandIds),
+    Popup(PopupIds),
 }
 
 impl Default for ViewComponentIds {
@@ -30,7 +30,7 @@ impl ToRoute for ViewComponentIds {
 
     fn to_popup_route(&self) -> Option<UiPopupViewIds> {
         match self {
-            Self::CommandPopup(CommandIds::Build(_)) => Some(UiPopupViewIds::Buildings),
+            Self::Popup(PopupIds::Build(_)) => Some(UiPopupViewIds::Buildings),
             _ => None,
         }
     }

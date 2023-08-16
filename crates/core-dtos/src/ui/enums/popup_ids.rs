@@ -1,14 +1,52 @@
 use serde::{Deserialize, Serialize};
 use tsify::Tsify;
 
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Tsify)]
-pub enum UiPopupViewIds {
-    Actions,
-    Buildings,
+use crate::prelude::*;
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Hash, Tsify)]
+pub enum PopupIds {
+    Build(Option<BuildingIds>),
+    UnknownCommandId,
 }
 
-impl Default for UiPopupViewIds {
+impl Default for PopupIds {
     fn default() -> Self {
-        UiPopupViewIds::Actions
+        PopupIds::Build(None)
+    }
+}
+
+impl ToShortcut for PopupIds {
+    fn get_shortcut(&self) -> Option<String> {
+        match self {
+            Self::Build(_) => Some("b".to_string()),
+            Self::UnknownCommandId => None,
+        }
+    }
+}
+
+impl ToSelectable for PopupIds {
+    type Item = ViewComponentIds;
+
+    fn get_selectable_items() -> Vec<ViewComponentIds> {
+        vec![
+            ViewComponentIds::Popup(PopupIds::Build(None)),
+        ]
+    }
+}
+
+impl ToUiViewChildren for PopupIds {
+    fn get_ui_items() -> Vec<UiViewChild> {
+        vec![UiViewChild::List(UiList {
+            id: ViewComponentIds::Main(MainMenuIds::MenuList),
+            label: "Available Actions".to_string(),
+            children: vec![
+                UiLabel {
+                    id: ViewComponentIds::Popup(PopupIds::Build(None)),
+                    alignment: TextAlignment::Left,
+                    text: "Build".to_string(),
+                    shortcut: PopupIds::Build(None).get_shortcut(),
+                },
+            ],
+        })]
     }
 }

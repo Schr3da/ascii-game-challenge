@@ -19,6 +19,44 @@
     }
   },
   {
+    "id": "visible",
+    "symbol": "›",
+    "isBold": false,
+    "background": {
+      "rgb": [
+        255,
+        255,
+        255
+      ]
+    },
+    "foreground": {
+      "rgb": [
+        255,
+        255,
+        255
+      ]
+    }
+  },
+  {
+    "id": "headQuarter",
+    "symbol": "H",
+    "isBold": true,
+    "background": {
+      "rgb": [
+        0,
+        0,
+        255
+      ]
+    },
+    "foreground": {
+      "rgb": [
+        255,
+        255,
+        255
+      ]
+    }
+  },
+  {
     "id": "sand",
     "symbol": "+",
     "isBold": false,
@@ -59,6 +97,25 @@
   {
     "id": "shallowWater",
     "symbol": "~",
+    "isBold": false,
+    "background": {
+      "rgb": [
+        255,
+        255,
+        255
+      ]
+    },
+    "foreground": {
+      "rgb": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": "unknownAsciiId",
+    "symbol": "U",
     "isBold": false,
     "background": {
       "rgb": [
