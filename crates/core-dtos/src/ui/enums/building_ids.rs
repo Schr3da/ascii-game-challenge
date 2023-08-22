@@ -32,9 +32,7 @@ impl ToUiViewChildren for BuildingIds {
             id: ViewComponentIds::Popup(PopupIds::Build(None)),
             label: "Available Buildings".to_string(),
             children: vec![UiLabel {
-                id: ViewComponentIds::Popup(PopupIds::Build(Some(
-                    BuildingIds::Lumbarjack,
-                ))),
+                id: ViewComponentIds::Popup(PopupIds::Build(Some(BuildingIds::Lumbarjack))),
                 alignment: TextAlignment::Left,
                 text: "Lumbarjack".to_string(),
                 shortcut: BuildingIds::Lumbarjack.get_shortcut(),

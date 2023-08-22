@@ -32,9 +32,12 @@ impl Default for Core {
 
         let mut ui_scheduler = UiScheduler::default();
         ui_scheduler.setup();
-        
+
         let mut tick_scheduler = TickScheduler::default();
         tick_scheduler.setup();
+
+        let logger = Logger::default();
+        world.insert_resource(logger);
 
         let mut assets = AssetResources::default();
         assets.load();
@@ -56,7 +59,8 @@ impl Default for Core {
         world.spawn(options_view());
         world.spawn(game_view());
         world.spawn(command_popup_view());
-        world.spawn(buildings_view());
+        world.spawn(buildings_popup_view());
+        world.spawn(logger_popup_view());
 
         Core {
             world,

@@ -4,6 +4,7 @@ use tsify::Tsify;
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Tsify)]
 pub enum UiPopupViewIds {
     Actions,
+    Logger,
     Buildings,
 }
 

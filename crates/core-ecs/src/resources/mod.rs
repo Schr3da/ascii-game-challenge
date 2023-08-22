@@ -4,8 +4,10 @@ mod clock;
 mod command;
 mod store;
 mod subscriber;
+mod logger;
 
 pub mod prelude {
+    pub use super::logger::prelude::*;
     pub use super::assets::prelude::*;
     pub use super::camera::prelude::*;
     pub use super::clock::prelude::*;

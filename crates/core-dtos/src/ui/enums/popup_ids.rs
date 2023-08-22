@@ -5,6 +5,7 @@ use crate::prelude::*;
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Hash, Tsify)]
 pub enum PopupIds {
+    Logger(Option<Vec<String>>),
     Build(Option<BuildingIds>),
     UnknownCommandId,
 }
@@ -19,6 +20,7 @@ impl ToShortcut for PopupIds {
     fn get_shortcut(&self) -> Option<String> {
         match self {
             Self::Build(_) => Some("b".to_string()),
+            Self::Logger(_) => Some("l".to_string()),
             Self::UnknownCommandId => None,
         }
     }
@@ -30,6 +32,7 @@ impl ToSelectable for PopupIds {
     fn get_selectable_items() -> Vec<ViewComponentIds> {
         vec![
             ViewComponentIds::Popup(PopupIds::Build(None)),
+            ViewComponentIds::Popup(PopupIds::Logger(None))
         ]
     }
 }
@@ -45,6 +48,12 @@ impl ToUiViewChildren for PopupIds {
                     alignment: TextAlignment::Left,
                     text: "Build".to_string(),
                     shortcut: PopupIds::Build(None).get_shortcut(),
+                },
+                UiLabel {
+                    id: ViewComponentIds::Popup(PopupIds::Logger(None)),
+                    alignment: TextAlignment::Left,
+                    text: "Logger".to_string(),
+                    shortcut: PopupIds::Logger(None).get_shortcut(),
                 },
             ],
         })]

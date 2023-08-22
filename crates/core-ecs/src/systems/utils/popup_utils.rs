@@ -6,6 +6,7 @@ use crate::prelude::*;
 pub fn set_next_popup(
     id: UiPopupViewIds,
     mut store: ResMut<UiStore>,
+    logger: ResMut<Logger>,
     mut views: Query<&mut UiView>,
 ) {
     let selected_tile = match &store.selected_game_tile {
@@ -19,7 +20,10 @@ pub fn set_next_popup(
         None => return,
     };
 
-    view.state.view_data = selected_tile.into();
+    view.state.view_data = match id_to_compare {
+        UiViewIds::Popup(UiPopupViewIds::Logger) => logger.as_ref().into(),
+        _ => selected_tile.into(),
+    };
 
     store.current_popup = Some(id);
 }

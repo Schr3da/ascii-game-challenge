@@ -31,7 +31,8 @@ impl ToRoute for ViewComponentIds {
     fn to_popup_route(&self) -> Option<UiPopupViewIds> {
         match self {
             Self::Popup(PopupIds::Build(_)) => Some(UiPopupViewIds::Buildings),
+            Self::Popup(PopupIds::Logger(_)) => Some(UiPopupViewIds::Logger),
             _ => None,
         }
-    }
+    } 
 }

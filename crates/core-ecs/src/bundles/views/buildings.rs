@@ -1,6 +1,6 @@
 use core_dtos::prelude::*;
 
-pub fn buildings_view() -> UiView {
+pub fn buildings_popup_view() -> UiView {
     UiView {
         id: UiViewIds::Popup(UiPopupViewIds::Buildings),
         layout: UiLayout {

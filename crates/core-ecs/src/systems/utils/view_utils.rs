@@ -15,6 +15,8 @@ pub fn set_next_view(
         None => return,
     };
 
+    println!("call {:?}", id);
+
     match id {
         ViewComponentIds::Main(MainMenuIds::NewGame) => {
             store.previous_view.push(current_view);

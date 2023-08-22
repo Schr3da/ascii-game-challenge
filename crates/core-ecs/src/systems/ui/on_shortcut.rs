@@ -68,6 +68,7 @@ fn find_shortcut_for_popup(
 
 pub fn on_shortcut_system(
     mut store: ResMut<UiStore>,
+    mut logger: ResMut<Logger>,
     subscriber: Res<Subscriber>,
     views: Query<&mut UiView>,
 ) {
@@ -75,6 +76,8 @@ pub fn on_shortcut_system(
         Some(SendEvents::Ui(UiEvents::OnShortcut(s))) => s,
         _ => return,
     };
+
+    logger.log("next".to_string());
 
     let next = match &store.current_popup {
         Some(id) => find_shortcut_for_popup(shortcut, id, &views),
@@ -88,7 +91,7 @@ pub fn on_shortcut_system(
 
     if store.current_popup.is_some() {
         return match label.id.to_popup_route() {
-            Some(p) => set_next_popup(p, store, views),
+            Some(p) => set_next_popup(p, store, logger, views),
             None => return,
         };
     }

@@ -94,8 +94,20 @@ impl Terrain {
         let (width, height) = self.land.size();
         self.buildings = NoiseMap::new(width, height);
 
-        self.buildings.set_value(0, 1, AsciiIds::HeadQuarter.to_float());
-        self.visibility.set_value(0, 1, AsciiIds::Visible.to_float());
+        self.buildings
+            .set_value(0, 1, AsciiIds::HeadQuarter.to_float());
+        self.visibility
+            .set_value(1, 1, AsciiIds::Visible.to_float());
+        self.visibility
+            .set_value(2, 1, AsciiIds::Visible.to_float());
+        self.visibility
+            .set_value(3, 1, AsciiIds::Visible.to_float());
+        self.visibility
+            .set_value(1, 2, AsciiIds::Visible.to_float());
+        self.visibility
+            .set_value(2, 2, AsciiIds::Visible.to_float());
+        self.visibility
+            .set_value(0, 1, AsciiIds::Visible.to_float());
     }
 
     pub fn generate(&mut self) {
@@ -108,7 +120,7 @@ impl Terrain {
 
     pub fn get_value(&self, x: i32, y: i32) -> f64 {
         let visibility = self.visibility.get_value(x as usize, y as usize);
-        if visibility == AsciiIds::NotVisible.to_float(){
+        if visibility == AsciiIds::NotVisible.to_float() {
             return -100.0;
         }
 
