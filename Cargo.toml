@@ -4,7 +4,7 @@ members = [
   "crates/cli",
   "crates/core-dtos",
   "crates/core-ecs",
-  "crates/core-serde",
+  "crates/core-serde-utils",
   "crates/core-shared",
   "crates/core-state",
   "crates/core-terrain",

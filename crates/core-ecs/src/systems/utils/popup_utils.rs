@@ -14,6 +14,7 @@ pub fn set_next_popup(
         None => return,
     };
 
+
     let id_to_compare = UiViewIds::Popup(id.clone());
     let mut view = match views.iter_mut().find(|v| v.id == id_to_compare) {
         Some(v) => v,
@@ -21,7 +22,7 @@ pub fn set_next_popup(
     };
 
     view.state.view_data = match id_to_compare {
-        UiViewIds::Popup(UiPopupViewIds::Logger) => logger.as_ref().into(),
+        UiViewIds::Popup(UiPopupViewIds::Logs) => logger.as_ref().into(),
         _ => selected_tile.into(),
     };
 

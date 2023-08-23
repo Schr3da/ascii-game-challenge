@@ -1,11 +1,8 @@
-mod colors;
-mod layout;
-mod renderer;
-mod ui;
+mod colors_utils;
+mod render_utils;
+mod popup_utils;
+mod draw_utils;
 
 pub mod prelude {
-    pub use super::colors::*;
-    pub use super::layout::*;
-    pub use super::renderer::*;
-    pub use super::ui::*;
+    pub use super::draw_utils::*;
 }

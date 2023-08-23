@@ -26,8 +26,8 @@ impl Default for GameViewHeaderState {
     fn default() -> Self {
         GameViewHeaderState {
             current_days: DEFAULT_DAYS.to_string(),
-            current_hours: prettify_i32(DEFAULT_HOURS),
-            current_minutes: prettify_i32(0),
+            current_hours: DigitFormatter::prettify_i32(DEFAULT_HOURS),
+            current_minutes: DigitFormatter::prettify_i32(0),
             tick_count: 0.to_string(),
         }
     }

@@ -51,8 +51,8 @@ pub fn on_application_will_initialise_system(
                     selectable_ids: BuildingIds::get_selectable_items(),
                     ..UiViewState::default()
                 },
-                UiPopupViewIds::Logger=> UiViewState {
-                    selected_id: ViewComponentIds::Popup(PopupIds::Logger(None)),
+                UiPopupViewIds::Logs=> UiViewState {
+                    selected_id: ViewComponentIds::Popup(PopupIds::Log(None)),
                     selectable_ids: vec![], 
                     ..UiViewState::default()
                 },
