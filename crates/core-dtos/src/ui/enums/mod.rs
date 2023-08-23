@@ -7,6 +7,7 @@ mod popup_ids;
 mod view_component_ids;
 mod view_ids;
 mod view_popup_ids;
+mod logger_ids;
 
 pub mod prelude {
     pub use super::building_ids::*;
@@ -18,4 +19,5 @@ pub mod prelude {
     pub use super::view_component_ids::*;
     pub use super::view_ids::*;
     pub use super::view_popup_ids::*;
+    pub use super::logger_ids::*;
 }

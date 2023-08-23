@@ -1,15 +1,16 @@
+mod entry;
 mod export;
 mod handlers;
-mod init;
 mod managers;
-mod shutdown;
-mod traits;
 mod utils;
-mod views;
+
+use entry::Entry;
 
 #[tokio::main]
 async fn main() -> Result<(), std::io::Error> {
-    let terminal = init::terminal().await?;
-    shutdown::terminal(terminal)?;
+    let mut entry = Entry::default();
+    entry.init().await?;
+    drop(entry);
+
     std::process::exit(0);
 }

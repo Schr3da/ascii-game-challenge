@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 
-use tsify::*;
 use serde::{Deserialize, Serialize};
+use tsify::*;
 
 use crate::prelude::*;
 
@@ -15,7 +15,7 @@ impl From<&LoggerState> for HashMap<ViewComponentIds, String> {
     fn from(value: &LoggerState) -> HashMap<ViewComponentIds, String> {
         let mut next = HashMap::new();
         next.insert(
-            ViewComponentIds::Popup(PopupIds::Logger(None)),
+            ViewComponentIds::Popup(PopupIds::Log(Some(LoggerIds::Print))),
             format!("{:?}", value.current_logs),
         );
 

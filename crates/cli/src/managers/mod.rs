@@ -1,7 +1,5 @@
-mod input;
-mod sprite;
+mod input_manager;
 
 pub mod prelude {
-    pub use super::input::prelude::*;
-    pub use super::sprite::prelude::*;
+    pub use super::input_manager::*;
 }
