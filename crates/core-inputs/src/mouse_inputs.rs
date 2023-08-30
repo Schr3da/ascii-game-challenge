@@ -7,7 +7,7 @@ impl MouseInputs {
     async fn handle_move(column: i32, row: i32, app_state: &mut AppState) {
         app_state
             .send(SendEvents::Renderer(RenderEvents::OnUpdateSelectedCell(
-                SelectedCellNavigation::Custom(column, row),
+                Navigation::Custom(column, row),
             )))
             .await;
     }

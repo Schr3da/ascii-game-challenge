@@ -1,5 +1,5 @@
-mod digits;
+mod digit_formatter;
 
 pub mod prelude {
-    pub use super::digits::*;
+    pub use super::digit_formatter::*;
 }

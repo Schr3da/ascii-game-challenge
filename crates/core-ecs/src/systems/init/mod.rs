@@ -1,11 +1,7 @@
-mod on_application_did_initialise;
-mod on_application_will_initialise;
-mod on_application_will_load_assets;
-mod scheduler;
+mod init_scheduler;
+mod init_systems;
 
 pub mod prelude {
-    pub use super::on_application_did_initialise::*;
-    pub use super::on_application_will_initialise::*;
-    pub use super::on_application_will_load_assets::*;
-    pub use super::scheduler::*;
+    pub use super::init_systems::*;
+    pub use super::init_scheduler::*;
 }

@@ -4,7 +4,7 @@ use core_state::prelude::*;
 pub struct KeyboardInputs;
 
 impl KeyboardInputs {
-    async fn handle_game_canvas_navigation(app_state: &mut AppState, next: SelectedCellNavigation) {
+    async fn handle_game_canvas_navigation(app_state: &mut AppState, next: Navigation) {
         if !app_state.has_game_started() {
             return;
         }
@@ -14,17 +14,17 @@ impl KeyboardInputs {
     }
 
     async fn handle_right_arrow_key(app_state: &mut AppState) {
-        Self::handle_game_canvas_navigation(app_state, SelectedCellNavigation::Right).await;
+        Self::handle_game_canvas_navigation(app_state, Navigation::Right).await;
     }
 
     async fn handle_left_arrow_key(app_state: &mut AppState) {
-        Self::handle_game_canvas_navigation(app_state, SelectedCellNavigation::Left).await;
+        Self::handle_game_canvas_navigation(app_state, Navigation::Left).await;
     }
 
     async fn handle_up_arrow_key(app_state: &mut AppState) {
         let event = match app_state.ecs_current_game_status {
             GameStatus::GameDidStart => SendEvents::Renderer(RenderEvents::OnUpdateSelectedCell(
-                SelectedCellNavigation::Up,
+                Navigation::Up,
             )),
             GameStatus::GameDidNotStart | GameStatus::GameDidPaused | GameStatus::GameWillEnded => {
                 SendEvents::Ui(UiEvents::OnSelect(SelectionDirections::Previous))
@@ -37,7 +37,7 @@ impl KeyboardInputs {
     async fn handle_down_arrow_key(app_state: &mut AppState) {
         let event = match app_state.ecs_current_game_status {
             GameStatus::GameDidStart => SendEvents::Renderer(RenderEvents::OnUpdateSelectedCell(
-                SelectedCellNavigation::Down,
+                Navigation::Down,
             )),
             GameStatus::GameDidNotStart | GameStatus::GameDidPaused | GameStatus::GameWillEnded => {
                 SendEvents::Ui(UiEvents::OnSelect(SelectionDirections::Next))
@@ -86,7 +86,7 @@ impl KeyboardInputs {
         app_state.send(event).await;
     }
 
-    async fn handle_camera_navigation(app_state: &mut AppState, next: CameraNavigation) {
+    async fn handle_camera_navigation(app_state: &mut AppState, next: Navigation) {
         if app_state.ecs_current_game_status != GameStatus::GameDidStart {
             return;
         }
@@ -144,16 +144,16 @@ impl KeyboardInputs {
             Keys::Char('n') => Self::handle_run_tick(app_state).await,
             Keys::Char(' ') => Self::handle_show_popup_menu(app_state).await,
             Keys::Char('j') => {
-                Self::handle_camera_navigation(app_state, CameraNavigation::Left).await
+                Self::handle_camera_navigation(app_state, Navigation::Left).await
             }
             Keys::Char('l') => {
-                Self::handle_camera_navigation(app_state, CameraNavigation::Right).await
+                Self::handle_camera_navigation(app_state, Navigation::Right).await
             }
             Keys::Char('i') => {
-                Self::handle_camera_navigation(app_state, CameraNavigation::Up).await
+                Self::handle_camera_navigation(app_state, Navigation::Up).await
             }
             Keys::Char('k') => {
-                Self::handle_camera_navigation(app_state, CameraNavigation::Down).await
+                Self::handle_camera_navigation(app_state, Navigation::Down).await
             }
             Keys::Char(s) => Self::handle_key_pressed(s.to_string(), app_state).await,
             _ => return false,

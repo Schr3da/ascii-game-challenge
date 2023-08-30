@@ -36,7 +36,7 @@ impl Default for Core {
         let mut tick_scheduler = TickScheduler::default();
         tick_scheduler.setup();
 
-        let logger = Logger::default();
+        let logger = LoggerResource::default();
         world.insert_resource(logger);
 
         let mut assets = AssetResources::default();
@@ -46,21 +46,21 @@ impl Default for Core {
         let game_clock = ClockResource::default();
         world.insert_resource(game_clock);
 
-        let ui_store_resource = UiStore::default();
+        let ui_store_resource = UiStoreResource::default();
         world.insert_resource(ui_store_resource);
 
-        let command_state = CommandState::default();
+        let command_state = CommandResource::default();
         world.insert_resource(command_state);
 
-        let camera = Camera2d::default();
+        let camera = CameraResource::default();
         world.insert_resource(camera);
 
-        world.spawn(main_view());
-        world.spawn(options_view());
-        world.spawn(game_view());
-        world.spawn(command_popup_view());
-        world.spawn(buildings_popup_view());
-        world.spawn(logger_popup_view());
+        world.spawn(MenuViews::main_menu());
+        world.spawn(MenuViews::settings());
+        world.spawn(GameView::new());
+        world.spawn(PopupViews::command());
+        world.spawn(PopupViews::buildings());
+        world.spawn(PopupViews::logger());
 
         Core {
             world,
@@ -79,7 +79,7 @@ impl ShareableSubscriber<EcsEvents> for Core {
     fn new_shared(subscriber: Sender<EcsEvents>) -> Shared<Self::Item> {
         let mut ecs = Core::default();
 
-        let subsrciber_resource = Subscriber::new(subscriber);
+        let subsrciber_resource = SubscriberResource::new(subscriber);
         ecs.world.insert_resource(subsrciber_resource);
 
         Arc::new(RwLock::new(ecs))
@@ -88,7 +88,7 @@ impl ShareableSubscriber<EcsEvents> for Core {
 
 impl EventHandler for Core {
     fn did_receive(&mut self, event: &SendEvents) {
-        match self.world.get_resource_mut::<Subscriber>() {
+        match self.world.get_resource_mut::<SubscriberResource>() {
             Some(mut r) => {
                 r.previous_event = r.next_event.clone();
                 r.next_event = Some(event.clone());
@@ -143,7 +143,7 @@ impl Core {
     }
 
     fn handle_tick_event(&mut self) {
-        match self.world.get_resource::<UiStore>() {
+        match self.world.get_resource::<UiStoreResource>() {
             Some(s) => {
                 if s.current_game_status != GameStatus::GameDidStart {
                     return;

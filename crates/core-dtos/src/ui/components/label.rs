@@ -5,6 +5,20 @@ use tsify::Tsify;
 
 use crate::prelude::*;
 
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Tsify)]
+pub enum TextAlignment {
+    Center,
+    Left,
+    Right,
+}
+
+impl Default for TextAlignment {
+    fn default() -> Self {
+        TextAlignment::Center
+    }
+}
+
+
 #[derive(Debug, PartialEq, Eq, Clone, Component, Serialize, Deserialize, Tsify)]
 pub struct UiLabel {
     pub id: ViewComponentIds,
