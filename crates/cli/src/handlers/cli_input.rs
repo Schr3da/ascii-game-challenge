@@ -40,10 +40,7 @@ impl CliInputHandler {
         MouseInputs::handle_event(next, app_state).await
     }
 
-    pub async fn handle(
-        event: Result<InpuEvents, TryRecvError>,
-        app_state: &mut AppState,
-    ) -> bool {
+    pub async fn handle(event: Result<InpuEvents, TryRecvError>, app_state: &mut AppState) -> bool {
         match event {
             Ok(InpuEvents::Keyboard(e)) => Self::on_key_pressed(e, app_state).await,
             Ok(InpuEvents::Mouse(e)) => Self::on_mouse_event(e, app_state).await,

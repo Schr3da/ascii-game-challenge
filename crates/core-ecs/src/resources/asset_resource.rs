@@ -2,8 +2,8 @@ use bevy_ecs::prelude::*;
 use core_dtos::prelude::*;
 use core_serde_utils::prelude::*;
 use core_terrain::prelude::Terrain;
-use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
 
 #[derive(Clone, Default, Serialize, Deserialize)]
 pub struct AssetConfig {

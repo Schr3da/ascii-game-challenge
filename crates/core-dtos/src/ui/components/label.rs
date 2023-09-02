@@ -18,7 +18,6 @@ impl Default for TextAlignment {
     }
 }
 
-
 #[derive(Debug, PartialEq, Eq, Clone, Component, Serialize, Deserialize, Tsify)]
 pub struct UiLabel {
     pub id: ViewComponentIds,

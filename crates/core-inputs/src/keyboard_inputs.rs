@@ -23,9 +23,9 @@ impl KeyboardInputs {
 
     async fn handle_up_arrow_key(app_state: &mut AppState) {
         let event = match app_state.ecs_current_game_status {
-            GameStatus::GameDidStart => SendEvents::Renderer(RenderEvents::OnUpdateSelectedCell(
-                Navigation::Up,
-            )),
+            GameStatus::GameDidStart => {
+                SendEvents::Renderer(RenderEvents::OnUpdateSelectedCell(Navigation::Up))
+            }
             GameStatus::GameDidNotStart | GameStatus::GameDidPaused | GameStatus::GameWillEnded => {
                 SendEvents::Ui(UiEvents::OnSelect(SelectionDirections::Previous))
             }
@@ -36,9 +36,9 @@ impl KeyboardInputs {
 
     async fn handle_down_arrow_key(app_state: &mut AppState) {
         let event = match app_state.ecs_current_game_status {
-            GameStatus::GameDidStart => SendEvents::Renderer(RenderEvents::OnUpdateSelectedCell(
-                Navigation::Down,
-            )),
+            GameStatus::GameDidStart => {
+                SendEvents::Renderer(RenderEvents::OnUpdateSelectedCell(Navigation::Down))
+            }
             GameStatus::GameDidNotStart | GameStatus::GameDidPaused | GameStatus::GameWillEnded => {
                 SendEvents::Ui(UiEvents::OnSelect(SelectionDirections::Next))
             }
@@ -143,18 +143,10 @@ impl KeyboardInputs {
             Keys::Char('q') => Self::handle_quit_application(app_state).await,
             Keys::Char('n') => Self::handle_run_tick(app_state).await,
             Keys::Char(' ') => Self::handle_show_popup_menu(app_state).await,
-            Keys::Char('j') => {
-                Self::handle_camera_navigation(app_state, Navigation::Left).await
-            }
-            Keys::Char('l') => {
-                Self::handle_camera_navigation(app_state, Navigation::Right).await
-            }
-            Keys::Char('i') => {
-                Self::handle_camera_navigation(app_state, Navigation::Up).await
-            }
-            Keys::Char('k') => {
-                Self::handle_camera_navigation(app_state, Navigation::Down).await
-            }
+            Keys::Char('j') => Self::handle_camera_navigation(app_state, Navigation::Left).await,
+            Keys::Char('l') => Self::handle_camera_navigation(app_state, Navigation::Right).await,
+            Keys::Char('i') => Self::handle_camera_navigation(app_state, Navigation::Up).await,
+            Keys::Char('k') => Self::handle_camera_navigation(app_state, Navigation::Down).await,
             Keys::Char(s) => Self::handle_key_pressed(s.to_string(), app_state).await,
             _ => return false,
         };

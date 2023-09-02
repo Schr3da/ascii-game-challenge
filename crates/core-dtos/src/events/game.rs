@@ -1,6 +1,6 @@
+use crate::prelude::*;
 use serde::{Deserialize, Serialize};
 use tsify::Tsify;
-use crate::prelude::*;
 
 #[derive(Debug, Default, PartialEq, Eq, Clone, Serialize, Deserialize, Tsify)]
 pub enum GameStatus {

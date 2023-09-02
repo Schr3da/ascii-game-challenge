@@ -34,5 +34,5 @@ impl ToRoute for ViewComponentIds {
             Self::Popup(PopupIds::Log(_)) => Some(UiPopupViewIds::Logs),
             _ => None,
         }
-    } 
+    }
 }

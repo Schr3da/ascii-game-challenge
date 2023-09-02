@@ -10,11 +10,11 @@ pub enum LoggerIds {
 
 impl ToShortcut for LoggerIds {
     fn get_shortcut(&self) -> Option<String> {
-      None
+        None
     }
 }
 
-impl ToSelectable for LoggerIds{
+impl ToSelectable for LoggerIds {
     type Item = ViewComponentIds;
 
     fn get_selectable_items() -> Vec<Self::Item> {
@@ -31,7 +31,7 @@ impl ToUiViewChildren for LoggerIds {
                 id: ViewComponentIds::Popup(PopupIds::Log(Some(LoggerIds::Print))),
                 alignment: TextAlignment::Left,
                 text: "".to_string(),
-                shortcut: None, 
+                shortcut: None,
             }],
         })]
     }

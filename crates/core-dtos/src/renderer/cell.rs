@@ -31,7 +31,6 @@ impl Default for Cell {
     }
 }
 
-
 #[derive(Debug, Clone, Serialize, Deserialize, Eq, PartialEq, Tsify)]
 pub struct SelectedCell {
     pub top: u16,
