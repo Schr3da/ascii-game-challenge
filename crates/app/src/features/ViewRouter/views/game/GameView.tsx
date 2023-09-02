@@ -1,4 +1,3 @@
-import * as Pixi from "pixi.js";
 import { Stage } from "@pixi/react";
 import { useMemo, useRef } from "react";
 import { useMouseControls, useWrapperSize } from "../../../../hooks";
@@ -11,6 +10,7 @@ import { GameHeader } from "./GameHeader";
 import { isGameCanvas } from "../../../../utils";
 import { GameViewGridData } from "./GameView.types";
 import { GameGrid } from "./GameGrid";
+import { Composer } from "../../../Composer";
 
 const defaultCanvasData: GameViewGridData = [];
 
@@ -59,11 +59,9 @@ export const GameView = () => {
           onMouseMove={handleMouseMove}
           onMouseDown={handleMouseDown}
         >
-          <GameTexturesProvider>
-            <GameMetaProvider>
-              <GameGrid data={data} />
-            </GameMetaProvider>
-          </GameTexturesProvider>
+          <Composer components={[GameTexturesProvider, GameMetaProvider]}>
+            <GameGrid data={data} />
+          </Composer>
         </Stage>
       </div>
     </div>
