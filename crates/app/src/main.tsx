@@ -13,23 +13,22 @@ import {
 
 import "./styles.css";
 import { ViewProvider } from "./providers/View/View";
+import { Composer } from "./features";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <BrowserRouter>
-    <ApplicationProvider>
-      <GeneralProvider>
-        <UiProvider>
-          <ViewProvider>
-            <PopupProvider>
-              <AssetProvider>
-                <NavigationProvider>
-                  <App />
-                </NavigationProvider>
-              </AssetProvider>
-            </PopupProvider>
-          </ViewProvider>
-        </UiProvider>
-      </GeneralProvider>
-    </ApplicationProvider>
+    <Composer
+      components={[
+        ApplicationProvider,
+        GeneralProvider,
+        UiProvider,
+        ViewProvider,
+        PopupProvider,
+        AssetProvider,
+        NavigationProvider,
+      ]}
+    >
+      <App />
+    </Composer>
   </BrowserRouter>
 );
