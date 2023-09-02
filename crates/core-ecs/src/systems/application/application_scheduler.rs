@@ -3,19 +3,19 @@ use core_dtos::prelude::*;
 
 use crate::prelude::*;
 
-pub struct GeneralScheduler {
+pub struct ApplicationScheduler {
     pub schedule: Schedule,
 }
 
-impl Default for GeneralScheduler {
+impl Default for ApplicationScheduler {
     fn default() -> Self {
         let schedule = Schedule::default();
 
-        GeneralScheduler { schedule }
+        ApplicationScheduler { schedule }
     }
 }
 
-impl ToScheduler for GeneralScheduler {
+impl ToScheduler for ApplicationScheduler {
     fn setup(&mut self) {
         self.schedule.add_systems((
             ApplicationSystems::on_application_will_resize,

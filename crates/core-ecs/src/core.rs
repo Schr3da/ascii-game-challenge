@@ -11,7 +11,7 @@ use crate::prelude::*;
 pub struct Core {
     pub world: World,
     pub init_scheduler: InitScheduler,
-    pub general_scheduler: GeneralScheduler,
+    pub general_scheduler: ApplicationScheduler,
     pub render_scheduler: RenderScheduler,
     pub ui_scheduler: UiScheduler,
     pub tick_scheduler: TickScheduler,
@@ -24,7 +24,7 @@ impl Default for Core {
         let mut init_scheduler = InitScheduler::default();
         init_scheduler.setup();
 
-        let mut general_scheduler = GeneralScheduler::default();
+        let mut general_scheduler = ApplicationScheduler::default();
         general_scheduler.setup();
 
         let mut render_scheduler = RenderScheduler::default();
