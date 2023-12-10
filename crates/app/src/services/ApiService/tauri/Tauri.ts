@@ -122,7 +122,7 @@ export class TauriApi {
     TauriApi.popupRenderListener = await listen(
       subscriptionId,
       (event: Event<UiView>) => {
-        event.payload && cb(event.payload);
+        cb(event.payload);
       }
     );
   }

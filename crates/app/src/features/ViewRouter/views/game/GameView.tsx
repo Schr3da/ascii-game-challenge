@@ -11,6 +11,7 @@ import { isGameCanvas } from "../../../../utils";
 import { GameViewGridData } from "./GameView.types";
 import { GameGrid } from "./GameGrid";
 import { Composer } from "../../../Composer";
+import { Popup } from "../../components/Popup";
 
 const defaultCanvasData: GameViewGridData = [];
 
@@ -64,6 +65,7 @@ export const GameView = () => {
           </Composer>
         </Stage>
       </div>
+      <Popup position="right" />
     </div>
   );
 };

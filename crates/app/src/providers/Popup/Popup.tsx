@@ -1,4 +1,10 @@
-import { createContext, PropsWithChildren, useCallback, useState } from "react";
+import {
+  createContext,
+  PropsWithChildren,
+  useCallback,
+  useMemo,
+  useState,
+} from "react";
 import { useSubscribe } from "../../hooks";
 import { UiView, ViewComponentIds } from "../../shared.d";
 import { PopupContextValues } from "./Popup.types";
@@ -6,12 +12,13 @@ import { PopupContextValues } from "./Popup.types";
 export const PopupContext = createContext<PopupContextValues | null>(null);
 
 export const PopupProvider = ({ children }: PropsWithChildren) => {
-
   const [nextPopup, setNextPopupView] = useState<UiView | null>(null);
 
   const [previousPopup, setPreviousPopupView] = useState<UiView | null>(null);
 
   const [selectedPopupId, setSelectedPopupId] = useState("");
+
+  const isPopupVisible = useMemo(() => nextPopup !== null, [nextPopup]);
 
   const isPopupSelected = useCallback(
     (next: ViewComponentIds) => {
@@ -40,6 +47,7 @@ export const PopupProvider = ({ children }: PropsWithChildren) => {
         previousPopup,
         selectedPopupId,
         isPopupSelected,
+        isPopupVisible,
       }}
     >
       {children}

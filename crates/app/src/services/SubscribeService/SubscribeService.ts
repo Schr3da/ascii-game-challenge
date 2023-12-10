@@ -57,6 +57,7 @@ class SubscribeService {
 
   private onReceivedPopupSubscriptionEvent = (view: UiView | null) => {
     Object.values(this.subscriptions.PopupSubscription).forEach((cb) => {
+      console.log("callll");
       cb && cb(view);
     });
   };
