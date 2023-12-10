@@ -10,6 +10,7 @@ members = [
   "crates/core-terrain",
   "crates/core-formatters",
   "crates/core-inputs",
+  "crates/core-db",
   "examples/*"
 ]
 
@@ -23,5 +24,6 @@ wasm-bindgen = "0.2.86"
 image = "0.24.6"
 imageproc = "0.23.0"
 log = "0.4.20"
+diesel = { version = "2.1.4", features = ["sqlite"] }
 noise = { version = "0.8.2", features = ["images"] }
 tokio = { version = "1.28.0", features=["full"]}

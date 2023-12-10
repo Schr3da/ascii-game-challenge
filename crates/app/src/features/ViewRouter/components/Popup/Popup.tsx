@@ -31,7 +31,7 @@ export const Popup = ({ position }: PopupProps) => {
   return (
     <div
       className={clsx(
-        "absolute bg-gray-800 transition-transform duration-300 rounded-2xl p-6",
+        "absolute bg-gray-900 transition-transform duration-300 rounded-2xl p-6",
         "flex flex-col overflow-hidden",
         popupPosition,
         popupTranslation
