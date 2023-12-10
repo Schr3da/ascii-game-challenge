@@ -119,10 +119,12 @@ impl Terrain {
     }
 
     pub fn get_value(&self, x: i32, y: i32) -> f64 {
+        /* Currently deactivated Visibility check
         let visibility = self.visibility.get_value(x as usize, y as usize);
         if visibility == AsciiIds::NotVisible.to_float() {
             return -100.0;
         }
+        */
 
         let building_value = self.buildings.get_value(x as usize, y as usize);
         if building_value > AsciiIds::UnknownAsciiId.to_float() {
