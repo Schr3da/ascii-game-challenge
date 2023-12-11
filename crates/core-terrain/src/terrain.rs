@@ -88,6 +88,9 @@ impl Terrain {
     fn generate_visibility(&mut self) {
         let (width, height) = self.land.size();
         self.visibility = NoiseMap::new(width, height);
+        self.visibility.iter_mut().for_each(|n| {
+            *n = -100.0;
+        });
     }
 
     fn generate_initial_buildings(&mut self) {
@@ -118,13 +121,15 @@ impl Terrain {
         self.generate_initial_buildings();
     }
 
-    pub fn get_value(&self, x: i32, y: i32) -> f64 {
-        /* Currently deactivated Visibility check
+    pub fn is_visible(&self, x: i32, y: i32) -> bool {
         let visibility = self.visibility.get_value(x as usize, y as usize);
-        if visibility == AsciiIds::NotVisible.to_float() {
-            return -100.0;
+        return visibility != AsciiIds::NotVisible.to_float();
+    }   
+
+    pub fn get_value(&self, x: i32, y: i32) -> f64 {
+        if self.is_visible(x, y) == false {
+            return AsciiIds::NotVisible.to_float();
         }
-        */
 
         let building_value = self.buildings.get_value(x as usize, y as usize);
         if building_value > AsciiIds::UnknownAsciiId.to_float() {

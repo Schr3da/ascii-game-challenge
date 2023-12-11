@@ -10,12 +10,17 @@ impl UiSystems {
         id: UiPopupViewIds,
         mut store: ResMut<UiStoreResource>,
         logger: ResMut<LoggerResource>,
+        assets: Res<AssetResources>,
         mut views: Query<&mut UiView>,
     ) {
         let selected_tile = match &store.selected_game_tile {
             Some(t) => t,
             None => return,
         };
+
+        if assets.terrain.is_visible(selected_tile.frame.x, selected_tile.frame.y) == false {
+            return;
+        }
 
         let id_to_compare = UiViewIds::Popup(id.clone());
         let mut view = match views.iter_mut().find(|v| v.id == id_to_compare) {
@@ -262,6 +267,7 @@ impl UiSystems {
     pub fn on_shortcut(
         mut store: ResMut<UiStoreResource>,
         mut logger: ResMut<LoggerResource>,
+        assets: Res<AssetResources>,
         subscriber: Res<SubscriberResource>,
         views: Query<&mut UiView>,
     ) {
@@ -284,7 +290,7 @@ impl UiSystems {
 
         if store.current_popup.is_some() {
             return match label.id.to_popup_route() {
-                Some(p) => Self::next_popup(p, store, logger, views),
+                Some(p) => Self::next_popup(p, store, logger, assets, views),
                 None => return,
             };
         }

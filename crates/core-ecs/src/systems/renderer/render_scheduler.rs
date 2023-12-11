@@ -19,9 +19,9 @@ impl ToScheduler for RenderScheduler {
     fn setup(&mut self) {
         self.schedule.add_systems((
             CameraSystems::on_update_camera,
-            CellsSystems::on_update_selected_cell_position.after(CameraSystems::on_update_camera),
+            NavigationSystem::on_update_selected_cell_position.after(CameraSystems::on_update_camera),
             CellsSystems::on_update_selected_cell_asset
-                .after(CellsSystems::on_update_selected_cell_position),
+                .after(NavigationSystem::on_update_selected_cell_position),
             CellsSystems::on_update_cells.after(CellsSystems::on_update_selected_cell_asset),
             RendererSystems::on_renderer_did_update.after(CellsSystems::on_update_cells),
         ));
